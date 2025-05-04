@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: root
-;;; Timestamp: <2025-05-04 23:52:30>
+;;; Timestamp: <2025-05-05 00:23:10>
 ;;; File: /root/.emacs.d/lisp/emacs-claude-code-auto-accept/emacs-claude-auto-accept-send.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -28,20 +28,24 @@
   (interactive)
   (with-current-buffer emacs-claude-buffer-name
     (when (--emacs-claude-detect-prompt-y/n)
+      (sit-for 0.3)
       (vterm-send-string "1\n")
       (vterm-send-return)
+      (sit-for 0.3)
       (vterm-copy-mode -1)
-      (message "1 command sent"))))
+      (message "[emacs-claude-auto-accept-send] Automatic Response: 1"))))
 
 (defun --emacs-claude-auto-send-yy ()
   "Automatically respond with '2' to Claude prompts in vterm."
   (interactive)
   (with-current-buffer emacs-claude-buffer-name
     (when (--emacs-claude-detect-prompt-y/y/n)
+      (sit-for 0.3)
       (vterm-send-string "2\n")
       (vterm-send-return)
       (vterm-copy-mode -1)
-      (message "2 command sent"))))
+      (sit-for 0.3)
+      (message "[emacs-claude-auto-accept-send] Automatic Response: 2"))))
 
 (defun --emacs-claude-auto-send-continue ()
   "Automatically respond with 'continue' to Claude waiting prompts in vterm."
@@ -49,10 +53,13 @@
   (with-current-buffer emacs-claude-buffer-name
     (when (or (--emacs-claude-detect-prompt-waiting)
               (--emacs-claude-detect-prompt-initial-waiting))
+      (sit-for 0.3)
       (vterm-send-string "continue\n")
       (vterm-send-return)
       (vterm-copy-mode -1)
-      (message "Continue command sent"))))
+      (sit-for 0.3)
+      (message
+       "[emacs-claude-auto-accept-send] Automatic Response: continue"))))
 
 (provide 'emacs-claude-auto-accept-send)
 
