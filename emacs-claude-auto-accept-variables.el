@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: root
-;;; Timestamp: <2025-05-04 23:49:31>
+;;; Timestamp: <2025-05-05 00:12:30>
 ;;; File: /root/.emacs.d/lisp/emacs-claude-code-auto-accept/emacs-claude-auto-accept-variables.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -22,13 +22,13 @@
   :type 'string
   :group 'emacs-claude)
 
-(defcustom emacs-claude-prompt-y/y/n "❯ 2. Yes, and"
+(defcustom emacs-claude-prompt-y/y/n " 2. Yes, and"
   "y/Y/n prompt pattern to match when Claude asks for confirmation."
   :type 'string
   :group 'emacs-claude)
 
 (defcustom emacs-claude-prompt-waiting
-  "│ >                                                                                                  │"
+  "│ > [[:space:]]+|"
   "Pattern that matches the waiting prompt shown in Claude interface."
   :type 'string
   :group 'emacs-claude)
