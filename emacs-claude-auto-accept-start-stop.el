@@ -1,9 +1,19 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: root
-;;; Timestamp: <2025-05-04 22:51:38>
-;;; File: /root/.emacs.d/lisp/claude/emacs-claude-auto-accept-start-stop.el
+;;; Timestamp: <2025-05-04 23:06:19>
+;;; File: /root/.emacs.d/lisp/emacs-claude-code-auto-accept/emacs-claude-auto-accept-start-stop.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
+
+;; (defun emacs-claude-auto-accept-start ()
+;;   "Start auto-accepting Claude prompts using a timer."
+;;   (interactive)
+;;   (unless (get-buffer emacs-claude-buffer-name)
+;;     (rename-buffer emacs-claude-buffer-name t))
+;;   (add-hook 'vterm-update-functions 'emacs-claude-auto-accept-send)
+
+;;   (message "Claude auto-accept enabled for %s"
+;;            emacs-claude-buffer-name))
 
 (defun emacs-claude-auto-accept-start ()
   "Start auto-accepting Claude prompts using a timer."
@@ -11,6 +21,9 @@
   (unless (get-buffer emacs-claude-buffer-name)
     (rename-buffer emacs-claude-buffer-name t))
   (add-hook 'vterm-update-functions 'emacs-claude-auto-accept-send)
+  (with-current-buffer emacs-claude-buffer-name
+    (vterm-send-key "l" nil nil t))
+  ;; Send C-l to refresh screen
   (message "Claude auto-accept enabled for %s"
            emacs-claude-buffer-name))
 
