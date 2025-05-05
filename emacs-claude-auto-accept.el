@@ -1,9 +1,10 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
-;;; Author: root
-;;; Timestamp: <2025-05-04 22:50:42>
-;;; File: /root/.emacs.d/lisp/claude/emacs-claude-auto-accept.el
+;;; Author: ywatanabe
+;;; Timestamp: <2025-05-05 11:17:50>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code-auto-accept/emacs-claude-auto-accept.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
+
 
 (let
     ((this-dir
@@ -14,6 +15,7 @@
 (require 'emacs-claude-auto-accept-detect-prompt)
 (require 'emacs-claude-auto-accept-send)
 (require 'emacs-claude-auto-accept-start-stop)
+
 
 (provide 'emacs-claude-auto-accept)
 
