@@ -1,9 +1,10 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
-;;; Author: root
-;;; Timestamp: <2025-05-05 00:20:44>
-;;; File: /root/.emacs.d/lisp/emacs-claude-code-auto-accept/emacs-claude-auto-accept-start-stop.el
+;;; Author: ywatanabe
+;;; Timestamp: <2025-05-05 11:18:52>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code-auto-accept/emacs-claude-auto-accept-start-stop.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
+
 
 (defun emacs-claude-auto-accept-start ()
   "Start auto-accepting Claude prompts using a hook and a timer."
@@ -49,6 +50,7 @@
     (setq emacs-claude-auto-accept-timer nil))
 
   (message "Claude auto-accept disabled"))
+
 
 (provide 'emacs-claude-auto-accept-start-stop)
 
