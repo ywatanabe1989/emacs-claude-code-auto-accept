@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(emacs:*)",
+      "Bash(git add:*)",
+      "Bash(git rev-parse:*)"
+    ],
+    "deny": []
+  }
+}
