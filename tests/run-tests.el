@@ -1,33 +1,33 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
 ;;; Timestamp: <2025-05-06 01:37:14>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/run-tests.el
+;;; File: /home/ywatanabe/.emacs.d/lisp/ecc/tests/run-tests.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 (require 'ert)
 
-(defun emacs-claude-code-run-tests (&optional pattern)
-  "Run all emacs-claude-code tests matching PATTERN.
-If PATTERN is nil, run all tests with 'test-emacs-claude-code' prefix."
+(defun ecc-run-tests (&optional pattern)
+  "Run all ecc tests matching PATTERN.
+If PATTERN is nil, run all tests with 'test-ecc' prefix."
   (interactive)
-  (let ((test-pattern (or pattern "^test-emacs-claude-code")))
+  (let ((test-pattern (or pattern "^test-ecc")))
     (ert-run-tests-interactively test-pattern)))
 
-(defun emacs-claude-code-load-tests ()
-  "Load all emacs-claude-code test files."
+(defun ecc-load-tests ()
+  "Load all ecc test files."
   (interactive)
-  (let ((test-dir "/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/tests"))
+  (let ((test-dir "/home/ywatanabe/.dotfiles/.emacs.d/lisp/ecc/tests"))
     (unless (file-exists-p test-dir)
       (error "Test directory not found: %s" test-dir))
     (dolist (test-file (directory-files test-dir t "^test-.*\\.el$"))
       (load test-file))))
 
-(defun emacs-claude-code-run-single-test-file (file-pattern)
+(defun ecc-run-single-test-file (file-pattern)
   "Run tests from a single test file matching FILE-PATTERN."
   (interactive "sEnter test file pattern (e.g. variables): ")
-  (let* ((test-dir "/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/tests")
-         (pattern (concat "^test-emacs-claude-code-" file-pattern))
+  (let* ((test-dir "/home/ywatanabe/.dotfiles/.emacs.d/lisp/ecc/tests")
+         (pattern (concat "^test-ecc-" file-pattern))
          (matching-files (directory-files test-dir t pattern)))
     (if matching-files
         (progn
@@ -38,8 +38,8 @@ If PATTERN is nil, run all tests with 'test-emacs-claude-code' prefix."
 
 (when (and (not load-file-name)
            (not noninteractive))
-  (emacs-claude-code-load-tests)
-  (emacs-claude-code-run-tests))
+  (ecc-load-tests)
+  (ecc-run-tests))
 
 
 (provide 'run-tests)
