@@ -24,37 +24,10 @@
                    vterm-update-functions))
       (progn
         (ecc-auto-disable)
-        nil)  ; Return nil to indicate it was disabled
+        nil)
     (progn
       (ecc-auto-enable)
-      t)))  ; Return t to indicate it was enabled
-
-;; ;;;###autoload
-;; (defun ecc-auto-enable ()
-;;   "Start auto-accepting Claude prompts for the current buffer."
-;;   (interactive)
-;;   (cond
-;;    ;; Check if current buffer is vterm-mode
-;;    ((derived-mode-p 'vterm-mode)
-;;     ;; Register current buffer
-;;     (--ecc-buffer-register-buffer (current-buffer)))
-;;    (t (message "Current buffer is not in vterm-mode")))
-;;   ;; Set up hooks for all registered buffers
-;;   (ecc-buffer-registry-cleanup-buffers)
-;;   (when ecc-buffers
-;;     ;; Set up hook for immediate response to changes
-;;     (remove-hook 'vterm-update-functions 'ecc-send-accept)
-;;     (add-hook 'vterm-update-functions 'ecc-send-accept)
-;;     ;; Set up timer for regular checking
-;;     (when ecc-timer
-;;       (cancel-timer ecc-timer))
-;;     (setq ecc-timer
-;;           (run-with-timer 1 ecc-interval-sec
-;;                           'ecc-auto-check-and-restart))
-;;     ;; Visual indicators
-;;     (ecc-update-mode-line-all-buffers)
-;;     (message "Claude auto-accept enabled for %d buffers"
-;;              (length ecc-buffers))))
+      t)))
 
 (defun ecc-auto-enable ()
   "Start auto-accepting Claude prompts for the current buffer."
@@ -120,14 +93,14 @@
 ;;               (--ecc-buffer-register-buffer found-buffer)
 ;;               (message "Claude auto-accept switched to buffer %s"
 ;;                        (buffer-name found-buffer)))))
-        
+
 ;;         ;; Update the state indicator and running status
 ;;         (ecc-update-mode-line-all-buffers)
-        
+
 ;;         ;; Ensure the hook is still active
 ;;         (unless (member 'ecc-send-accept vterm-update-functions)
 ;;           (add-hook 'vterm-update-functions 'ecc-send-accept))
-        
+
 ;;         ;; Run the accept function if we have a valid buffer
 ;;         (when (buffer-live-p ecc-active-buffer)
 ;;           (ecc-send-accept)))

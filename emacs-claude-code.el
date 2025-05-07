@@ -22,7 +22,6 @@
 (require 'ecc-buffer-navigation)
 (require 'ecc-bindings)
 
-
 (provide 'emacs-claude-code)
 
 (when

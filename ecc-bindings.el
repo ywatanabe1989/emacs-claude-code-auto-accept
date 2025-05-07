@@ -81,14 +81,14 @@
   (ecc-setup-keymap)
   (message "ECC keymap reloaded"))
 
- (defun ecc-setup-keymap ()
-   "Set up the keymap for ECC commands."
-   (let ((prefix-key (kbd ecc-keymap-prefix)))
-     ;; Global map
-     (global-set-key prefix-key ecc-keymap)
-     ;; Apply same keymap to dired mode
-     (with-eval-after-load 'dired
-       (define-key dired-mode-map prefix-key ecc-keymap))
+(defun ecc-setup-keymap ()
+  "Set up the keymap for ECC commands."
+  (let ((prefix-key (kbd ecc-keymap-prefix)))
+    ;; Global map
+    (global-set-key prefix-key ecc-keymap)
+    ;; Apply same keymap to dired mode
+    (with-eval-after-load 'dired
+      (define-key dired-mode-map prefix-key ecc-keymap))))
 
 (provide 'ecc-bindings)
 
