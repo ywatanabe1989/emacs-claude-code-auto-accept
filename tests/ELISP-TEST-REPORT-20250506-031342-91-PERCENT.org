@@ -14,18 +14,18 @@
 - Success Rate: 90.5%
 
 * Passed Tests (74)
-** test-emacs-claude-code-copy-repository.el (10 tests)
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-code-copy-repository-loadable][test-emacs-claude-code-copy-repository-loadable]]
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-repository-dir-defined][test-emacs-claude-repository-dir-defined]]
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-repository-output-file-defined][test-emacs-claude-repository-output-file-defined]]
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-file-blacklist-defined][test-emacs-claude-file-blacklist-defined]]
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-max-file-size-defined][test-emacs-claude-max-file-size-defined]]
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-blacklisted-p-functionality][test-emacs-claude-blacklisted-p-functionality]]
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-get-file-type-functionality][test-emacs-claude-get-file-type-functionality]]
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-get-file-content][test-emacs-claude-get-file-content]]
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-get-repository-files-with-mock-dir][test-emacs-claude-get-repository-files-with-mock-dir]]
+** test-ecc-repository-copy-contents.el (10 tests)
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-copy-contents-loadable][test-ecc-repository-copy-contents-loadable]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-dir-defined][test-ecc-repository-dir-defined]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-output-file-defined][test-ecc-repository-output-file-defined]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-file-blacklist-defined][test-ecc-repository-file-blacklist-defined]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-max-file-size-defined][test-ecc-repository-max-file-size-defined]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-blacklisted-p-functionality][test-ecc-repository-blacklisted-p-functionality]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-get-file-type-functionality][test-ecc-get-file-type-functionality]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-get-file-content][test-ecc-repository-get-file-content]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-get-repository-files-with-mock-dir][test-ecc-get-repository-files-with-mock-dir]]
   + Error details:
-    Selector: test-emacs-claude-get-repository-files-with-mock-dir
+    Selector: test-ecc-get-repository-files-with-mock-dir
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -37,16 +37,16 @@
     
     F
     
-    F test-emacs-claude-get-repository-files-with-mock-dir
+    F test-ecc-get-repository-files-with-mock-dir
         (ert-test-failed
          ((should (member elisp-file files)) :form
-          (member "/tmp/emacs-claude-test-dir-66V9Rj/test.el" nil) :value nil))
+          (member "/tmp/ecc-test-dir-66V9Rj/test.el" nil) :value nil))
     
     
     
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-copy-repository-creates-output-file][test-emacs-claude-copy-repository-creates-output-file]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-copy-contents-creates-output-file][test-ecc-repository-copy-contents-creates-output-file]]
   + Error details:
-    Selector: test-emacs-claude-copy-repository-creates-output-file
+    Selector: test-ecc-repository-copy-contents-creates-output-file
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -58,7 +58,7 @@
     
     F
     
-    F test-emacs-claude-copy-repository-creates-output-file
+    F test-ecc-repository-copy-contents-creates-output-file
         (ert-test-failed
          ((should
            (string-match-p (regexp-quote "(defun test () (message \"test\"))")
@@ -70,17 +70,17 @@
     
     
     
-** test-emacs-claude-code-detect-prompt.el (10 tests)
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-code-detect-prompt-loadable][test-emacs-claude-code-detect-prompt-loadable]]
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-waiting-defined][test-emacs-claude-detect-prompt-waiting-defined]]
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-initial-waiting-defined][test-emacs-claude-detect-prompt-initial-waiting-defined]]
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-y/n-defined][test-emacs-claude-detect-prompt-y/n-defined]]
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-y/y/n-defined][test-emacs-claude-detect-prompt-y/y/n-defined]]
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-defined][test-emacs-claude-detect-prompt-defined]]
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-with-mock-buffer][test-emacs-claude-detect-prompt-with-mock-buffer]]
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-handles-nil-buffer][test-emacs-claude-detect-prompt-handles-nil-buffer]]
+** test-ecc-detect-prompt.el (10 tests)
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-loadable][test-ecc-detect-prompt-loadable]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-waiting-defined][test-ecc-detect-prompt-waiting-defined]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-initial-waiting-defined][test-ecc-detect-prompt-initial-waiting-defined]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-y/n-defined][test-ecc-detect-prompt-y/n-defined]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-y/y/n-defined][test-ecc-detect-prompt-y/y/n-defined]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-defined][test-ecc-detect-prompt-defined]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-with-mock-buffer][test-ecc-detect-prompt-with-mock-buffer]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-handles-nil-buffer][test-ecc-detect-prompt-handles-nil-buffer]]
   + Error details:
-    Selector: test-emacs-claude-detect-prompt-handles-nil-buffer
+    Selector: test-ecc-detect-prompt-handles-nil-buffer
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -92,36 +92,36 @@
     
     F
     
-    F test-emacs-claude-detect-prompt-handles-nil-buffer
+    F test-ecc-detect-prompt-handles-nil-buffer
         (wrong-type-argument stringp nil)
     
     
     
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-returns-nil-when-not-found][test-emacs-claude-detect-prompt-returns-nil-when-not-found]]
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-y/n-prompt-detection][test-emacs-claude-y/n-prompt-detection]]
-** test-emacs-claude-code-run.el (11 tests)
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-code-run-loadable][test-emacs-claude-code-run-loadable]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-prompt-template-defined][test-emacs-claude-prompt-template-defined]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-default-instructions-defined][test-emacs-claude-default-instructions-defined]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-ensure-buffer-defined][test-emacs-claude-ensure-buffer-defined]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-run-defined][test-emacs-claude-run-defined]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-run-on-region-defined][test-emacs-claude-run-on-region-defined]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-run-on-buffer-defined][test-emacs-claude-run-on-buffer-defined]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-run-quick-defined][test-emacs-claude-run-quick-defined]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-run-formats-prompt-correctly][test-emacs-claude-run-formats-prompt-correctly]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-run-on-region-extracts-region-content][test-emacs-claude-run-on-region-extracts-region-content]]
-- [[file:test-emacs-claude-code-run.el::test-emacs-claude-run-on-buffer-extracts-buffer-content][test-emacs-claude-run-on-buffer-extracts-buffer-content]]
-** test-emacs-claude-code-send.el (9 tests)
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-code-send-loadable][test-emacs-claude-code-send-loadable]]
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-code-send-defined][test-emacs-claude-code-send-defined]]
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-auto-send-y-defined][test-emacs-claude-auto-send-y-defined]]
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-auto-send-yy-defined][test-emacs-claude-auto-send-yy-defined]]
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-auto-send-continue-defined][test-emacs-claude-auto-send-continue-defined]]
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-auto-send-y-sends-correct-response][test-emacs-claude-auto-send-y-sends-correct-response]]
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-auto-send-yy-sends-correct-response][test-emacs-claude-auto-send-yy-sends-correct-response]]
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-auto-send-continue-sends-correct-response][test-emacs-claude-auto-send-continue-sends-correct-response]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-returns-nil-when-not-found][test-ecc-detect-prompt-returns-nil-when-not-found]]
+- [[file:test-ecc-detect-prompt.el::test-ecc-y/n-prompt-detection][test-ecc-y/n-prompt-detection]]
+** test-ecc-run.el (11 tests)
+- [[file:test-ecc-run.el::test-ecc-run-loadable][test-ecc-run-loadable]]
+- [[file:test-ecc-run.el::test-ecc-prompt-template-defined][test-ecc-prompt-template-defined]]
+- [[file:test-ecc-run.el::test-ecc-default-instructions-defined][test-ecc-default-instructions-defined]]
+- [[file:test-ecc-run.el::test-ecc-buffer-ensure-active-exists-defined][test-ecc-buffer-ensure-active-exists-defined]]
+- [[file:test-ecc-run.el::test-ecc-run-defined][test-ecc-run-defined]]
+- [[file:test-ecc-run.el::test-ecc-run-on-region-defined][test-ecc-run-on-region-defined]]
+- [[file:test-ecc-run.el::test-ecc-run-on-buffer-defined][test-ecc-run-on-buffer-defined]]
+- [[file:test-ecc-run.el::test-ecc-run-quick-defined][test-ecc-run-quick-defined]]
+- [[file:test-ecc-run.el::test-ecc-run-formats-prompt-correctly][test-ecc-run-formats-prompt-correctly]]
+- [[file:test-ecc-run.el::test-ecc-run-on-region-extracts-region-content][test-ecc-run-on-region-extracts-region-content]]
+- [[file:test-ecc-run.el::test-ecc-run-on-buffer-extracts-buffer-content][test-ecc-run-on-buffer-extracts-buffer-content]]
+** test-ecc-send.el (9 tests)
+- [[file:test-ecc-send.el::test-ecc-send-loadable][test-ecc-send-loadable]]
+- [[file:test-ecc-send.el::test-ecc-send-defined][test-ecc-send-defined]]
+- [[file:test-ecc-send.el::test-ecc-auto-send-y-defined][test-ecc-auto-send-y-defined]]
+- [[file:test-ecc-send.el::test-ecc-auto-send-yy-defined][test-ecc-auto-send-yy-defined]]
+- [[file:test-ecc-send.el::test-ecc-auto-send-continue-defined][test-ecc-auto-send-continue-defined]]
+- [[file:test-ecc-send.el::test-ecc-auto-send-y-sends-correct-response][test-ecc-auto-send-y-sends-correct-response]]
+- [[file:test-ecc-send.el::test-ecc-auto-send-yy-sends-correct-response][test-ecc-auto-send-yy-sends-correct-response]]
+- [[file:test-ecc-send.el::test-ecc-auto-send-continue-sends-correct-response][test-ecc-auto-send-continue-sends-correct-response]]
   + Error details:
-    Selector: test-emacs-claude-auto-send-continue-sends-correct-response
+    Selector: test-ecc-auto-send-continue-sends-correct-response
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -133,7 +133,7 @@
     
     F
     
-    F test-emacs-claude-auto-send-continue-sends-correct-response
+    F test-ecc-auto-send-continue-sends-correct-response
         (ert-test-failed
          ((should (string= string-sent "continue\n")) :form
           (string=
@@ -146,14 +146,14 @@
     
     
     
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-code-send-routes-to-correct-handler][test-emacs-claude-code-send-routes-to-correct-handler]]
-** test-emacs-claude-code-start-stop.el (11 tests)
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-start-stop-loadable][test-emacs-claude-code-start-stop-loadable]]
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-toggle-defined][test-emacs-claude-code-toggle-defined]]
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-toggle-starts-when-inactive][test-emacs-claude-code-toggle-starts-when-inactive]]
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-toggle-stops-when-active][test-emacs-claude-code-toggle-stops-when-active]]
+- [[file:test-ecc-send.el::test-ecc-send-routes-to-correct-handler][test-ecc-send-routes-to-correct-handler]]
+** test-ecc-auto-enable-stop.el (11 tests)
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-enable-stop-loadable][test-ecc-auto-enable-stop-loadable]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-toggle-defined][test-ecc-auto-toggle-defined]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-toggle-starts-when-inactive][test-ecc-auto-toggle-starts-when-inactive]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-toggle-stops-when-active][test-ecc-auto-toggle-stops-when-active]]
   + Error details:
-    Selector: test-emacs-claude-code-toggle-stops-when-active
+    Selector: test-ecc-auto-toggle-stops-when-active
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -165,14 +165,14 @@
     
     F
     
-    F test-emacs-claude-code-toggle-stops-when-active
+    F test-ecc-auto-toggle-stops-when-active
         (ert-test-failed ((should-not started) :form started :value t))
     
     
     
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-rename-buffer-when-enabled][test-emacs-claude-code-rename-buffer-when-enabled]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-buffer-rename-buffer-when-enabled][test-ecc-buffer-rename-buffer-when-enabled]]
   + Error details:
-    Selector: test-emacs-claude-code-rename-buffer-when-enabled
+    Selector: test-ecc-buffer-rename-buffer-when-enabled
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -184,9 +184,9 @@
     
     F
     
-    F test-emacs-claude-code-rename-buffer-when-enabled
+    F test-ecc-buffer-rename-buffer-when-enabled
         (ert-test-failed
-         ((should (string= (buffer-name mock-buffer) emacs-claude-buffer-name))
+         ((should (string= (buffer-name mock-buffer) ecc-buffer-name))
           :form (string= "*CLAUDE-CODE*<2>" "*CLAUDE-CODE*") :value nil
           :explanation
           (arrays-of-different-length 16 13 "*CLAUDE-CODE*<2>" "*CLAUDE-CODE*"
@@ -194,14 +194,14 @@
     
     
     
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-rename-buffer-when-disabled][test-emacs-claude-code-rename-buffer-when-disabled]]
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-start-uses-current-buffer-when-no-buffer-exists][test-emacs-claude-code-start-uses-current-buffer-when-no-buffer-exists]]
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-start-adds-hook-and-starts-timer][test-emacs-claude-code-start-adds-hook-and-starts-timer]]
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-stop-removes-hook-and-cancels-timer][test-emacs-claude-code-stop-removes-hook-and-cancels-timer]]
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-check-and-restart-adds-hook-when-missing][test-emacs-claude-code-check-and-restart-adds-hook-when-missing]]
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed][test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-buffer-rename-buffer-when-disabled][test-ecc-buffer-rename-buffer-when-disabled]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-enable-uses-current-buffer-when-no-buffer-exists][test-ecc-auto-enable-uses-current-buffer-when-no-buffer-exists]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-enable-adds-hook-and-starts-timer][test-ecc-auto-enable-adds-hook-and-starts-timer]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-disable-removes-hook-and-cancels-timer][test-ecc-auto-disable-removes-hook-and-cancels-timer]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-check-and-restart-adds-hook-when-missing][test-ecc-auto-check-and-restart-adds-hook-when-missing]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed][test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed]]
   + Error details:
-    Selector: test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed
+    Selector: test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -213,44 +213,44 @@
     
     F
     
-    F test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed
+    F test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed
         (ert-test-failed
-         ((should (eq emacs-claude-buffer 'mock-vterm-buffer)) :form
+         ((should (eq ecc-buffer 'mock-vterm-buffer)) :form
           (eq nil mock-vterm-buffer) :value nil))
     
     
     
-** test-emacs-claude-code-update-mode-line.el (8 tests)
-- [[file:test-emacs-claude-code-update-mode-line.el::test-emacs-claude-code-update-mode-line-loadable][test-emacs-claude-code-update-mode-line-loadable]]
-- [[file:test-emacs-claude-code-update-mode-line.el::test-emacs-claude-code-mode-line-indicator-defined][test-emacs-claude-code-mode-line-indicator-defined]]
-- [[file:test-emacs-claude-code-update-mode-line.el::test-emacs-claude-code-update-mode-line-defined][test-emacs-claude-code-update-mode-line-defined]]
-- [[file:test-emacs-claude-code-update-mode-line.el::test-emacs-claude-code-update-mode-line-adds-indicator][test-emacs-claude-code-update-mode-line-adds-indicator]]
-- [[file:test-emacs-claude-code-update-mode-line.el::test-emacs-claude-code-update-mode-line-removes-indicator][test-emacs-claude-code-update-mode-line-removes-indicator]]
-- [[file:test-emacs-claude-code-update-mode-line.el::test-emacs-claude-code-update-mode-line-adds-overlay][test-emacs-claude-code-update-mode-line-adds-overlay]]
-- [[file:test-emacs-claude-code-update-mode-line.el::test-emacs-claude-code-update-mode-line-removes-overlay][test-emacs-claude-code-update-mode-line-removes-overlay]]
-- [[file:test-emacs-claude-code-update-mode-line.el::test-emacs-claude-code-update-mode-line-force-updates][test-emacs-claude-code-update-mode-line-force-updates]]
-** test-emacs-claude-code-variables.el (7 tests)
-- [[file:test-emacs-claude-code-variables.el::test-emacs-claude-code-variables-loadable][test-emacs-claude-code-variables-loadable]]
-- [[file:test-emacs-claude-code-variables.el::test-emacs-claude-code-variables-customization-group][test-emacs-claude-code-variables-customization-group]]
-- [[file:test-emacs-claude-code-variables.el::test-emacs-claude-buffer-name-defined][test-emacs-claude-buffer-name-defined]]
-- [[file:test-emacs-claude-code-variables.el::test-emacs-claude-buffer-defined][test-emacs-claude-buffer-defined]]
-- [[file:test-emacs-claude-code-variables.el::test-emacs-claude-code-timer-defined][test-emacs-claude-code-timer-defined]]
-- [[file:test-emacs-claude-code-variables.el::test-emacs-claude-prompt-patterns-defined][test-emacs-claude-prompt-patterns-defined]]
-- [[file:test-emacs-claude-code-variables.el::test-emacs-claude-code-interval-sec-defined][test-emacs-claude-code-interval-sec-defined]]
-** test-emacs-claude-code.el (8 tests)
-- [[file:test-emacs-claude-code.el::test-emacs-claude-code-loadable][test-emacs-claude-code-loadable]]
-- [[file:test-emacs-claude-code.el::test-emacs-claude-code-variables-required][test-emacs-claude-code-variables-required]]
-- [[file:test-emacs-claude-code.el::test-emacs-claude-code-detect-prompt-required][test-emacs-claude-code-detect-prompt-required]]
-- [[file:test-emacs-claude-code.el::test-emacs-claude-code-send-required][test-emacs-claude-code-send-required]]
-- [[file:test-emacs-claude-code.el::test-emacs-claude-code-update-mode-line-required][test-emacs-claude-code-update-mode-line-required]]
-- [[file:test-emacs-claude-code.el::test-emacs-claude-code-start-stop-required][test-emacs-claude-code-start-stop-required]]
-- [[file:test-emacs-claude-code.el::test-emacs-claude-code-run-required][test-emacs-claude-code-run-required]]
-- [[file:test-emacs-claude-code.el::test-emacs-claude-code-copy-repository-required][test-emacs-claude-code-copy-repository-required]]
+** test-ecc-update-mode-line.el (8 tests)
+- [[file:test-ecc-update-mode-line.el::test-ecc-update-mode-line-loadable][test-ecc-update-mode-line-loadable]]
+- [[file:test-ecc-update-mode-line.el::test-ecc-mode-line-indicator-defined][test-ecc-mode-line-indicator-defined]]
+- [[file:test-ecc-update-mode-line.el::test-ecc-update-mode-line-defined][test-ecc-update-mode-line-defined]]
+- [[file:test-ecc-update-mode-line.el::test-ecc-update-mode-line-adds-indicator][test-ecc-update-mode-line-adds-indicator]]
+- [[file:test-ecc-update-mode-line.el::test-ecc-update-mode-line-removes-indicator][test-ecc-update-mode-line-removes-indicator]]
+- [[file:test-ecc-update-mode-line.el::test-ecc-update-mode-line-adds-overlay][test-ecc-update-mode-line-adds-overlay]]
+- [[file:test-ecc-update-mode-line.el::test-ecc-update-mode-line-removes-overlay][test-ecc-update-mode-line-removes-overlay]]
+- [[file:test-ecc-update-mode-line.el::test-ecc-update-mode-line-force-updates][test-ecc-update-mode-line-force-updates]]
+** test-ecc-variables.el (7 tests)
+- [[file:test-ecc-variables.el::test-ecc-variables-loadable][test-ecc-variables-loadable]]
+- [[file:test-ecc-variables.el::test-ecc-variables-customization-group][test-ecc-variables-customization-group]]
+- [[file:test-ecc-variables.el::test-ecc-buffer-name-defined][test-ecc-buffer-name-defined]]
+- [[file:test-ecc-variables.el::test-ecc-buffer-defined][test-ecc-buffer-defined]]
+- [[file:test-ecc-variables.el::test-ecc-timer-defined][test-ecc-timer-defined]]
+- [[file:test-ecc-variables.el::test-ecc-prompt-patterns-defined][test-ecc-prompt-patterns-defined]]
+- [[file:test-ecc-variables.el::test-ecc-interval-sec-defined][test-ecc-interval-sec-defined]]
+** test-ecc.el (8 tests)
+- [[file:test-ecc.el::test-ecc-loadable][test-ecc-loadable]]
+- [[file:test-ecc.el::test-ecc-variables-required][test-ecc-variables-required]]
+- [[file:test-ecc.el::test-ecc-detect-prompt-required][test-ecc-detect-prompt-required]]
+- [[file:test-ecc.el::test-ecc-send-required][test-ecc-send-required]]
+- [[file:test-ecc.el::test-ecc-update-mode-line-required][test-ecc-update-mode-line-required]]
+- [[file:test-ecc.el::test-ecc-auto-enable-stop-required][test-ecc-auto-enable-stop-required]]
+- [[file:test-ecc.el::test-ecc-run-required][test-ecc-run-required]]
+- [[file:test-ecc.el::test-ecc-repository-copy-contents-required][test-ecc-repository-copy-contents-required]]
 * Failed Tests (7)
-** test-emacs-claude-code-copy-repository.el (2 tests)
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-get-repository-files-with-mock-dir][test-emacs-claude-get-repository-files-with-mock-dir]]
+** test-ecc-repository-copy-contents.el (2 tests)
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-get-repository-files-with-mock-dir][test-ecc-get-repository-files-with-mock-dir]]
   + Error details:
-    Selector: test-emacs-claude-get-repository-files-with-mock-dir
+    Selector: test-ecc-get-repository-files-with-mock-dir
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -262,16 +262,16 @@
     
     F
     
-    F test-emacs-claude-get-repository-files-with-mock-dir
+    F test-ecc-get-repository-files-with-mock-dir
         (ert-test-failed
          ((should (member elisp-file files)) :form
-          (member "/tmp/emacs-claude-test-dir-66V9Rj/test.el" nil) :value nil))
+          (member "/tmp/ecc-test-dir-66V9Rj/test.el" nil) :value nil))
     
     
     
-- [[file:test-emacs-claude-code-copy-repository.el::test-emacs-claude-copy-repository-creates-output-file][test-emacs-claude-copy-repository-creates-output-file]]
+- [[file:test-ecc-repository-copy-contents.el::test-ecc-repository-copy-contents-creates-output-file][test-ecc-repository-copy-contents-creates-output-file]]
   + Error details:
-    Selector: test-emacs-claude-copy-repository-creates-output-file
+    Selector: test-ecc-repository-copy-contents-creates-output-file
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -283,7 +283,7 @@
     
     F
     
-    F test-emacs-claude-copy-repository-creates-output-file
+    F test-ecc-repository-copy-contents-creates-output-file
         (ert-test-failed
          ((should
            (string-match-p (regexp-quote "(defun test () (message \"test\"))")
@@ -295,10 +295,10 @@
     
     
     
-** test-emacs-claude-code-detect-prompt.el (1 tests)
-- [[file:test-emacs-claude-code-detect-prompt.el::test-emacs-claude-detect-prompt-handles-nil-buffer][test-emacs-claude-detect-prompt-handles-nil-buffer]]
+** test-ecc-detect-prompt.el (1 tests)
+- [[file:test-ecc-detect-prompt.el::test-ecc-detect-prompt-handles-nil-buffer][test-ecc-detect-prompt-handles-nil-buffer]]
   + Error details:
-    Selector: test-emacs-claude-detect-prompt-handles-nil-buffer
+    Selector: test-ecc-detect-prompt-handles-nil-buffer
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -310,15 +310,15 @@
     
     F
     
-    F test-emacs-claude-detect-prompt-handles-nil-buffer
+    F test-ecc-detect-prompt-handles-nil-buffer
         (wrong-type-argument stringp nil)
     
     
     
-** test-emacs-claude-code-send.el (1 tests)
-- [[file:test-emacs-claude-code-send.el::test-emacs-claude-auto-send-continue-sends-correct-response][test-emacs-claude-auto-send-continue-sends-correct-response]]
+** test-ecc-send.el (1 tests)
+- [[file:test-ecc-send.el::test-ecc-auto-send-continue-sends-correct-response][test-ecc-auto-send-continue-sends-correct-response]]
   + Error details:
-    Selector: test-emacs-claude-auto-send-continue-sends-correct-response
+    Selector: test-ecc-auto-send-continue-sends-correct-response
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -330,7 +330,7 @@
     
     F
     
-    F test-emacs-claude-auto-send-continue-sends-correct-response
+    F test-ecc-auto-send-continue-sends-correct-response
         (ert-test-failed
          ((should (string= string-sent "continue\n")) :form
           (string=
@@ -343,10 +343,10 @@
     
     
     
-** test-emacs-claude-code-start-stop.el (3 tests)
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-toggle-stops-when-active][test-emacs-claude-code-toggle-stops-when-active]]
+** test-ecc-auto-enable-stop.el (3 tests)
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-toggle-stops-when-active][test-ecc-auto-toggle-stops-when-active]]
   + Error details:
-    Selector: test-emacs-claude-code-toggle-stops-when-active
+    Selector: test-ecc-auto-toggle-stops-when-active
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -358,14 +358,14 @@
     
     F
     
-    F test-emacs-claude-code-toggle-stops-when-active
+    F test-ecc-auto-toggle-stops-when-active
         (ert-test-failed ((should-not started) :form started :value t))
     
     
     
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-rename-buffer-when-enabled][test-emacs-claude-code-rename-buffer-when-enabled]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-buffer-rename-buffer-when-enabled][test-ecc-buffer-rename-buffer-when-enabled]]
   + Error details:
-    Selector: test-emacs-claude-code-rename-buffer-when-enabled
+    Selector: test-ecc-buffer-rename-buffer-when-enabled
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -377,9 +377,9 @@
     
     F
     
-    F test-emacs-claude-code-rename-buffer-when-enabled
+    F test-ecc-buffer-rename-buffer-when-enabled
         (ert-test-failed
-         ((should (string= (buffer-name mock-buffer) emacs-claude-buffer-name))
+         ((should (string= (buffer-name mock-buffer) ecc-buffer-name))
           :form (string= "*CLAUDE-CODE*<2>" "*CLAUDE-CODE*") :value nil
           :explanation
           (arrays-of-different-length 16 13 "*CLAUDE-CODE*<2>" "*CLAUDE-CODE*"
@@ -387,9 +387,9 @@
     
     
     
-- [[file:test-emacs-claude-code-start-stop.el::test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed][test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed]]
+- [[file:test-ecc-auto-enable-stop.el::test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed][test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed]]
   + Error details:
-    Selector: test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed
+    Selector: test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed
     Passed:  0
     Failed:  1 (1 unexpected)
     Skipped: 0
@@ -401,9 +401,9 @@
     
     F
     
-    F test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed
+    F test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed
         (ert-test-failed
-         ((should (eq emacs-claude-buffer 'mock-vterm-buffer)) :form
+         ((should (eq ecc-buffer 'mock-vterm-buffer)) :form
           (eq nil mock-vterm-buffer) :value nil))
     
     
