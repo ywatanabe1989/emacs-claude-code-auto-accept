@@ -1,9 +1,10 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-06 01:35:51>
-;;; File: /home/ywatanabe/.emacs.d/lisp/ecc/tests/test-ecc-update-mode-line.el
+;;; Timestamp: <2025-05-07 12:27:11>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-update-mode-line.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
+
 
 (require 'ert)
 (require 'ecc-update-mode-line)
@@ -43,14 +44,15 @@
       (setq global-mode-string orig-global-mode-string))))
 
 (ert-deftest test-ecc-update-mode-line-adds-overlay ()
-  (let ((orig-buffer ecc-buffer)
+  (let ((orig-buffer ecc-active-buffer)
         (mock-buffer (generate-new-buffer "*MOCK-CLAUDE*"))
         (overlay-created nil))
     (unwind-protect
         (progn
-          (setq ecc-buffer mock-buffer)
+          (setq ecc-active-buffer mock-buffer)
           (cl-letf (((symbol-function 'make-overlay)
-                     (lambda (&rest _) (setq overlay-created t)
+                     (lambda (&rest _) 
+                       (setq overlay-created t)
                        'mock-overlay))
                     ((symbol-function 'overlay-put)
                      (lambda (&rest _) nil))
@@ -60,41 +62,52 @@
             (should overlay-created)))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq ecc-buffer orig-buffer))))
+      (setq ecc-active-buffer orig-buffer))))
 
-(ert-deftest test-ecc-update-mode-line-removes-overlay
-    ()
-  (let ((orig-buffer ecc-buffer)
+(ert-deftest test-ecc-update-mode-line-removes-overlay ()
+  (let ((orig-buffer ecc-active-buffer)
         (mock-buffer (generate-new-buffer "*MOCK-CLAUDE*"))
-        (overlay-deleted nil))
+        (overlay-deleted nil)
+        (mock-overlay (make-overlay (point-min) (point-min))))
     (unwind-protect
         (progn
-          (setq ecc-buffer mock-buffer)
+          (setq ecc-active-buffer mock-buffer)
           (with-current-buffer mock-buffer
-            (setq-local ecc-buffer-name-overlay
-                        'mock-overlay))
+            (setq-local ecc-buffer-name-overlay mock-overlay))
           (cl-letf (((symbol-function 'delete-overlay)
                      (lambda (overlay)
-                       (when (eq overlay 'mock-overlay)
+                       (when (overlay-buffer overlay)
                          (setq overlay-deleted t)))))
             (ecc-update-mode-line nil)
             (should overlay-deleted)))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq ecc-buffer orig-buffer))))
+      (setq ecc-active-buffer orig-buffer))))
 
 (ert-deftest test-ecc-update-mode-line-force-updates ()
-  (let ((mode-line-updated nil))
-    (cl-letf (((symbol-function 'force-mode-line-update)
-               (lambda (&rest _) (setq mode-line-updated t))))
-      (ecc-update-mode-line t)
-      (should mode-line-updated))))
+  (let ((mode-line-updated nil)
+        (orig-active-buffer ecc-active-buffer))
+    (unwind-protect
+        (progn
+          ;; Mock active buffer to avoid overlay errors
+          (setq ecc-active-buffer nil)
+          (cl-letf (((symbol-function 'force-mode-line-update)
+                     (lambda (&rest _) (setq mode-line-updated t)))
+                    ((symbol-function 'make-overlay)
+                     (lambda (&rest _) nil))
+                    ((symbol-function 'overlay-put)
+                     (lambda (&rest _) nil))
+                    ((symbol-function 'delete-overlay)
+                     (lambda (&rest _) nil)))
+            (ecc-update-mode-line t)
+            (should mode-line-updated)))
+      (setq ecc-active-buffer orig-active-buffer))))
 
 
-(provide 'test-ecc-update-mode-line)
+(provide 'test-emacs-claude-code-update-mode-line)
 
 (when
     (not load-file-name)
-  (message "test-ecc-update-mode-line.el loaded."
+  (message "test-emacs-claude-code-update-mode-line.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

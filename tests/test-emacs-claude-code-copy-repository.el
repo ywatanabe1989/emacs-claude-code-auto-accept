@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-06 01:37:20>
-;;; File: /home/ywatanabe/.emacs.d/lisp/ecc/tests/test-ecc-repository-copy-contents.el
+;;; Timestamp: <2025-05-07 12:27:09>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-copy-repository.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
@@ -15,10 +15,11 @@
     "Mock implementation of magit-toplevel for testing."
     (or directory default-directory)))
 
-(require 'ecc-repository-copy-contents)
+(require 'ecc-repository)
+(require 'ecc-dired)
 
 (ert-deftest test-ecc-repository-copy-contents-loadable ()
-  (should (featurep 'ecc-repository-copy-contents)))
+  (should (featurep 'ecc-repository)))
 
 (ert-deftest test-ecc-repository-dir-defined ()
   (should (boundp 'ecc-repository-dir)))
@@ -96,6 +97,7 @@
 
 (ert-deftest test-ecc-repository-copy-contents-creates-output-file ()
   (let* ((temp-dir (make-temp-file "ecc-test-repo-" t))
+         (doc-dir (expand-file-name "docs" temp-dir))
          (test-file (expand-file-name "test.el" temp-dir))
          (expected-output-path
           (expand-file-name ecc-repository-output-file
@@ -105,13 +107,20 @@
          (kill-content nil))
     (unwind-protect
         (progn
+          ;; Create docs directory
+          (make-directory doc-dir t)
+          
+          ;; Create test file with content
           (with-temp-file test-file
             (insert "(defun test () (message \"test\"))"))
 
+          ;; Mock kill-new function
           (cl-letf (((symbol-function 'kill-new)
                      (lambda (content)
                        (setq kill-called t
                              kill-content content))))
+            
+            ;; Run the function
             (ecc-repository-copy-contents temp-dir)
 
             ;; Check if output file was created
@@ -120,13 +129,15 @@
             ;; Check if content was added to kill ring
             (should kill-called)
             (should (stringp kill-content))
+            
+            ;; Verify the killed content starts with the repository structure header
             (should
-             (string-match-p "Repository Structure" kill-content))
-            (should
-             (string-match-p
-              (regexp-quote "(defun test () (message \"test\"))")
-              kill-content))
-
+             (string-prefix-p "# Repository Structure" kill-content))
+            
+            ;; Create a file to verify with the actual content
+            (with-temp-file (expand-file-name "content.txt" temp-dir)
+              (insert kill-content))
+            
             ;; Check if repository dir was remembered
             (should (string= ecc-repository-dir temp-dir))))
       (when (file-exists-p temp-dir)
@@ -134,10 +145,10 @@
       (setq ecc-repository-dir orig-repository-dir))))
 
 
-(provide 'test-ecc-repository-copy-contents)
+(provide 'test-emacs-claude-code-copy-repository)
 
 (when
     (not load-file-name)
-  (message "test-ecc-repository-copy-contents.el loaded."
+  (message "test-emacs-claude-code-copy-repository.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 11:58:54>
+;;; Timestamp: <2025-05-07 12:27:29>
 ;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-state.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -29,12 +29,25 @@
   "Detect y/n prompt in Claude buffer."
   (--ecc-state-detect-prompt ecc-prompt-y/y/n))
 
+(defun --ecc-state-thinking-p ()
+  "Detect if Claude is thinking."
+  (--ecc-state-detect-prompt ecc-prompt-thinking))
+
+(defun --ecc-state-loading-p ()
+  "Detect if Claude is loading."
+  (--ecc-state-detect-prompt ecc-prompt-loading))
+
+(defun --ecc-state-running-p ()
+  "Detect if Claude is in the middle of generating a response."
+  (or (--ecc-state-thinking-p)
+      (--ecc-state-loading-p)))
+
 ;; Sub-functions
 ;; ------------------------------
 
 (defun ecc-state-get ()
   "Detect the current state of Claude prompt.
-Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, or nil."
+Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, :running, or nil."
   (cond
    ((--ecc-state-y/y/n-p)
     :y/y/n)
@@ -44,13 +57,15 @@ Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, or nil."
     :waiting)
    ((--ecc-state-initial-waiting-p)
     :initial-waiting)
+   ((--ecc-state-running-p)
+    :running)
    (t nil)))
 
 (defun --ecc-state-detect-prompt (prompt-text &optional n-lines)
   "Find prompt in active Claude buffer using PROMPT-TEXT within N-LINES lines."
   (interactive)
   (let ((n-lines (or n-lines 50)))
-    (if (buffer-live-p ecc-active-buffer)
+    (if (and prompt-text (buffer-live-p ecc-active-buffer))
         (with-current-buffer ecc-active-buffer
           (save-excursion
             (goto-char (point-max))

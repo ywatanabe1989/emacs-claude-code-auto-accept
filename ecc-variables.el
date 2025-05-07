@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 11:03:09>
+;;; Timestamp: <2025-05-07 12:27:34>
 ;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-variables.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -82,6 +82,24 @@
 (defcustom ecc-prompt-thinking
   "Thinking..."
   "Pattern that matches thinking indicator in Claude interface."
+  :type 'string
+  :group 'emacs-claude)
+
+(defvar ecc-running nil
+  "Non-nil when Claude is running and processing a request.")
+
+(defcustom ecc-running-mode-line " [Claude:Running]"
+  "String to display in mode line when Claude is running."
+  :type 'string
+  :group 'emacs-claude)
+
+(defcustom ecc-waiting-mode-line " [Claude:Waiting]"
+  "String to display in mode line when Claude is waiting for input."
+  :type 'string
+  :group 'emacs-claude)
+
+(defcustom ecc-idle-mode-line " [Claude:Idle]"
+  "String to display in mode line when Claude is idle."
   :type 'string
   :group 'emacs-claude)
 

@@ -1,9 +1,10 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-06 01:35:18>
-;;; File: /home/ywatanabe/.emacs.d/lisp/ecc/tests/test-ecc-run.el
+;;; Timestamp: <2025-05-07 12:27:11>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-run.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
+
 
 (require 'ert)
 (require 'ecc-run)
@@ -111,10 +112,10 @@
       (setq ecc-buffer orig-buffer))))
 
 
-(provide 'test-ecc-run)
+(provide 'test-emacs-claude-code-run)
 
 (when
     (not load-file-name)
-  (message "test-ecc-run.el loaded."
+  (message "test-emacs-claude-code-run.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

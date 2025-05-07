@@ -1,17 +1,17 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-06 01:35:56>
-;;; File: /home/ywatanabe/.emacs.d/lisp/ecc/tests/test-ecc-send.el
+;;; Timestamp: <2025-05-07 12:27:12>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-send.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 
 (require 'ert)
 (require 'ecc-send)
-(require 'ecc-detect-prompt)
+(require 'ecc-state)
 
 (ert-deftest test-ecc-send-loadable ()
-  (should (featurep 'ecc-send-accept)))
+  (should (featurep 'ecc-send)))
 
 (ert-deftest test-ecc-send-defined ()
   (should (fboundp 'ecc-send-accept)))
@@ -47,7 +47,7 @@
 
             (--ecc-auto-send-1-y/n)
             (should prompt-detected)
-            (should (string= string-sent "1\n"))))
+            (should (string= string-sent "1"))))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
       (setq ecc-buffer orig-buffer))))
@@ -75,7 +75,7 @@
 
             (--ecc-auto-send-2-y/y/n)
             (should prompt-detected)
-            (should (string= string-sent "2\n"))))
+            (should (string= string-sent "2"))))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
       (setq ecc-buffer orig-buffer))))
@@ -106,7 +106,7 @@
 
             (--ecc-auto-send-continue)
             (should prompt-detected)
-            (should (string= string-sent "continue\n"))))
+            (should (string= string-sent "continue"))))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
       (setq ecc-buffer orig-buffer))))
@@ -147,10 +147,10 @@
       (setq ecc-buffer orig-buffer))))
 
 
-(provide 'test-ecc-send)
+(provide 'test-emacs-claude-code-send)
 
 (when
     (not load-file-name)
-  (message "test-ecc-send.el loaded."
+  (message "test-emacs-claude-code-send.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

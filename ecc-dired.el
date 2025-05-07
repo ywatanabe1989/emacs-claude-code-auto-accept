@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 11:54:22>
+;;; Timestamp: <2025-05-07 12:27:25>
 ;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-dired.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -8,7 +8,6 @@
 
 (defun ecc-get-repository-files (dir)
   "Get list of files in DIR, filtered by blacklist and size."
-  ;; rename this appropriately
   (let ((files '()))
     (ecc--dired-collect-files dir files)
     (nreverse files)))

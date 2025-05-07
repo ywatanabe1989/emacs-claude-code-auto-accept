@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 11:23:17>
+;;; Timestamp: <2025-05-07 12:27:25>
 ;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-buffer-registry.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -37,32 +37,28 @@ Otherwise, reset to a default vterm name."
             (default-name
              (concat "vterm<" (number-to-string (emacs-pid)) ">")))
         (if enable
-            (unless (string-match-p "\\*Claude.*\\*" current-name)
+            (unless (string-match-p (regexp-quote ecc-buffer-name) current-name)
               (rename-buffer ecc-buffer-name t))
-          (when (string-match-p "\\*Claude.*\\*" current-name)
+          (when (string-match-p (regexp-quote ecc-buffer-name) current-name)
             (rename-buffer default-name t)))))))
-(defun ecc-buffer-register-active-buffer (buffer-or-name)
-  "Switch active Claude buffer."
-  (interactive
-   (list (completing-read "Switch to Claude buffer: "
-                          (mapcar 'buffer-name ecc-buffers))))
-  (let ((buffer (get-buffer buffer-or-name)))
-    (when (and (buffer-live-p buffer)
-               (member buffer ecc-buffers))
-      (setq ecc-active-buffer buffer)
-      (ecc-update-mode-line-all-buffers)
-      (message "Switched active Claude buffer to %s"
-               (buffer-name buffer)))))
 
-(defun --ecc-buffer-register-buffer (buffer)
-  "Register BUFFER as a Claude buffer with timestamp."
-  (unless (member buffer ecc-buffers)
-    (push buffer ecc-buffers)
-    (puthash buffer (current-time) ecc-buffer-timestamps))
-  (setq ecc-active-buffer buffer)
-  (ecc-update-mode-line-all-buffers))
+;; (defun --ecc-buffer-register-buffer (buffer)
+;;   "Register BUFFER as a Claude buffer with timestamp."
+;;   (unless (member buffer ecc-buffers)
+;;     (push buffer ecc-buffers)
+;;     (puthash buffer (current-time) ecc-buffer-timestamps))
+;;   (setq ecc-active-buffer buffer)
+;;   (ecc-update-mode-line-all-buffers))
+(defun --ecc-buffer-register-buffer (buf)
+  "Register BUF as a Claude buffer."
+  (unless (member buf ecc-buffers)
+    (push buf ecc-buffers))
+  (setq ecc-active-buffer buf)
+  (ecc-update-mode-line-all-buffers)
+  buf)
 
-(defun --ecc-buffer-create-list ()
+
+(defun ecc-buffer-list-buffers ()
   "List all registered Claude buffers."
   (interactive)
   (let ((buffer-names

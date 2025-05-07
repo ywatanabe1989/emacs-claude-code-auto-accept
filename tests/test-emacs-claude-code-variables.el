@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-06 01:30:37>
-;;; File: /home/ywatanabe/.emacs.d/lisp/ecc/tests/-test-ecc-variables.el
+;;; Timestamp: <2025-05-07 12:27:12>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-variables.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
@@ -43,10 +43,10 @@
                      ecc-interval-sec))))
 
 
-(provide '-test-ecc-variables)
+(provide 'test-emacs-claude-code-variables)
 
 (when
     (not load-file-name)
-  (message "-test-ecc-variables.el loaded."
+  (message "test-emacs-claude-code-variables.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

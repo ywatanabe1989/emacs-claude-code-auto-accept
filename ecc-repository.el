@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 11:54:41>
+;;; Timestamp: <2025-05-07 12:27:26>
 ;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-repository.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -31,6 +31,18 @@
   "Maximum file size in bytes to include when copying repository."
   :type 'integer
   :group 'emacs-claude)
+
+(defun ecc-get-repository-files (dir)
+  "Get list of files in DIR to include in repository copy.
+Filter out blacklisted files and large files."
+  (let ((result nil))
+    (dolist (file (directory-files-recursively dir "\\."))
+      (when (and (file-regular-p file)
+                 (not (ecc-repository-blacklisted-p file))
+                 (<= (file-attribute-size (file-attributes file))
+                     ecc-repository-max-file-size))
+        (push file result)))
+    result))
 
 (defun ecc-repository-copy-contents (dir)
   "Write repository structure from DIR to output file and clipboard."
