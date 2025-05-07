@@ -1,7 +1,11 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
 <<<<<<< HEAD
+<<<<<<< HEAD
 ;;; Timestamp: <2025-05-07 13:12:36>
+=======
+;;; Timestamp: <2025-05-07 13:47:30>
+>>>>>>> develop
 =======
 ;;; Timestamp: <2025-05-07 13:47:30>
 >>>>>>> develop
@@ -10,7 +14,10 @@
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
 =======
 >>>>>>> develop
 (require 'ecc-buffer-navigation)
@@ -94,12 +101,15 @@
   (message "ECC keymap reloaded"))
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 (defun ecc-setup-keymap ()
   "Set up the keymap for ECC commands."
   (let ((prefix-key (kbd ecc-keymap-prefix)))
     (global-set-key prefix-key ecc-keymap)
     (message "ECC keymap set up with prefix %s" ecc-keymap-prefix)))
 =======
+=======
+>>>>>>> develop
  (defun ecc-setup-keymap ()
    "Set up the keymap for ECC commands."
    (let ((prefix-key (kbd ecc-keymap-prefix)))
@@ -108,11 +118,15 @@
      ;; Apply same keymap to dired mode
      (with-eval-after-load 'dired
        (define-key dired-mode-map prefix-key ecc-keymap))
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
 
 ;; Set up the keymap when this file is loaded
 (ecc-reload-keymap)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ;; ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;; ;;; Author: ywatanabe
@@ -182,6 +196,8 @@
 
 =======
 >>>>>>> develop
+=======
+>>>>>>> develop
 
 (provide 'ecc-bindings)
 
@@ -190,7 +206,11 @@
   (message "ecc-bindings.el loaded."
            (file-name-nondirectory
 <<<<<<< HEAD
+<<<<<<< HEAD
             (or load-file-name buffer-file-name))))
+=======
+            (or load-file-name buffer-file-name))))
+>>>>>>> develop
 =======
             (or load-file-name buffer-file-name))))
 >>>>>>> develop

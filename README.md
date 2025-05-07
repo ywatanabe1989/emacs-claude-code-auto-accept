@@ -1,6 +1,10 @@
 <!-- ---
 <<<<<<< HEAD
+<<<<<<< HEAD
 !-- Timestamp: 2025-05-07 13:24:27
+=======
+!-- Timestamp: 2025-05-07 13:50:55
+>>>>>>> develop
 =======
 !-- Timestamp: 2025-05-07 13:50:55
 >>>>>>> develop
@@ -14,6 +18,7 @@
 
 # Emacs Claude Code
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ## Features
 - **Multi-buffer support**:
@@ -44,6 +49,10 @@
 =======
 A streamlined Emacs interface for Claude AI coding assistance.
 
+=======
+A streamlined Emacs interface for Claude AI coding assistance.
+
+>>>>>>> develop
 ## Overview
 
 Emacs Claude Code (ECC) enhances your workflow by seamlessly integrating Claude's AI capabilities directly into Emacs. The package provides:
@@ -53,6 +62,9 @@ Emacs Claude Code (ECC) enhances your workflow by seamlessly integrating Claude'
 - Template system for common queries
 - Region/buffer processing
 - Repository analysis capabilities
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
 
 ## Installation
@@ -78,6 +90,7 @@ Emacs Claude Code (ECC) enhances your workflow by seamlessly integrating Claude'
 
 ## Usage
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ### Multi-buffer Support
 - `M-x ecc-buffer-create`: Create a new Claude buffer and register it
@@ -157,6 +170,22 @@ All commands are available under the `C-c c` prefix:
 - `C-c c i` - Initialize/restart Claude session
 - `C-c c ESC` - Interrupt Claude processing
 
+=======
+All commands are available under the `C-c c` prefix:
+
+### Buffer Management
+- `C-c c c` - Create new Claude session
+- `C-c c n` - Navigate to next Claude buffer
+- `C-c c p` - Navigate to previous Claude buffer
+- `C-c c l` - List all Claude buffers
+
+### Interaction
+- `C-c c a` - Toggle auto-accept mode
+- `C-c c y` - Manually accept Claude prompt
+- `C-c c i` - Initialize/restart Claude session
+- `C-c c ESC` - Interrupt Claude processing
+
+>>>>>>> develop
 ### Content Processing
 - `C-c c r` - Run Claude on region
 - `C-c c b` - Run Claude on buffer
@@ -185,6 +214,9 @@ M-x customize-group RET emacs-claude-code RET
 ## License
 
 MIT License
+<<<<<<< HEAD
+>>>>>>> develop
+=======
 >>>>>>> develop
 
 ## Contact

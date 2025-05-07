@@ -1,6 +1,7 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Timestamp: "2025-05-07 12:27:40 (ywatanabe)"
 # File: ./run-tests.sh
 
@@ -17,6 +18,15 @@ THIS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_PATH="$0.log"
 touch "$LOG_PATH"
 
+=======
+# Timestamp: "2025-03-08 14:43:04 (ywatanabe)"
+# File: /home/ywatanabe/.emacs.d/lisp/elisp-test/run-tests.sh
+
+THIS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOG_PATH="$0.log"
+touch "$LOG_PATH"
+
+>>>>>>> develop
 PATHS=(
     "$THIS_DIR"
     "$THIS_DIR/tests/"
@@ -107,6 +117,7 @@ check_global_success () {
     fi
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Print header
 echo "====================================="
 echo "Running tests for ecc"
@@ -133,6 +144,14 @@ emacs --batch \
 # Cleanup
 rm -f "$MOCK_FILE"
 
+=======
+}
+
+main "$@" 2>&1 | tee "$LOG_PATH"
+
+check_global_success
+
+>>>>>>> develop
 =======
 }
 
