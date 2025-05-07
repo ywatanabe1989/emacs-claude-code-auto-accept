@@ -1,87 +1,87 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
 ;;; Timestamp: <2025-05-06 01:39:18>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-start-stop.el
+;;; File: /home/ywatanabe/.emacs.d/lisp/ecc/tests/test-ecc-auto-enable-stop.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 (require 'ert)
-(require 'emacs-claude-code-start-stop)
+(require 'ecc-auto-enable-stop)
 
-(ert-deftest test-emacs-claude-code-start-stop-loadable ()
-  (should (featurep 'emacs-claude-code-start-stop)))
+(ert-deftest test-ecc-auto-enable-stop-loadable ()
+  (should (featurep 'ecc-auto-enable-stop)))
 
-(ert-deftest test-emacs-claude-code-toggle-defined ()
-  (should (fboundp 'emacs-claude-code-toggle)))
+(ert-deftest test-ecc-auto-toggle-defined ()
+  (should (fboundp 'ecc-auto-toggle)))
 
-(ert-deftest test-emacs-claude-code-toggle-starts-when-inactive ()
+(ert-deftest test-ecc-auto-toggle-starts-when-inactive ()
   (let ((started nil)
         (stopped nil))
     (cl-letf
-        (((symbol-function 'emacs-claude-code-timer) (lambda () nil))
-         ((symbol-function 'emacs-claude-code-start)
+        (((symbol-function 'ecc-timer) (lambda () nil))
+         ((symbol-function 'ecc-auto-enable)
           (lambda () (setq started t)))
-         ((symbol-function 'emacs-claude-code-stop)
+         ((symbol-function 'ecc-auto-disable)
           (lambda () (setq stopped t)))
          ((symbol-function 'member) (lambda (&rest _) nil)))
-      (emacs-claude-code-toggle)
+      (ecc-auto-toggle)
       (should started)
       (should-not stopped))))
 
-(ert-deftest test-emacs-claude-code-toggle-stops-when-active ()
+(ert-deftest test-ecc-auto-toggle-stops-when-active ()
   (let ((started nil)
         (stopped nil))
     (cl-letf
-        (((symbol-function 'emacs-claude-code-timer) (lambda () t))
-         ((symbol-function 'emacs-claude-code-start)
+        (((symbol-function 'ecc-timer) (lambda () t))
+         ((symbol-function 'ecc-auto-enable)
           (lambda () (setq started t)))
-         ((symbol-function 'emacs-claude-code-stop)
+         ((symbol-function 'ecc-auto-disable)
           (lambda () (setq stopped t)))
          ((symbol-function 'member) (lambda (&rest _) t)))
-      (emacs-claude-code-toggle)
+      (ecc-auto-toggle)
       (should-not started)
       (should stopped))))
 
-(ert-deftest test-emacs-claude-code-rename-buffer-when-enabled ()
-  (let ((orig-buffer emacs-claude-buffer)
+(ert-deftest test-ecc-buffer-rename-buffer-when-enabled ()
+  (let ((orig-buffer ecc-buffer)
         (mock-buffer (generate-new-buffer "vterm<123>")))
     (unwind-protect
         (progn
-          (setq emacs-claude-buffer mock-buffer)
-          (emacs-claude-code-rename-buffer t)
+          (setq ecc-buffer mock-buffer)
+          (ecc-buffer-rename-buffer t)
           (should
-           (string= (buffer-name mock-buffer) emacs-claude-buffer-name)))
+           (string= (buffer-name mock-buffer) ecc-buffer-name)))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq emacs-claude-buffer orig-buffer))))
+      (setq ecc-buffer orig-buffer))))
 
-(ert-deftest test-emacs-claude-code-rename-buffer-when-disabled ()
-  (let ((orig-buffer emacs-claude-buffer)
+(ert-deftest test-ecc-buffer-rename-buffer-when-disabled ()
+  (let ((orig-buffer ecc-buffer)
         (mock-buffer (generate-new-buffer "*CLAUDE-CODE*")))
     (unwind-protect
         (progn
-          (setq emacs-claude-buffer mock-buffer)
+          (setq ecc-buffer mock-buffer)
           (cl-letf (((symbol-function 'emacs-pid) (lambda () 123)))
-            (emacs-claude-code-rename-buffer nil)
+            (ecc-buffer-rename-buffer nil)
             (should (string= (buffer-name mock-buffer) "vterm<123>"))))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq emacs-claude-buffer orig-buffer))))
+      (setq ecc-buffer orig-buffer))))
 
 (ert-deftest
-    test-emacs-claude-code-start-uses-current-buffer-when-no-buffer-exists
+    test-ecc-auto-enable-uses-current-buffer-when-no-buffer-exists
     ()
-  (let ((orig-buffer emacs-claude-buffer)
+  (let ((orig-buffer ecc-buffer)
         (buffer-set nil))
     (unwind-protect
         (progn
-          (setq emacs-claude-buffer nil)
+          (setq ecc-buffer nil)
           (cl-letf
               (((symbol-function 'derived-mode-p) (lambda (&rest _) t))
-               ((symbol-function 'emacs-claude-code-rename-buffer)
+               ((symbol-function 'ecc-buffer-rename-buffer)
                 #'ignore)
                ((symbol-function
-                 'emacs-claude-code-update-mode-line)
+                 'ecc-update-mode-line)
                 #'ignore)
                ((symbol-function 'add-hook) #'ignore)
                ((symbol-function 'remove-hook) #'ignore)
@@ -92,20 +92,20 @@
                 (lambda () 'current-buffer))
                ((symbol-function 'buffer-name)
                 (lambda (&rest _) "buffer-name")))
-            (emacs-claude-code-start)
-            (should (eq emacs-claude-buffer 'current-buffer))))
-      (setq emacs-claude-buffer orig-buffer))))
+            (ecc-auto-enable)
+            (should (eq ecc-buffer 'current-buffer))))
+      (setq ecc-buffer orig-buffer))))
 
-(ert-deftest test-emacs-claude-code-start-adds-hook-and-starts-timer
+(ert-deftest test-ecc-auto-enable-adds-hook-and-starts-timer
     ()
-  (let ((orig-buffer emacs-claude-buffer)
-        (orig-timer emacs-claude-code-timer)
+  (let ((orig-buffer ecc-buffer)
+        (orig-timer ecc-timer)
         (hook-added nil)
         (timer-started nil))
     (unwind-protect
         (progn
-          (setq emacs-claude-buffer (current-buffer)
-                emacs-claude-code-timer nil)
+          (setq ecc-buffer (current-buffer)
+                ecc-timer nil)
           (cl-letf
               (((symbol-function 'derived-mode-p) (lambda (&rest _) t))
                ((symbol-function 'add-hook)
@@ -117,58 +117,58 @@
                   (setq timer-started function)
                   'mock-timer))
                ((symbol-function 'remove-hook) #'ignore)
-               ((symbol-function 'emacs-claude-code-rename-buffer)
+               ((symbol-function 'ecc-buffer-rename-buffer)
                 #'ignore)
                ((symbol-function
-                 'emacs-claude-code-update-mode-line)
+                 'ecc-update-mode-line)
                 #'ignore)
                ((symbol-function 'vterm-send-key) #'ignore))
-            (emacs-claude-code-start)
-            (should (eq hook-added 'emacs-claude-code-send))
+            (ecc-auto-enable)
+            (should (eq hook-added 'ecc-send-accept-))
             (should
-             (eq timer-started 'emacs-claude-code-check-and-restart))
-            (should (eq emacs-claude-code-timer 'mock-timer))))
-      (setq emacs-claude-buffer orig-buffer
-            emacs-claude-code-timer orig-timer))))
+             (eq timer-started 'ecc-auto-check-and-restart))
+            (should (eq ecc-timer 'mock-timer))))
+      (setq ecc-buffer orig-buffer
+            ecc-timer orig-timer))))
 
 (ert-deftest
-    test-emacs-claude-code-stop-removes-hook-and-cancels-timer ()
-  (let ((orig-buffer emacs-claude-buffer)
-        (orig-timer emacs-claude-code-timer)
+    test-ecc-auto-disable-removes-hook-and-cancels-timer ()
+  (let ((orig-buffer ecc-buffer)
+        (orig-timer ecc-timer)
         (hook-removed nil)
         (timer-cancelled nil))
     (unwind-protect
         (progn
-          (setq emacs-claude-buffer (current-buffer)
-                emacs-claude-code-timer 'mock-timer)
+          (setq ecc-buffer (current-buffer)
+                ecc-timer 'mock-timer)
           (cl-letf (((symbol-function 'remove-hook)
                      (lambda (hook function)
                        (when (and (eq hook 'vterm-update-functions)
-                                  (eq function 'emacs-claude-code-send))
+                                  (eq function 'ecc-sendd-1-2-3-))
                          (setq hook-removed t))))
                     ((symbol-function 'cancel-timer)
                      (lambda (timer)
                        (when (eq timer 'mock-timer)
                          (setq timer-cancelled t))))
-                    ((symbol-function 'emacs-claude-code-rename-buffer)
+                    ((symbol-function 'ecc-buffer-rename-buffer)
                      #'ignore)
                     ((symbol-function
-                      'emacs-claude-code-update-mode-line)
+                      'ecc-update-mode-line)
                      #'ignore))
-            (emacs-claude-code-stop)
+            (ecc-auto-disable)
             (should hook-removed)
             (should timer-cancelled)
-            (should-not emacs-claude-code-timer)))
-      (setq emacs-claude-buffer orig-buffer
-            emacs-claude-code-timer orig-timer))))
+            (should-not ecc-timer)))
+      (setq ecc-buffer orig-buffer
+            ecc-timer orig-timer))))
 
 (ert-deftest
-    test-emacs-claude-code-check-and-restart-adds-hook-when-missing ()
-  (let ((orig-buffer emacs-claude-buffer)
+    test-ecc-auto-check-and-restart-adds-hook-when-missing ()
+  (let ((orig-buffer ecc-buffer)
         (hook-added nil))
     (unwind-protect
         (progn
-          (setq emacs-claude-buffer (current-buffer))
+          (setq ecc-buffer (current-buffer))
           (cl-letf
               (((symbol-function 'derived-mode-p) (lambda (&rest _) t))
                ((symbol-function 'member) (lambda (&rest _) nil))
@@ -176,20 +176,20 @@
                 (lambda (hook function)
                   (when (eq hook 'vterm-update-functions)
                     (setq hook-added function))))
-               ((symbol-function 'emacs-claude-code-send)
+               ((symbol-function 'ecc-sendd-1-2-3-)
                 #'ignore))
-            (emacs-claude-code-check-and-restart)
-            (should (eq hook-added 'emacs-claude-code-send))))
-      (setq emacs-claude-buffer orig-buffer))))
+            (ecc-auto-check-and-restart)
+            (should (eq hook-added 'ecc-sendd-1-2-3-))))
+      (setq ecc-buffer orig-buffer))))
 
 (ert-deftest
-    test-emacs-claude-code-check-and-restart-finds-vterm-buffer-when-needed
+    test-ecc-auto-check-and-restart-finds-vterm-buffer-when-needed
     ()
-  (let ((orig-buffer emacs-claude-buffer)
+  (let ((orig-buffer ecc-buffer)
         (found-buffer nil))
     (unwind-protect
         (progn
-          (setq emacs-claude-buffer nil)
+          (setq ecc-buffer nil)
           (cl-letf (((symbol-function 'buffer-list)
                      (lambda ()
                        (list 'buffer1 'buffer2 'mock-vterm-buffer)))
@@ -206,19 +206,19 @@
                                        (funcall body-function))))
                          (setq current-buffer nil)
                          result)))
-                    ((symbol-function 'emacs-claude-code-send)
+                    ((symbol-function 'ecc-sendd-1-2-3-)
                      #'ignore)
                     ((symbol-function 'buffer-name)
                      (lambda (buf) "buffer-name")))
-            (emacs-claude-code-check-and-restart)
-            (should (eq emacs-claude-buffer 'mock-vterm-buffer))))
-      (setq emacs-claude-buffer orig-buffer))))
+            (ecc-auto-check-and-restart)
+            (should (eq ecc-buffer 'mock-vterm-buffer))))
+      (setq ecc-buffer orig-buffer))))
 
 
-(provide 'test-emacs-claude-code-start-stop)
+(provide 'test-ecc-auto-enable-stop)
 
 (when
     (not load-file-name)
-  (message "test-emacs-claude-code-start-stop.el loaded."
+  (message "test-ecc-auto-enable-stop.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

@@ -1,34 +1,34 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
 ;;; Timestamp: <2025-05-06 01:35:10>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-detect-prompt.el
+;;; File: /home/ywatanabe/.emacs.d/lisp/ecc/tests/test-ecc-detect-prompt.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 (require 'ert)
-(require 'emacs-claude-code-detect-prompt)
+(require 'ecc-detect-prompt)
 
-(ert-deftest test-emacs-claude-code-detect-prompt-loadable ()
-  (should (featurep 'emacs-claude-code-detect-prompt)))
+(ert-deftest test-ecc-detect-prompt-loadable ()
+  (should (featurep 'ecc-detect-prompt)))
 
-(ert-deftest test-emacs-claude-detect-prompt-waiting-defined ()
-  (should (fboundp '--emacs-claude-detect-prompt-waiting)))
+(ert-deftest test-ecc-detect-prompt-waiting-defined ()
+  (should (fboundp '--ecc-state-waiting-p)))
 
-(ert-deftest test-emacs-claude-detect-prompt-initial-waiting-defined
+(ert-deftest test-ecc-detect-prompt-initial-waiting-defined
     ()
-  (should (fboundp '--emacs-claude-detect-prompt-initial-waiting)))
+  (should (fboundp '--ecc-state-initial-waiting-p)))
 
-(ert-deftest test-emacs-claude-detect-prompt-y/n-defined ()
-  (should (fboundp '--emacs-claude-detect-prompt-y/n)))
+(ert-deftest test-ecc-detect-prompt-y/n-defined ()
+  (should (fboundp '--ecc-state-y/n-p)))
 
-(ert-deftest test-emacs-claude-detect-prompt-y/y/n-defined ()
-  (should (fboundp '--emacs-claude-detect-prompt-y/y/n)))
+(ert-deftest test-ecc-detect-prompt-y/y/n-defined ()
+  (should (fboundp '--ecc-state-y/y/n-p)))
 
-(ert-deftest test-emacs-claude-detect-prompt-defined ()
-  (should (fboundp '--emacs-claude-detect-prompt)))
+(ert-deftest test-ecc-detect-prompt-defined ()
+  (should (fboundp '--ecc-state-detect-prompt)))
 
-(ert-deftest test-emacs-claude-detect-prompt-with-mock-buffer ()
-  (let ((orig-buffer emacs-claude-buffer)
+(ert-deftest test-ecc-detect-prompt-with-mock-buffer ()
+  (let ((orig-buffer ecc-buffer)
         (mock-buffer (generate-new-buffer "*MOCK-CLAUDE*"))
         (test-prompt "❯ 1. Yes"))
     (unwind-protect
@@ -36,53 +36,53 @@
           (with-current-buffer mock-buffer
             (insert "Some content before the prompt\n" test-prompt
                     "\nSome content after"))
-          (setq emacs-claude-buffer mock-buffer)
-          (should (--emacs-claude-detect-prompt test-prompt)))
+          (setq ecc-buffer mock-buffer)
+          (should (--ecc-state-detect-prompt test-prompt)))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq emacs-claude-buffer orig-buffer))))
+      (setq ecc-buffer orig-buffer))))
 
-(ert-deftest test-emacs-claude-detect-prompt-handles-nil-buffer ()
-  (let ((orig-buffer emacs-claude-buffer))
+(ert-deftest test-ecc-detect-prompt-handles-nil-buffer ()
+  (let ((orig-buffer ecc-buffer))
     (unwind-protect
         (progn
-          (setq emacs-claude-buffer nil)
-          (should-not (--emacs-claude-detect-prompt "any prompt")))
-      (setq emacs-claude-buffer orig-buffer))))
+          (setq ecc-buffer nil)
+          (should-not (--ecc-state-detect-prompt "any prompt")))
+      (setq ecc-buffer orig-buffer))))
 
 (ert-deftest
-    test-emacs-claude-detect-prompt-returns-nil-when-not-found ()
-  (let ((orig-buffer emacs-claude-buffer)
+    test-ecc-detect-prompt-returns-nil-when-not-found ()
+  (let ((orig-buffer ecc-buffer)
         (mock-buffer (generate-new-buffer "*MOCK-CLAUDE*")))
     (unwind-protect
         (progn
           (with-current-buffer mock-buffer
             (insert "Content without the target prompt"))
-          (setq emacs-claude-buffer mock-buffer)
+          (setq ecc-buffer mock-buffer)
           (should-not
-           (--emacs-claude-detect-prompt "Target prompt not present")))
+           (--ecc-state-detect-prompt "Target prompt not present")))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq emacs-claude-buffer orig-buffer))))
+      (setq ecc-buffer orig-buffer))))
 
-(ert-deftest test-emacs-claude-y/n-prompt-detection ()
-  (let ((orig-buffer emacs-claude-buffer)
+(ert-deftest test-ecc-y/n-prompt-detection ()
+  (let ((orig-buffer ecc-buffer)
         (mock-buffer (generate-new-buffer "*MOCK-CLAUDE*")))
     (unwind-protect
         (progn
           (with-current-buffer mock-buffer
             (insert "Some content\n❯ 1. Yes\nMore content"))
-          (setq emacs-claude-buffer mock-buffer)
-          (should (--emacs-claude-detect-prompt-y/n)))
+          (setq ecc-buffer mock-buffer)
+          (should (--ecc-state-y/n-p)))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq emacs-claude-buffer orig-buffer))))
+      (setq ecc-buffer orig-buffer))))
 
 
-(provide 'test-emacs-claude-code-detect-prompt)
+(provide 'test-ecc-detect-prompt)
 
 (when
     (not load-file-name)
-  (message "test-emacs-claude-code-detect-prompt.el loaded."
+  (message "test-ecc-detect-prompt.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))
