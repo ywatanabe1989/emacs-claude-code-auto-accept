@@ -25,23 +25,32 @@
   (let ((original-buffers ecc-buffer-registered-buffers)
         (original-alist ecc-buffer-registered-buffers-alist)
         (original-active ecc-buffer-current-active-buffer)
-        (test-buffer (generate-new-buffer "*test-claude*")))
-    ;; Setup test environment
-    (setq ecc-buffer-registered-buffers (list test-buffer))
-    (setq ecc-buffer-registered-buffers-alist (list (cons test-buffer nil)))
-    (setq ecc-buffer-current-active-buffer test-buffer)
-    
-    ;; Kill the buffer and run cleanup
-    (kill-buffer test-buffer)
-    (ecc-buffer-cleanup-buffer-registry)
-    
-    ;; Verify cleanup worked
-    (should (equal ecc-buffer-registered-buffers-alist nil))
-    
-    ;; Restore original state
-    (setq ecc-buffer-registered-buffers original-buffers)
-    (setq ecc-buffer-registered-buffers-alist original-alist)
-    (setq ecc-buffer-current-active-buffer original-active)))
+        (test-buffer (generate-new-buffer "*test-claude*"))
+        (kill-hook-status nil))
+    (unwind-protect
+        (progn
+          ;; Mock kill-buffer-hook to prevent recursion
+          (cl-letf (((symbol-function 'ecc-buffer-cleanup-hook) 
+                   (lambda () (setq kill-hook-status 'called))))
+            ;; Setup test environment
+            (setq ecc-buffer-registered-buffers (list test-buffer))
+            (setq ecc-buffer-registered-buffers-alist (list (cons test-buffer nil)))
+            (setq ecc-buffer-current-active-buffer test-buffer)
+            
+            ;; Kill the buffer directly without invoking hooks
+            (let ((kill-buffer-hook nil)) 
+              (kill-buffer test-buffer))
+            
+            ;; Manually run cleanup
+            (ecc-buffer-cleanup-buffer-registry)
+            
+            ;; Verify cleanup worked
+            (should (equal ecc-buffer-registered-buffers-alist nil))))
+      
+      ;; Restore original state
+      (setq ecc-buffer-registered-buffers original-buffers)
+      (setq ecc-buffer-registered-buffers-alist original-alist)
+      (setq ecc-buffer-current-active-buffer original-active))))
 
 (ert-deftest test-ecc-buffer-unregister-buffer ()
   "Test buffer unregistration functionality."
