@@ -1,24 +1,5 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Timestamp: "2025-05-07 12:27:40 (ywatanabe)"
-# File: ./run-tests.sh
-
-THIS_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
-LOG_PATH="$THIS_DIR/.$(basename $0).log"
-touch "$LOG_PATH" >/dev/null 2>&1
-
-=======
-# Timestamp: "2025-03-08 14:43:04 (ywatanabe)"
-# File: /home/ywatanabe/.emacs.d/lisp/elisp-test/run-tests.sh
->>>>>>> develop
-
-THIS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LOG_PATH="$0.log"
-touch "$LOG_PATH"
-
-=======
 # Timestamp: "2025-03-08 14:43:04 (ywatanabe)"
 # File: /home/ywatanabe/.emacs.d/lisp/elisp-test/run-tests.sh
 
@@ -26,7 +7,6 @@ THIS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOG_PATH="$0.log"
 touch "$LOG_PATH"
 
->>>>>>> develop
 PATHS=(
     "$THIS_DIR"
     "$THIS_DIR/tests/"
@@ -116,48 +96,10 @@ check_global_success () {
         grep "Ran [0-9]\\+ tests" "$LOG_PATH" | tail -1
     fi
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Print header
-echo "====================================="
-echo "Running tests for ecc"
-echo "====================================="
-
-# Run a specific test if provided, otherwise run all tests
-if [ -n "$1" ]; then
-    TEST_PATTERN="$1"
-    echo "Running test pattern: $TEST_PATTERN"
-else
-    TEST_PATTERN="test-ecc"
-    echo "Running all tests"
-fi
-
-# Run the tests
-emacs --batch \
-    -L "$SRC_DIR" \
-    -L "$TEST_DIR" \
-    -l ert \
-    -l "$MOCK_FILE" \
-    -l "$TEST_DIR/run-tests.el" \
-    --eval "(progn (setq debug-on-error t) (ecc-load-tests) (ert-run-tests-batch-and-exit \".*\"))"
-
-# Cleanup
-rm -f "$MOCK_FILE"
-
-=======
 }
 
 main "$@" 2>&1 | tee "$LOG_PATH"
 
 check_global_success
 
->>>>>>> develop
-=======
-}
-
-main "$@" 2>&1 | tee "$LOG_PATH"
-
-check_global_success
-
->>>>>>> develop
 # EOF
