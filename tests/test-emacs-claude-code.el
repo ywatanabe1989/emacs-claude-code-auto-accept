@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-06 01:37:34>
+;;; Timestamp: <2025-05-07 12:27:11>
 ;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -9,29 +9,29 @@
 (require 'ert)
 (require 'emacs-claude-code)
 
-(ert-deftest test-emacs-claude-code-loadable ()
+(ert-deftest test-ecc-loadable ()
   (should (featurep 'emacs-claude-code)))
 
-(ert-deftest test-emacs-claude-code-variables-required ()
-  (should (featurep 'emacs-claude-code-variables)))
+(ert-deftest test-ecc-variables-required ()
+  (should (featurep 'ecc-variables)))
 
-(ert-deftest test-emacs-claude-code-detect-prompt-required ()
-  (should (featurep 'emacs-claude-code-detect-prompt)))
+(ert-deftest test-ecc-detect-prompt-required ()
+  (should (featurep 'ecc-state)))
 
-(ert-deftest test-emacs-claude-code-send-required ()
-  (should (featurep 'emacs-claude-code-send)))
+(ert-deftest test-ecc-send-required ()
+  (should (featurep 'ecc-send)))
 
-(ert-deftest test-emacs-claude-code-update-mode-line-required ()
-  (should (featurep 'emacs-claude-code-update-mode-line)))
+(ert-deftest test-ecc-update-mode-line-required ()
+  (should (featurep 'ecc-update-mode-line)))
 
-(ert-deftest test-emacs-claude-code-start-stop-required ()
-  (should (featurep 'emacs-claude-code-start-stop)))
+(ert-deftest test-ecc-auto-enable-stop-required ()
+  (should (featurep 'ecc-auto)))
 
-(ert-deftest test-emacs-claude-code-run-required ()
-  (should (featurep 'emacs-claude-code-run)))
+(ert-deftest test-ecc-run-required ()
+  (should (featurep 'ecc-run)))
 
-(ert-deftest test-emacs-claude-code-copy-repository-required ()
-  (should (featurep 'emacs-claude-code-copy-repository)))
+(ert-deftest test-ecc-repository-copy-contents-required ()
+  (should (featurep 'ecc-repository)))
 
 
 (provide 'test-emacs-claude-code)

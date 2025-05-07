@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-06 03:35:08>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/emacs-claude-code-detect-prompt.el
+;;; Timestamp: <2025-05-07 12:27:29>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-state.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
@@ -11,33 +11,62 @@
 ;; Detectors
 ;; ------------------------------
 
-(defun --emacs-claude-detect-prompt-waiting ()
+(defun --ecc-state-waiting-p ()
   "Detect waiting prompt in Claude buffer."
-  (--emacs-claude-detect-prompt emacs-claude-prompt-waiting))
+  (--ecc-state-detect-prompt ecc-prompt-waiting))
 
-(defun --emacs-claude-detect-prompt-initial-waiting ()
+(defun --ecc-state-initial-waiting-p ()
   "Detect y/n prompt in Claude buffer."
-  (--emacs-claude-detect-prompt emacs-claude-prompt-initial-waiting))
+  (--ecc-state-detect-prompt ecc-prompt-initial-waiting))
 
-(defun --emacs-claude-detect-prompt-y/n ()
+(defun --ecc-state-y/n-p ()
   "Detect y/n prompt in Claude buffer."
   (and
-   (--emacs-claude-detect-prompt emacs-claude-prompt-y/n)
-   (not (--emacs-claude-detect-prompt-y/y/n))))
+   (--ecc-state-detect-prompt ecc-prompt-y/n)
+   (not (--ecc-state-y/y/n-p))))
 
-(defun --emacs-claude-detect-prompt-y/y/n ()
+(defun --ecc-state-y/y/n-p ()
   "Detect y/n prompt in Claude buffer."
-  (--emacs-claude-detect-prompt emacs-claude-prompt-y/y/n))
+  (--ecc-state-detect-prompt ecc-prompt-y/y/n))
+
+(defun --ecc-state-thinking-p ()
+  "Detect if Claude is thinking."
+  (--ecc-state-detect-prompt ecc-prompt-thinking))
+
+(defun --ecc-state-loading-p ()
+  "Detect if Claude is loading."
+  (--ecc-state-detect-prompt ecc-prompt-loading))
+
+(defun --ecc-state-running-p ()
+  "Detect if Claude is in the middle of generating a response."
+  (or (--ecc-state-thinking-p)
+      (--ecc-state-loading-p)))
 
 ;; Sub-functions
 ;; ------------------------------
 
-(defun --emacs-claude-detect-prompt (prompt-text &optional n-lines)
-  "Find prompt in Claude buffer using PROMPT-TEXT within N-LINES lines."
+(defun ecc-state-get ()
+  "Detect the current state of Claude prompt.
+Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, :running, or nil."
+  (cond
+   ((--ecc-state-y/y/n-p)
+    :y/y/n)
+   ((--ecc-state-y/n-p)
+    :y/n)
+   ((--ecc-state-waiting-p)
+    :waiting)
+   ((--ecc-state-initial-waiting-p)
+    :initial-waiting)
+   ((--ecc-state-running-p)
+    :running)
+   (t nil)))
+
+(defun --ecc-state-detect-prompt (prompt-text &optional n-lines)
+  "Find prompt in active Claude buffer using PROMPT-TEXT within N-LINES lines."
   (interactive)
   (let ((n-lines (or n-lines 50)))
-    (if (buffer-live-p emacs-claude-buffer)
-        (with-current-buffer emacs-claude-buffer
+    (if (and prompt-text (buffer-live-p ecc-active-buffer))
+        (with-current-buffer ecc-active-buffer
           (save-excursion
             (goto-char (point-max))
             (skip-chars-backward " \t\n\r")
@@ -66,10 +95,10 @@
       nil)))
 
 
-(provide 'emacs-claude-code-detect-prompt)
+(provide 'ecc-state)
 
 (when
     (not load-file-name)
-  (message "emacs-claude-code-detect-prompt.el loaded."
+  (message "ecc-state.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

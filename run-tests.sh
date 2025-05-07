@@ -1,4 +1,12 @@
 #!/bin/bash
+# -*- coding: utf-8 -*-
+# Timestamp: "2025-05-07 12:27:40 (ywatanabe)"
+# File: ./run-tests.sh
+
+THIS_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+LOG_PATH="$THIS_DIR/.$(basename $0).log"
+touch "$LOG_PATH" >/dev/null 2>&1
+
 
 # Set base directory for the project
 BASE_DIR="$(dirname "$(readlink -f "$0")")"
@@ -36,7 +44,7 @@ EOF
 
 # Print header
 echo "====================================="
-echo "Running tests for emacs-claude-code"
+echo "Running tests for ecc"
 echo "====================================="
 
 # Run a specific test if provided, otherwise run all tests
@@ -44,7 +52,7 @@ if [ -n "$1" ]; then
     TEST_PATTERN="$1"
     echo "Running test pattern: $TEST_PATTERN"
 else
-    TEST_PATTERN="test-emacs-claude-code"
+    TEST_PATTERN="test-ecc"
     echo "Running all tests"
 fi
 
@@ -55,7 +63,9 @@ emacs --batch \
     -l ert \
     -l "$MOCK_FILE" \
     -l "$TEST_DIR/run-tests.el" \
-    --eval "(progn (setq debug-on-error t) (emacs-claude-code-load-tests) (ert-run-tests-batch-and-exit \"$TEST_PATTERN\"))"
+    --eval "(progn (setq debug-on-error t) (ecc-load-tests) (ert-run-tests-batch-and-exit \".*\"))"
 
 # Cleanup
 rm -f "$MOCK_FILE"
+
+# EOF

@@ -1,56 +1,68 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-06 02:06:15>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/emacs-claude-code-copy-repository.el
+;;; Timestamp: <2025-05-07 12:27:26>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-repository.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 
-(require 'emacs-claude-code-variables)
+(require 'ecc-variables)
 (declare-function magit-toplevel "ext:magit-git")
 
-(defcustom emacs-claude-repository-dir nil
+(defcustom ecc-repository-dir nil
   "Default directory for repository operations."
   :type 'string
   :group 'emacs-claude)
 
-(defcustom emacs-claude-repository-output-file
+(defcustom ecc-repository-output-file
   "./docs/REPOSITORY_CONCATENATED.md"
   "Output file path for repository content relative to repo root."
   :type 'string
   :group 'emacs-claude)
 
-(defcustom emacs-claude-file-blacklist
+(defcustom ecc-repository-file-blacklist
   '("\\.git" "\\.png$" "\\.jpg$" "\\.jpeg$" "\\.gif$" "\\.pdf$"
     "\\.zip$" "\\.tar$" "\\.gz$" "\\.mp4$" "\\.mp3$")
   "Regex patterns for files to exclude when copying repository."
   :type '(repeat string)
   :group 'emacs-claude)
 
-(defcustom emacs-claude-max-file-size 100000
+(defcustom ecc-repository-max-file-size 100000
   "Maximum file size in bytes to include when copying repository."
   :type 'integer
   :group 'emacs-claude)
 
-(defun emacs-claude-copy-repository (dir)
+(defun ecc-get-repository-files (dir)
+  "Get list of files in DIR to include in repository copy.
+Filter out blacklisted files and large files."
+  (let ((result nil))
+    (dolist (file (directory-files-recursively dir "\\."))
+      (when (and (file-regular-p file)
+                 (not (ecc-repository-blacklisted-p file))
+                 (<= (file-attribute-size (file-attributes file))
+                     ecc-repository-max-file-size))
+        (push file result)))
+    result))
+
+(defun ecc-repository-copy-contents (dir)
   "Write repository structure from DIR to output file and clipboard."
   (interactive
-   (list (or emacs-claude-repository-dir
+   (list (or ecc-repository-dir
              (read-directory-name "Repository directory: "))))
-  (let ((file-list (emacs-claude-get-repository-files dir))
+  (let ((file-list (ecc-get-repository-files dir))
         (content "")
         (output-path
-         (expand-file-name emacs-claude-repository-output-file dir)))
-    (setq emacs-claude-repository-dir dir)
+         (expand-file-name ecc-repository-output-file dir)))
+    (setq ecc-repository-dir dir)
     (setq content (concat "# Repository Structure\n\n"))
     (dolist (file file-list)
       (let ((relative-path (file-relative-name file dir)))
         (setq content
               (concat content
                       "\n\n## " relative-path "\n\n```"
-                      (emacs-claude-get-file-type file)
+                      (ecc-get-file-type file)
                       "\n"
-                      (emacs-claude-get-file-content file)
+                      (ecc-repository-get-file-content file)
                       "\n```\n"))))
     (unless (file-exists-p (file-name-directory output-path))
       (make-directory (file-name-directory output-path) t))
@@ -62,41 +74,20 @@
      output-path (length file-list))
     output-path))
 
-(defun emacs-claude-get-repository-files (dir)
-  "Get list of files in DIR, filtered by blacklist and size."
-  (let ((files '()))
-    (emacs-claude--collect-files dir files)
-    (nreverse files)))
-
-(defun emacs-claude--collect-files (dir files-list)
-  "Recursively collect files from DIR into FILES-LIST."
-  (dolist (file (directory-files dir t))
-    (let ((file-name (file-name-nondirectory file)))
-      (unless (or (string= file-name ".")
-                  (string= file-name ".."))
-        (if (file-directory-p file)
-            (unless (emacs-claude-blacklisted-p file)
-              (emacs-claude--collect-files file files-list))
-          (when (and (not (emacs-claude-blacklisted-p file))
-                     (<= (file-attribute-size (file-attributes file))
-                         emacs-claude-max-file-size))
-            (push file files-list))))))
-  files-list)
-
-(defun emacs-claude-blacklisted-p (file)
+(defun ecc-repository-blacklisted-p (file)
   "Return t if FILE matches any pattern in blacklist."
   (let ((relative-name (file-name-nondirectory file)))
     (cl-some (lambda (pattern)
                (string-match-p pattern file))
-             emacs-claude-file-blacklist)))
+             ecc-repository-file-blacklist)))
 
-(defun emacs-claude-get-file-content (file)
+(defun ecc-repository-get-file-content (file)
   "Get content of FILE as string."
   (with-temp-buffer
     (insert-file-contents file)
     (buffer-string)))
 
-(defun emacs-claude-get-file-type (file)
+(defun ecc-get-file-type (file)
   "Get file type for syntax highlighting based on file extension."
   (let ((ext (file-name-extension file)))
     (cond
@@ -122,20 +113,11 @@
      ((member ext '("sql")) "sql")
      (t ext))))
 
-(defun emacs-claude-paste-to-claude ()
-  "Paste the current kill ring contents to Claude buffer."
-  (interactive)
-  (when (buffer-live-p emacs-claude-buffer)
-    (with-current-buffer emacs-claude-buffer
-      (let ((content (current-kill 0)))
-        (vterm-send-string content)
-        (message "Content pasted to Claude buffer.")))))
 
-
-(provide 'emacs-claude-code-copy-repository)
+(provide 'ecc-repository)
 
 (when
     (not load-file-name)
-  (message "emacs-claude-code-copy-repository.el loaded."
+  (message "ecc-repository.el loaded."
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))
