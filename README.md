@@ -1,7 +1,7 @@
 <!-- ---
-!-- Timestamp: 2025-05-06 02:15:22
+!-- Timestamp: 2025-05-07 11:53:01
 !-- Author: ywatanabe
-!-- File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/README.md
+!-- File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/README.md
 !-- --- -->
 
 # Emacs Claude Code
@@ -11,6 +11,10 @@
 This package provides integration with Claude Code in Emacs using Vterm.
 
 ## Features
+- **Multi-buffer support**:
+  - Work with multiple Claude instances simultaneously
+  - Register, switch between, and manage multiple Claude buffers
+  - Visual indicators show which buffer is active
 - **Auto-accept mode**: 
   - Automatically respond "yes" to confirmation prompts
   - Automatically send "continue" when Claude is waiting for input
@@ -27,27 +31,35 @@ This package provides integration with Claude Code in Emacs using Vterm.
 
 ## Installation
 ```elisp
-(require 'emacs-claude-code)
+(require 'ecc)
 ```
 
 ## Usage
 
+### Multi-buffer Support
+- `M-x ecc-buffer-new`: Create a new Claude buffer and register it
+- `M-x ecc-buffer-next`: Switch to the next registered Claude buffer
+- `M-x --ecc-buffer-create-list`: List all registered Claude buffers
+- `M-x ecc-buffer-register-active-buffer`: Switch to a specific Claude buffer
+- `M-x ecc-buffer-unregister-buffer`: Remove a buffer from the Claude buffer list
+
 ### Auto-accept Mode
 To start auto-accepting in a vterm buffer:
 1. Run Claude Code in a vterm buffer
-2. Rename the buffer as "*CLAUDE-CODE*" (= `emacs-claude-buffer-name`)
-3. In the "*CLAUDE-CODE*" buffer, `M-x emacs-claude-code-start`
+2. Make the buffer active with `M-x ecc-auto-enable`
+   - This will register the current buffer as a Claude buffer
+   - The buffer will be highlighted in the mode line
 
 To stop auto-accepting:
-`M-x emacs-claude-code-stop`
+`M-x ecc-auto-disable`
 
 ### Sending Content to Claude
-- `M-x emacs-claude-run-on-region`: Send selected region to Claude
-- `M-x emacs-claude-run-on-buffer`: Send current buffer to Claude
-- `M-x emacs-claude-run-quick`: Quick prompt from minibuffer
+- `M-x ecc-run-on-region`: Send selected region to Claude
+- `M-x ecc-run-on-buffer`: Send current buffer to Claude
+- `M-x ecc-run-quick`: Quick prompt from minibuffer
 
 ### Repository Utilities
-- `M-x emacs-claude-copy-repository`: Format repository content for Claude
+- `M-x ecc-repository-copy-contents`: Format repository content for Claude
 
 ## Contact
 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
