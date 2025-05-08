@@ -18,7 +18,9 @@
       "Bash(ELISP-TEST-REPORT-*)",
       "Bash(tests/test-ecc-buffer-:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git rm:*)",
+      "Bash(git stash:*)"
     ],
     "deny": []
   }
