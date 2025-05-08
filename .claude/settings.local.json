@@ -19,7 +19,9 @@
       "Bash(tests/test-ecc-buffer-:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(git rm:*)",
+      "Bash(git stash:*)"
     ],
     "deny": []
   }
