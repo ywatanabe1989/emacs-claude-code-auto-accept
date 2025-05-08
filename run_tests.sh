@@ -1,0 +1,1 @@
+tests/run-elisp-tests.sh
