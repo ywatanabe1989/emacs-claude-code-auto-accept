@@ -1,10 +1,140 @@
-End of file during parsing: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-bindings.el
-
-Error: end-of-file ("/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-bindings.el")
-  read(#<buffer  *load*>)
-  eval-buffer(#<buffer  *load*> nil "/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-bindings.el" nil t)
-  load-with-code-conversion("/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-bindings.el" "/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-bindings.el" nil t)
-  load("/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-bindings.el" nil t)
-  command-line-1(("-l" "ert" "-l" "package" "--eval" "(progn (package-initialize) (add-to-list 'load-path \"/home/ywatanabe/.emacs.d/lisp/emacs-claude-code\") (add-to-list 'load-path \"/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/\")  (require 'org)(require 'cl-lib) (require 'ert))" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-auto.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-bindings.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-buffer-navigation.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-buffer-registry.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-dired.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-repository.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-run.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-send.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-state.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-templates.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-update-mode-line.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-variables.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/emacs-claude-code.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-buffer-navigation.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-buffer-registry.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-copy-repository.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-detect-prompt.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-run.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-send.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-start-stop.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-update-mode-line.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-variables.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-detect-prompt.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-start-stop.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-update-mode-line.el" "-l" "/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-variables.el" "-f" "ert-run-tests-batch-and-exit"))
+Running single test file: tests/test-ecc-buffer-navigation.el
+Load paths: (/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-buffer/ /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/ /home/ywatanabe/.emacs.d/lisp/emacs-claude-code /home/ywatanabe/.emacs.d/elpa/aggressive-indent-20230112.1300 /home/ywatanabe/.emacs.d/elpa/all-the-icons-ibuffer-20230503.1625 /home/ywatanabe/.emacs.d/elpa/all-the-icons-20240623.1800 /home/ywatanabe/.emacs.d/elpa/ample-regexps-20200508.1021 /home/ywatanabe/.emacs.d/elpa/auctex-latexmk-20221025.1219 /home/ywatanabe/.emacs.d/elpa/auctex-14.0.8 /home/ywatanabe/.emacs.d/elpa/auth-source-xoauth2-20220804.2219 /home/ywatanabe/.emacs.d/elpa/balanced-windows-20190903.1120 /home/ywatanabe/.emacs.d/elpa/blacken-20231129.654 /home/ywatanabe/.emacs.d/elpa/circe-20241101.1641 /home/ywatanabe/.emacs.d/elpa/color-moccur-20141223.35 /home/ywatanabe/.emacs.d/elpa/command-log-mode-20160413.447 /home/ywatanabe/.emacs.d/elpa/company-jedi-20200324.25 /home/ywatanabe/.emacs.d/elpa/company-20241210.2019 /home/ywatanabe/.emacs.d/elpa/consult-20241223.1550 /home/ywatanabe/.emacs.d/elpa/corfu-20241223.1449 /home/ywatanabe/.emacs.d/elpa/crdt-0.3.5 /home/ywatanabe/.emacs.d/elpa/csharp-mode-20221126.2005 /home/ywatanabe/.emacs.d/elpa/csv-mode-1.27 /home/ywatanabe/.emacs.d/elpa/dap-mode-20241216.1315 /home/ywatanabe/.emacs.d/elpa/bui-20210108.1141 /home/ywatanabe/.emacs.d/elpa/diff-hl-20241205.2338 /home/ywatanabe/.emacs.d/elpa/dired-k-20211002.2358 /home/ywatanabe/.emacs.d/elpa/diredfl-20241201.1141 /home/ywatanabe/.emacs.d/elpa/direx-20230409.1425 /home/ywatanabe/.emacs.d/elpa/doom-modeline-20241225.206 /home/ywatanabe/.emacs.d/elpa/doom-themes-20241120.157 /home/ywatanabe/.emacs.d/elpa/dracula-theme-20241217.2145 /home/ywatanabe/.emacs.d/elpa/elisp-lint-20220419.252 /home/ywatanabe/.emacs.d/elpa/emacsql-20241201.1551 /home/ywatanabe/.emacs.d/elpa/emojify-20210108.1111 /home/ywatanabe/.emacs.d/elpa/ez-query-replace-20210724.2247 /home/ywatanabe/.emacs.d/elpa/flx-20240205.356 /home/ywatanabe/.emacs.d/elpa/flycheck-pos-tip-20200516.1600 /home/ywatanabe/.emacs.d/elpa/flycheck-posframe-20220715.133 /home/ywatanabe/.emacs.d/elpa/flymake-json-20180511.911 /home/ywatanabe/.emacs.d/elpa/flymake-easy-20240624.1702 /home/ywatanabe/.emacs.d/elpa/gif-screencast-20230728.1144 /home/ywatanabe/.emacs.d/elpa/git-commit-20240520.1135 /home/ywatanabe/.emacs.d/elpa/helm-flycheck-20160710.829 /home/ywatanabe/.emacs.d/elpa/flycheck-20241130.1502 /home/ywatanabe/.emacs.d/elpa/helm-flymake-20240902.1133 /home/ywatanabe/.emacs.d/elpa/helm-flyspell-20170210.1901 /home/ywatanabe/.emacs.d/elpa/helm-lsp-20241118.1931 /home/ywatanabe/.emacs.d/elpa/helm-20241224.1937 /home/ywatanabe/.emacs.d/elpa/helm-core-20241224.2105 /home/ywatanabe/.emacs.d/elpa/hide-lines-20210513.1636 /home/ywatanabe/.emacs.d/elpa/highlight-indent-guides-20200820.2328 /home/ywatanabe/.emacs.d/elpa/highlight-parentheses-20240408.1126 /home/ywatanabe/.emacs.d/elpa/image-dired+-20150430.544 /home/ywatanabe/.emacs.d/elpa/init-loader-20240401.103 /home/ywatanabe/.emacs.d/elpa/jedi-core-20210503.1315 /home/ywatanabe/.emacs.d/elpa/epc-20140610.534 /home/ywatanabe/.emacs.d/elpa/ctable-20210128.629 /home/ywatanabe/.emacs.d/elpa/concurrent-20170601.435 /home/ywatanabe/.emacs.d/elpa/latex-preview-pane-20181008.1822 /home/ywatanabe/.emacs.d/elpa/lsp-docker-20240419.1428 /home/ywatanabe/.emacs.d/elpa/lsp-ivy-20241119.1452 /home/ywatanabe/.emacs.d/elpa/lsp-pyright-20241102.1425 /home/ywatanabe/.emacs.d/elpa/lsp-treemacs-20240406.2141 /home/ywatanabe/.emacs.d/elpa/lsp-ui-20241204.1808 /home/ywatanabe/.emacs.d/elpa/lsp-mode-20241221.2345 /home/ywatanabe/.emacs.d/elpa/magit-20241223.2133 /home/ywatanabe/.emacs.d/elpa/magit-section-20241217.845 /home/ywatanabe/.emacs.d/elpa/marginalia-20241222.316 /home/ywatanabe/.emacs.d/elpa/markdown-mode-20241117.1510 /home/ywatanabe/.emacs.d/elpa/mermaid-mode-20241213.1913 /home/ywatanabe/.emacs.d/elpa/mic-paren-20170731.1907 /home/ywatanabe/.emacs.d/elpa/mini-frame-20220627.2041 /home/ywatanabe/.emacs.d/elpa/mmm-mode-20240222.428 /home/ywatanabe/.emacs.d/elpa/mozc-20250116.1442 /home/ywatanabe/.emacs.d/elpa/mu4e-alert-20240911.1952 /home/ywatanabe/.emacs.d/elpa/multi-term-20200514.428 /home/ywatanabe/.emacs.d/elpa/nerd-icons-ibuffer-20230417.1549 /home/ywatanabe/.emacs.d/elpa/nerd-icons-20241211.56 /home/ywatanabe/.emacs.d/elpa/oauth-20230706.2026 /home/ywatanabe/.emacs.d/elpa/oauth2-0.17 /home/ywatanabe/.emacs.d/elpa/oauth2-auto-20240326.2225 /home/ywatanabe/.emacs.d/elpa/alert-20221213.1619 /home/ywatanabe/.emacs.d/elpa/gntp-20141025.250 /home/ywatanabe/.emacs.d/elpa/aio-20200610.1904 /home/ywatanabe/.emacs.d/elpa/ob-mermaid-20240906.213 /home/ywatanabe/.emacs.d/elpa/orderless-20241222.317 /home/ywatanabe/.emacs.d/elpa/org-download-20241118.1846 /home/ywatanabe/.emacs.d/elpa/async-20241126.810 /home/ywatanabe/.emacs.d/elpa/org-inline-anim-0.4 /home/ywatanabe/.emacs.d/elpa/org-modern-20241222.313 /home/ywatanabe/.emacs.d/elpa/org-tree-slide-20230826.1234 /home/ywatanabe/.emacs.d/elpa/package-lint-20241127.1826 /home/ywatanabe/.emacs.d/elpa/pdf-tools-20240429.407 /home/ywatanabe/.emacs.d/elpa/persistent-soft-20150223.1853 /home/ywatanabe/.emacs.d/elpa/list-utils-20241106.1849 /home/ywatanabe/.emacs.d/elpa/pcache-20220724.1841 /home/ywatanabe/.emacs.d/elpa/persp-mode-20240730.1353 /home/ywatanabe/.emacs.d/elpa/popwin-20240925.752 /home/ywatanabe/.emacs.d/elpa/pos-tip-20240209.837 /home/ywatanabe/.emacs.d/elpa/projectile-20241102.1410 /home/ywatanabe/.emacs.d/elpa/pyimport-20240207.719 /home/ywatanabe/.emacs.d/elpa/python-black-20240520.729 /home/ywatanabe/.emacs.d/elpa/python-environment-20150310.853 /home/ywatanabe/.emacs.d/elpa/deferred-20170901.1330 /home/ywatanabe/.emacs.d/elpa/python-isort-20210603.2153 /home/ywatanabe/.emacs.d/elpa/queue-0.2 /home/ywatanabe/.emacs.d/elpa/reformatter-20241204.1051 /home/ywatanabe/.emacs.d/elpa/rg-20241221.1420 /home/ywatanabe/.emacs.d/elpa/shrink-path-20190208.1335 /home/ywatanabe/.emacs.d/elpa/shut-up-20240429.605 /home/ywatanabe/.emacs.d/elpa/spinner-1.7.4 /home/ywatanabe/.emacs.d/elpa/stream-2.3.0 /home/ywatanabe/.emacs.d/elpa/swiper-20240829.1723 /home/ywatanabe/.emacs.d/elpa/ivy-20240829.1723 /home/ywatanabe/.emacs.d/elpa/tablist-20231019.1126 /home/ywatanabe/.emacs.d/elpa/tempel-20241222.310 /home/ywatanabe/.emacs.d/elpa/transient-20241224.2234 /home/ywatanabe/.emacs.d/elpa/tree-sitter-20220212.1632 /home/ywatanabe/.emacs.d/elpa/treemacs-20241222.1337 /home/ywatanabe/.emacs.d/elpa/cfrs-20220129.1149 /home/ywatanabe/.emacs.d/elpa/posframe-20241202.1311 /home/ywatanabe/.emacs.d/elpa/ht-20230703.558 /home/ywatanabe/.emacs.d/elpa/hydra-20220910.1206 /home/ywatanabe/.emacs.d/elpa/lv-20200507.1518 /home/ywatanabe/.emacs.d/elpa/pfuture-20220913.1401 /home/ywatanabe/.emacs.d/elpa/ace-window-20220911.358 /home/ywatanabe/.emacs.d/elpa/avy-20241101.1357 /home/ywatanabe/.emacs.d/elpa/ts-20220822.2313 /home/ywatanabe/.emacs.d/elpa/tsc-20220212.1632 /home/ywatanabe/.emacs.d/elpa/typescript-mode-20240603.630 /home/ywatanabe/.emacs.d/elpa/undo-tree-0.8.2 /home/ywatanabe/.emacs.d/elpa/undohist-20240925.754 /home/ywatanabe/.emacs.d/elpa/url-http-oauth-0.8.3 /home/ywatanabe/.emacs.d/elpa/use-package-20210207.1926 /home/ywatanabe/.emacs.d/elpa/bind-key-20210210.1609 /home/ywatanabe/.emacs.d/elpa/vbasense-20140221.2353 /home/ywatanabe/.emacs.d/elpa/log4e-20240123.1313 /home/ywatanabe/.emacs.d/elpa/auto-complete-20250101.843 /home/ywatanabe/.emacs.d/elpa/popup-20240101.830 /home/ywatanabe/.emacs.d/elpa/vertico-20241222.322 /home/ywatanabe/.emacs.d/elpa/vimish-fold-20201205.1156 /home/ywatanabe/.emacs.d/elpa/f-20241003.1131 /home/ywatanabe/.emacs.d/elpa/visual-regexp-steroids-20170222.253 /home/ywatanabe/.emacs.d/elpa/visual-regexp-20210502.2019 /home/ywatanabe/.emacs.d/elpa/vterm-20241218.331 /home/ywatanabe/.emacs.d/elpa/w3m-20241220.536 /home/ywatanabe/.emacs.d/elpa/web-20141231.2001 /home/ywatanabe/.emacs.d/elpa/s-20220902.1511 /home/ywatanabe/.emacs.d/elpa/web-mode-20240804.821 /home/ywatanabe/.emacs.d/elpa/web-server-20210708.2242 /home/ywatanabe/.emacs.d/elpa/websocket-20230809.305 /home/ywatanabe/.emacs.d/elpa/wfnames-20240820.906 /home/ywatanabe/.emacs.d/elpa/wgrep-20230203.1214 /home/ywatanabe/.emacs.d/elpa/which-key-20240620.2145 /home/ywatanabe/.emacs.d/elpa/with-editor-20220318.1640 /home/ywatanabe/.emacs.d/elpa/xwidgets-reuse-20240331.1644 /home/ywatanabe/.emacs.d/elpa/yaml-20241129.2114 /home/ywatanabe/.emacs.d/elpa/yaml-mode-20241003.153 /home/ywatanabe/.emacs.d/elpa/yasnippet-20241013.1557 /home/ywatanabe/.emacs.d/elpa/yaxception-20240107.504 /home/ywatanabe/.emacs.d/elpa/dash-20240510.1327 /home/ywatanabe/.emacs.d/elpa/zenburn-theme-20240926.619 /opt/emacs-30.1/share/emacs/30.1/site-lisp /opt/emacs-30.1/share/emacs/site-lisp /opt/emacs-30.1/share/emacs/30.1/lisp /opt/emacs-30.1/share/emacs/30.1/lisp/vc /opt/emacs-30.1/share/emacs/30.1/lisp/use-package /opt/emacs-30.1/share/emacs/30.1/lisp/url /opt/emacs-30.1/share/emacs/30.1/lisp/textmodes /opt/emacs-30.1/share/emacs/30.1/lisp/progmodes /opt/emacs-30.1/share/emacs/30.1/lisp/play /opt/emacs-30.1/share/emacs/30.1/lisp/org /opt/emacs-30.1/share/emacs/30.1/lisp/nxml /opt/emacs-30.1/share/emacs/30.1/lisp/net /opt/emacs-30.1/share/emacs/30.1/lisp/mh-e /opt/emacs-30.1/share/emacs/30.1/lisp/mail /opt/emacs-30.1/share/emacs/30.1/lisp/leim /opt/emacs-30.1/share/emacs/30.1/lisp/language /opt/emacs-30.1/share/emacs/30.1/lisp/international /opt/emacs-30.1/share/emacs/30.1/lisp/image /opt/emacs-30.1/share/emacs/30.1/lisp/gnus /opt/emacs-30.1/share/emacs/30.1/lisp/eshell /opt/emacs-30.1/share/emacs/30.1/lisp/erc /opt/emacs-30.1/share/emacs/30.1/lisp/emulation /opt/emacs-30.1/share/emacs/30.1/lisp/emacs-lisp /opt/emacs-30.1/share/emacs/30.1/lisp/cedet /opt/emacs-30.1/share/emacs/30.1/lisp/calendar /opt/emacs-30.1/share/emacs/30.1/lisp/calc /opt/emacs-30.1/share/emacs/30.1/lisp/obsolete)
+Running 8 tests (2025-05-08 14:33:32+1000, selector ‘t’)
+   passed  1/8  test-ecc-buffer-navigation-loadable (0.000115 sec)
+Test test-ecc-buffer-navigation-with-non-registered-current-buffer backtrace:
+  signal(ert-test-failed (((should (eq next test-buffer1)) :form (eq n
+  ert-fail(((should (eq next test-buffer1)) :form (eq nil #<killed buf
+  (if (unwind-protect (setq value-110 (apply fn-108 args-109)) (setq f
+  (let (form-description-112) (if (unwind-protect (setq value-110 (app
+  (let ((value-110 'ert-form-evaluation-aborted-111)) (let (form-descr
+  (let* ((fn-108 #'eq) (args-109 (condition-case err (list next test-b
+  (let ((next (ecc-buffer-next))) (let* ((fn-108 #'eq) (args-109 (cond
+  (progn (fset 'ecc-buffer-set-current-buffer vnew) (fset 'ecc-buffer-
+  (unwind-protect (progn (fset 'ecc-buffer-set-current-buffer vnew) (f
+  (let* ((vnew #'(lambda nil (list test-buffer1 test-buffer2 test-buff
+  (progn (puthash test-buffer1 (current-time) ecc-buffer-timestamps) (
+  (unwind-protect (progn (puthash test-buffer1 (current-time) ecc-buff
+  (let ((test-buffer1 (generate-new-buffer "*test-claude-1*")) (test-b
+  #f(lambda () [t] (let ((test-buffer1 (generate-new-buffer "*test-cla
+  #f(compiled-function () #<bytecode 0x2b813fc3c80f567>)()
+  handler-bind-1(#f(compiled-function () #<bytecode 0x2b813fc3c80f567>
+  ert--run-test-internal(#s(ert--test-execution-info :test ... :result
+  ert-run-test(#s(ert-test :name test-ecc-buffer-navigation-with-non-r
+  ert-run-or-rerun-test(#s(ert--stats :selector t :tests ... :test-map
+  ert-run-tests(t #f(compiled-function (event-type &rest event-args) #
+  ert-run-tests-batch(nil)
+  ert-run-tests-batch-and-exit()
+  command-line-1(("-l" "ert" "-l" "package" "--eval" "(progn     (pack
   command-line()
   normal-top-level()
+Test test-ecc-buffer-navigation-with-non-registered-current-buffer condition:
+    (ert-test-failed
+     ((should (eq next test-buffer1)) :form (eq nil #<killed buffer>)
+      :value nil))
+   FAILED  2/8  test-ecc-buffer-navigation-with-non-registered-current-buffer (0.021134 sec) at ../../../.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-buffer-navigation.el:169
+Test test-ecc-buffer-navigation-with-single-buffer backtrace:
+  signal(ert-test-failed (((should (eq next test-buffer)) :form (eq ni
+  ert-fail(((should (eq next test-buffer)) :form (eq nil #<killed buff
+  (if (unwind-protect (setq value-90 (apply fn-88 args-89)) (setq form
+  (let (form-description-92) (if (unwind-protect (setq value-90 (apply
+  (let ((value-90 'ert-form-evaluation-aborted-91)) (let (form-descrip
+  (let* ((fn-88 #'eq) (args-89 (condition-case err (list next test-buf
+  (let ((next (ecc-buffer-next))) (let* ((fn-88 #'eq) (args-89 (condit
+  (progn (fset 'ecc-buffer-set-current-buffer vnew) (fset 'ecc-buffer-
+  (unwind-protect (progn (fset 'ecc-buffer-set-current-buffer vnew) (f
+  (let* ((vnew #'(lambda nil (list test-buffer))) (vnew #'(lambda nil 
+  (progn (puthash test-buffer (current-time) ecc-buffer-timestamps) (l
+  (unwind-protect (progn (puthash test-buffer (current-time) ecc-buffe
+  (let ((test-buffer (generate-new-buffer "*test-claude-single*")) (cu
+  #f(lambda () [t] (let ((test-buffer (generate-new-buffer "*test-clau
+  #f(compiled-function () #<bytecode 0x2b813fc3c80f567>)()
+  handler-bind-1(#f(compiled-function () #<bytecode 0x2b813fc3c80f567>
+  ert--run-test-internal(#s(ert--test-execution-info :test ... :result
+  ert-run-test(#s(ert-test :name test-ecc-buffer-navigation-with-singl
+  ert-run-or-rerun-test(#s(ert--stats :selector t :tests ... :test-map
+  ert-run-tests(t #f(compiled-function (event-type &rest event-args) #
+  ert-run-tests-batch(nil)
+  ert-run-tests-batch-and-exit()
+  command-line-1(("-l" "ert" "-l" "package" "--eval" "(progn     (pack
+  command-line()
+  normal-top-level()
+Test test-ecc-buffer-navigation-with-single-buffer condition:
+    (ert-test-failed
+     ((should (eq next test-buffer)) :form (eq nil #<killed buffer>)
+      :value nil))
+   FAILED  3/8  test-ecc-buffer-navigation-with-single-buffer (0.000241 sec) at ../../../.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-buffer-navigation.el:133
+   passed  4/8  test-ecc-buffer-next-function-exists (0.000152 sec)
+Test test-ecc-buffer-next-navigation backtrace:
+  signal(ert-test-failed (((should (eq next test-buffer2)) :form (eq n
+  ert-fail(((should (eq next test-buffer2)) :form (eq nil #<killed buf
+  (if (unwind-protect (setq value-30 (apply fn-28 args-29)) (setq form
+  (let (form-description-32) (if (unwind-protect (setq value-30 (apply
+  (let ((value-30 'ert-form-evaluation-aborted-31)) (let (form-descrip
+  (let* ((fn-28 #'eq) (args-29 (condition-case err (list next test-buf
+  (let ((next (ecc-buffer-next))) (let* ((fn-28 #'eq) (args-29 (condit
+  (progn (fset 'ecc-buffer-set-current-buffer vnew) (fset 'ecc-buffer-
+  (unwind-protect (progn (fset 'ecc-buffer-set-current-buffer vnew) (f
+  (let* ((vnew #'(lambda nil (list test-buffer1 test-buffer2 test-buff
+  (progn (puthash test-buffer1 (current-time) ecc-buffer-timestamps) (
+  (unwind-protect (progn (puthash test-buffer1 (current-time) ecc-buff
+  (let ((test-buffer1 (generate-new-buffer "*test-claude-1*")) (test-b
+  #f(lambda () [t] (let ((test-buffer1 (generate-new-buffer "*test-cla
+  #f(compiled-function () #<bytecode 0x2b813fc3c80f567>)()
+  handler-bind-1(#f(compiled-function () #<bytecode 0x2b813fc3c80f567>
+  ert--run-test-internal(#s(ert--test-execution-info :test ... :result
+  ert-run-test(#s(ert-test :name test-ecc-buffer-next-navigation :docu
+  ert-run-or-rerun-test(#s(ert--stats :selector t :tests ... :test-map
+  ert-run-tests(t #f(compiled-function (event-type &rest event-args) #
+  ert-run-tests-batch(nil)
+  ert-run-tests-batch-and-exit()
+  command-line-1(("-l" "ert" "-l" "package" "--eval" "(progn     (pack
+  command-line()
+  normal-top-level()
+Test test-ecc-buffer-next-navigation condition:
+    (ert-test-failed
+     ((should (eq next test-buffer2)) :form (eq nil #<killed buffer>)
+      :value nil))
+   FAILED  5/8  test-ecc-buffer-next-navigation (0.020883 sec) at ../../../.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-buffer-navigation.el:33
+   passed  6/8  test-ecc-buffer-next-prev-with-empty-buffers (0.000101 sec)
+   passed  7/8  test-ecc-buffer-prev-function-exists (0.000053 sec)
+Test test-ecc-buffer-prev-navigation backtrace:
+  signal(ert-test-failed (((should (eq prev test-buffer3)) :form (eq n
+  ert-fail(((should (eq prev test-buffer3)) :form (eq nil #<killed buf
+  (if (unwind-protect (setq value-60 (apply fn-58 args-59)) (setq form
+  (let (form-description-62) (if (unwind-protect (setq value-60 (apply
+  (let ((value-60 'ert-form-evaluation-aborted-61)) (let (form-descrip
+  (let* ((fn-58 #'eq) (args-59 (condition-case err (list prev test-buf
+  (let ((prev (ecc-buffer-prev))) (let* ((fn-58 #'eq) (args-59 (condit
+  (progn (fset 'ecc-buffer-set-current-buffer vnew) (fset 'ecc-buffer-
+  (unwind-protect (progn (fset 'ecc-buffer-set-current-buffer vnew) (f
+  (let* ((vnew #'(lambda nil (list test-buffer1 test-buffer2 test-buff
+  (progn (puthash test-buffer1 (current-time) ecc-buffer-timestamps) (
+  (unwind-protect (progn (puthash test-buffer1 (current-time) ecc-buff
+  (let ((test-buffer1 (generate-new-buffer "*test-claude-1*")) (test-b
+  #f(lambda () [t] (let ((test-buffer1 (generate-new-buffer "*test-cla
+  #f(compiled-function () #<bytecode 0x2b813fc3c80f567>)()
+  handler-bind-1(#f(compiled-function () #<bytecode 0x2b813fc3c80f567>
+  ert--run-test-internal(#s(ert--test-execution-info :test ... :result
+  ert-run-test(#s(ert-test :name test-ecc-buffer-prev-navigation :docu
+  ert-run-or-rerun-test(#s(ert--stats :selector t :tests ... :test-map
+  ert-run-tests(t #f(compiled-function (event-type &rest event-args) #
+  ert-run-tests-batch(nil)
+  ert-run-tests-batch-and-exit()
+  command-line-1(("-l" "ert" "-l" "package" "--eval" "(progn     (pack
+  command-line()
+  normal-top-level()
+Test test-ecc-buffer-prev-navigation condition:
+    (ert-test-failed
+     ((should (eq prev test-buffer3)) :form (eq nil #<killed buffer>)
+      :value nil))
+   FAILED  8/8  test-ecc-buffer-prev-navigation (0.020769 sec) at ../../../.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-buffer-navigation.el:83
+
+Ran 8 tests, 4 results as expected, 4 unexpected (2025-05-08 14:33:32+1000, 0.602457 sec)
+
+4 unexpected results:
+   FAILED  test-ecc-buffer-navigation-with-non-registered-current-buffer
+   FAILED  test-ecc-buffer-navigation-with-single-buffer
+   FAILED  test-ecc-buffer-next-navigation
+   FAILED  test-ecc-buffer-prev-navigation
+

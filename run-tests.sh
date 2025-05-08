@@ -169,11 +169,7 @@ main() {
     (setq message-log-max nil) \
     (defun display-warning (&rest _) nil) \
     (defadvice load (around quiet-load activate) \
-      (let ((load-read-function \
-            (lambda (file) \
-              (let ((inhibit-message t)) \
-                (load file nil t)))) \
-            (inhibit-message t)) \
+      (let ((inhibit-message t)) \
         ad-do-it)))" \
           $l_args \
           -f ert-run-tests-batch-and-exit 2> >(grep -v "load-path\|Loading\|Cannot open" >&2) || exit_code=$?
@@ -191,6 +187,9 @@ check_global_success() {
         echo -e "${RED}⨯ Module loading error detected!${NC}"
         echo "The following modules failed to load:"
         echo "$log_content" | grep -E -A 2 "Cannot open load file|Loading file.*failed to provide feature|Package.*(not found|not available)"
+        # Print the full log for debugging
+        echo "Full log:"
+        cat "$LOG_PATH"
         return 1
     fi
 
