@@ -1,3 +1,10 @@
 **/.claude/settings.local.json
 .old
 tests/.oldtests/.old
+
+# Elisp test reports and logs
+ELISP-TEST-REPORT-*.org
+ELISP-TEST-REPORT-*.pdf
+ELISP-TEST-REPORT-*.tex
+LATEST-TEST-REPORT.*
+*.sh.log
