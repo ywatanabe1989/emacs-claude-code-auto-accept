@@ -8,14 +8,14 @@
 
 (require 'ert)
 (require 'ecc-variables)
-(require 'ecc-buffer-variables)
-(require 'ecc-buffer-registry)
-(require 'ecc-buffer-current)
-(require 'ecc-buffer-stale)
+(require 'ecc-buffer/ecc-buffer-variables)
+(require 'ecc-buffer/ecc-buffer-registry)
+(require 'ecc-buffer/ecc-buffer-current)
+(require 'ecc-buffer/ecc-buffer-stale)
 
 (ert-deftest test-ecc-buffer-stale-loadable ()
   "Test that ecc-buffer-stale loads properly."
-  (should (featurep 'ecc-buffer-stale)))
+  (should (featurep 'ecc-buffer/ecc-buffer-stale)))
 
 (ert-deftest test-ecc-buffer-get-buffer-state-exists ()
   "Test that ecc-buffer-get-buffer-state function exists."

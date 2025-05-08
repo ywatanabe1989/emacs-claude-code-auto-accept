@@ -7,14 +7,14 @@
 
 
 (require 'ert)
-(require 'ecc-buffer-variables)
-(require 'ecc-buffer-registry)
-(require 'ecc-buffer-state)
-(require 'ecc-buffer-current)
+(require 'ecc-buffer/ecc-buffer-variables)
+(require 'ecc-buffer/ecc-buffer-registry)
+(require 'ecc-buffer/ecc-buffer-state)
+(require 'ecc-buffer/ecc-buffer-current)
 
 (ert-deftest test-ecc-buffer-current-loadable ()
   "Test that ecc-buffer-current loads properly."
-  (should (featurep 'ecc-buffer-current)))
+  (should (featurep 'ecc-buffer/ecc-buffer-current)))
 
 (ert-deftest test-ecc-buffer-current-buffer-variable-exists ()
   "Test that ecc-buffer-current-buffer variable exists."

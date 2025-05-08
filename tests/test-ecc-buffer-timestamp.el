@@ -4,9 +4,9 @@
 
 (require 'ert)
 (require 'cl-lib)
-(require 'ecc-buffer-variables)
-(require 'ecc-buffer-registry)
-(require 'ecc-buffer-timestamp)
+(require 'ecc-buffer/ecc-buffer-variables)
+(require 'ecc-buffer/ecc-buffer-registry)
+(require 'ecc-buffer/ecc-buffer-timestamp)
 
 (ert-deftest test-ecc-buffer-timestamp-vars-exists ()
   "Test that timestamp hash table variable exists."

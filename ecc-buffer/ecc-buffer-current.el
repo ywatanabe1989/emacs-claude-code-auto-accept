@@ -250,7 +250,7 @@ Return t if state was set successfully, nil otherwise."
 ;;             (or load-file-name buffer-file-name))))
 
 
-(provide 'ecc-buffer-current)
+(provide 'ecc-buffer/ecc-buffer-current)
 
 (when
     (not load-file-name)

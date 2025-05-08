@@ -25,7 +25,7 @@ Return t if buffer is valid, in vterm-mode, and registered, nil otherwise."
            is-registered))))
 
 
-(provide 'ecc-buffer-verification)
+(provide 'ecc-buffer/ecc-buffer-verification)
 
 (when
     (not load-file-name)

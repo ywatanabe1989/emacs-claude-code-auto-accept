@@ -8,11 +8,11 @@
 
 (require 'ert)
 (require 'ecc-variables)
-(require 'ecc-buffer-variables)
+(require 'ecc-buffer/ecc-buffer-variables)
 
 (ert-deftest test-ecc-buffer-variables-loadable ()
   "Test that ecc-buffer-variables loads properly."
-  (should (featurep 'ecc-buffer-variables)))
+  (should (featurep 'ecc-buffer/ecc-buffer-variables)))
 
 (ert-deftest test-ecc-buffer-registered-buffers-alist-exists ()
   "Test that ecc-buffer-registered-buffers-alist variable exists."

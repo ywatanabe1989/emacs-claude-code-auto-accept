@@ -1,0 +1,385 @@
+% Created 2025-05-08 Thu 20:19
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{ywatanabe}
+\date{2025-05-08 20:19:47 Created by ECC-ELISP-TEST}
+\title{Elisp Test Report}
+\hypersetup{
+ pdfauthor={ywatanabe},
+ pdftitle={Elisp Test Report},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 30.1 (Org mode 9.7.11)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Test Results Summary}
+\label{sec:org621ac30}
+
+\begin{itemize}
+\item Passed: 224
+\item Failed: 0
+\item Skipped: 0
+\item Timeout (= 10 s): 0
+\item Duplicates: 0
+\item Total: 224
+\item Total Time: 0.05 seconds
+\item Success Rate: 100.0\%
+\end{itemize}
+\section{Passed Tests (224)}
+\label{sec:org659f11d}
+\subsection{test-emacs-claude-code.el (8 tests)}
+\label{sec:orgdab708e}
+\begin{itemize}
+\item \href{test-emacs-claude-code.el}{test-ecc-repository-copy-contents-required}
+\item \href{test-emacs-claude-code.el}{test-ecc-run-required}
+\item \href{test-emacs-claude-code.el}{test-ecc-auto-enable-stop-required}
+\item \href{test-emacs-claude-code.el}{test-ecc-update-mode-line-required}
+\item \href{test-emacs-claude-code.el}{test-ecc-send-required}
+\item \href{test-emacs-claude-code.el}{test-ecc-detect-prompt-required}
+\item \href{test-emacs-claude-code.el}{test-ecc-variables-required}
+\item \href{test-emacs-claude-code.el}{test-ecc-loadable}
+\end{itemize}
+\subsection{test-emacs-claude-code-variables.el (7 tests)}
+\label{sec:org0417b2f}
+\begin{itemize}
+\item \href{test-emacs-claude-code-variables.el}{test-ecc-auto-interval-sec-defined}
+\item \href{test-emacs-claude-code-variables.el}{test-ecc-prompt-patterns-defined}
+\item \href{test-emacs-claude-code-variables.el}{test-ecc-auto-timer-defined}
+\item \href{test-emacs-claude-code-variables.el}{test-ecc-buffer-defined}
+\item \href{test-emacs-claude-code-variables.el}{test-ecc-buffer-name-defined}
+\item \href{test-emacs-claude-code-variables.el}{test-ecc-variables-customization-group}
+\item \href{test-emacs-claude-code-variables.el}{test-ecc-variables-loadable}
+\end{itemize}
+\subsection{test-emacs-claude-code-update-mode-line.el (8 tests)}
+\label{sec:org5846a7f}
+\begin{itemize}
+\item \href{test-emacs-claude-code-update-mode-line.el}{test-ecc-update-mode-line-force-updates}
+\item \href{test-emacs-claude-code-update-mode-line.el}{test-ecc-update-mode-line-removes-overlay}
+\item \href{test-emacs-claude-code-update-mode-line.el}{test-ecc-update-mode-line-adds-overlay}
+\item \href{test-emacs-claude-code-update-mode-line.el}{test-ecc-update-mode-line-removes-indicator}
+\item \href{test-emacs-claude-code-update-mode-line.el}{test-ecc-update-mode-line-adds-indicator}
+\item \href{test-emacs-claude-code-update-mode-line.el}{test-ecc-update-mode-line-defined}
+\item \href{test-emacs-claude-code-update-mode-line.el}{test-ecc-mode-line-indicator-defined}
+\item \href{test-emacs-claude-code-update-mode-line.el}{test-ecc-update-mode-line-loadable}
+\end{itemize}
+\subsection{test-emacs-claude-code-start-stop.el (11 tests)}
+\label{sec:orga04211a}
+\begin{itemize}
+\item \href{test-emacs-claude-code-start-stop.el}{test---ecc-auto-check-and-restart-finds-vterm-buffer-when-needed}
+\item \href{test-emacs-claude-code-start-stop.el}{test---ecc-auto-check-and-restart-adds-hook-when-missing}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-auto-disable-removes-hook-and-cancels-timer}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-auto-enable-adds-hook-and-starts-timer}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-auto-enable-uses-current-buffer-when-no-buffer-exists}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-buffer-rename-buffer-when-disabled}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-buffer-rename-buffer-when-enabled}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-auto-toggle-stops-when-active}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-auto-toggle-starts-when-inactive}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-auto-toggle-defined}
+\item \href{test-emacs-claude-code-start-stop.el}{test-ecc-auto-loadable}
+\end{itemize}
+\subsection{test-emacs-claude-code-detect-prompt.el (10 tests)}
+\label{sec:orgc2a02e6}
+\begin{itemize}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-y/n-prompt-detection}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-returns-nil-when-not-found}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-handles-nil-buffer}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-with-mock-buffer}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-defined}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-y/y/n-defined}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-y/n-defined}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-initial-waiting-defined}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-waiting-defined}
+\item \href{test-emacs-claude-code-detect-prompt.el}{test-ecc-detect-prompt-loadable}
+\end{itemize}
+\subsection{test-ecc.el (8 tests)}
+\label{sec:org584ee57}
+\begin{itemize}
+\item \href{test-ecc.el}{test-ecc-repository-copy-contents-required}
+\item \href{test-ecc.el}{test-ecc-run-required}
+\item \href{test-ecc.el}{test-ecc-auto-enable-stop-required}
+\item \href{test-ecc.el}{test-ecc-update-mode-line-required}
+\item \href{test-ecc.el}{test-ecc-send-required}
+\item \href{test-ecc.el}{test-ecc-detect-prompt-required}
+\item \href{test-ecc.el}{test-ecc-variables-required}
+\item \href{test-ecc.el}{test-ecc-loadable}
+\end{itemize}
+\subsection{test-ecc-variables.el (7 tests)}
+\label{sec:org0a9fe0d}
+\begin{itemize}
+\item \href{test-ecc-variables.el}{test-ecc-auto-interval-sec-defined}
+\item \href{test-ecc-variables.el}{test-ecc-prompt-patterns-defined}
+\item \href{test-ecc-variables.el}{test-ecc-auto-timer-defined}
+\item \href{test-ecc-variables.el}{test-ecc-buffer-defined}
+\item \href{test-ecc-variables.el}{test-ecc-buffer-name-defined}
+\item \href{test-ecc-variables.el}{test-ecc-variables-customization-group}
+\item \href{test-ecc-variables.el}{test-ecc-variables-loadable}
+\end{itemize}
+\subsection{test-ecc-update-mode-line.el (8 tests)}
+\label{sec:org9ab2c0a}
+\begin{itemize}
+\item \href{test-ecc-update-mode-line.el}{test-ecc-update-mode-line-force-updates}
+\item \href{test-ecc-update-mode-line.el}{test-ecc-update-mode-line-removes-overlay}
+\item \href{test-ecc-update-mode-line.el}{test-ecc-update-mode-line-adds-overlay}
+\item \href{test-ecc-update-mode-line.el}{test-ecc-update-mode-line-removes-indicator}
+\item \href{test-ecc-update-mode-line.el}{test-ecc-update-mode-line-adds-indicator}
+\item \href{test-ecc-update-mode-line.el}{test-ecc-update-mode-line-defined}
+\item \href{test-ecc-update-mode-line.el}{test-ecc-mode-line-indicator-defined}
+\item \href{test-ecc-update-mode-line.el}{test-ecc-update-mode-line-loadable}
+\end{itemize}
+\subsection{test-ecc-template-cache.el (7 tests)}
+\label{sec:org5848a03}
+\begin{itemize}
+\item \href{test-ecc-template-cache.el}{test-ecc-template-cache-stats}
+\item \href{test-ecc-template-cache.el}{test-ecc-template-cache-purge-outdated}
+\item \href{test-ecc-template-cache.el}{test-ecc-template-cache-clear}
+\item \href{test-ecc-template-cache.el}{test-ecc-template-cache-put-get}
+\item \href{test-ecc-template-cache.el}{test-ecc-template-cache-file-hash}
+\item \href{test-ecc-template-cache.el}{test-ecc-template-cache-init}
+\item \href{test-ecc-template-cache.el}{test-ecc-template-cache-loadable}
+\end{itemize}
+\subsection{test-ecc-start-stop.el (11 tests)}
+\label{sec:org4d63537}
+\begin{itemize}
+\item \href{test-ecc-start-stop.el}{test---ecc-auto-check-and-restart-finds-vterm-buffer-when-needed}
+\item \href{test-ecc-start-stop.el}{test---ecc-auto-check-and-restart-adds-hook-when-missing}
+\item \href{test-ecc-start-stop.el}{test-ecc-auto-disable-removes-hook-and-cancels-timer}
+\item \href{test-ecc-start-stop.el}{test-ecc-auto-enable-adds-hook-and-starts-timer}
+\item \href{test-ecc-start-stop.el}{test-ecc-auto-enable-uses-current-buffer-when-no-buffer-exists}
+\item \href{test-ecc-start-stop.el}{test-ecc-buffer-rename-buffer-when-disabled}
+\item \href{test-ecc-start-stop.el}{test-ecc-buffer-rename-buffer-when-enabled}
+\item \href{test-ecc-start-stop.el}{test-ecc-auto-toggle-stops-when-active}
+\item \href{test-ecc-start-stop.el}{test-ecc-auto-toggle-starts-when-inactive}
+\item \href{test-ecc-start-stop.el}{test-ecc-auto-toggle-defined}
+\item \href{test-ecc-start-stop.el}{test-ecc-auto-loadable}
+\end{itemize}
+\subsection{test-ecc-send.el (9 tests)}
+\label{sec:orgbd4ffb6}
+\begin{itemize}
+\item \href{test-ecc-send.el}{test-ecc-send-routes-to-correct-handler}
+\item \href{test-ecc-send.el}{test-ecc-auto-send-continue-sends-correct-response}
+\item \href{test-ecc-send.el}{test-ecc-auto-send-yy-sends-correct-response}
+\item \href{test-ecc-send.el}{test-ecc-auto-send-y-sends-correct-response}
+\item \href{test-ecc-send.el}{test-ecc-auto-send-continue-defined}
+\item \href{test-ecc-send.el}{test-ecc-auto-send-yy-defined}
+\item \href{test-ecc-send.el}{test-ecc-auto-send-y-defined}
+\item \href{test-ecc-send.el}{test-ecc-send-defined}
+\item \href{test-ecc-send.el}{test-ecc-send-loadable}
+\end{itemize}
+\subsection{test-ecc-run.el (8 tests)}
+\label{sec:orgfefede4}
+\begin{itemize}
+\item \href{test-ecc-run.el}{test-ecc-run-quick}
+\item \href{test-ecc-run.el}{test-ecc-run-on-buffer}
+\item \href{test-ecc-run.el}{test-ecc-run-on-region-passes-parameters}
+\item \href{test-ecc-run.el}{test-ecc-run-on-region-combines-prompt-and-content}
+\item \href{test-ecc-run.el}{test-ecc-run-on-region-extracts-region-content}
+\item \href{test-ecc-run.el}{test-ecc-run-with-no-display}
+\item \href{test-ecc-run.el}{test-ecc-run-with-template}
+\item \href{test-ecc-run.el}{test-ecc-run-sends-prompt}
+\end{itemize}
+\subsection{test-ecc-repository-view.el (3 tests)}
+\label{sec:org92c2a64}
+\begin{itemize}
+\item \href{test-ecc-repository-view.el}{test-ecc-repo-view-script-exists}
+\item \href{test-ecc-repository-view.el}{test-ecc-repo-view-path}
+\item \href{test-ecc-repository-view.el}{test-ecc-repository-view-loadable}
+\end{itemize}
+\subsection{test-ecc-large-buffer.el (6 tests)}
+\label{sec:orgebb7e75}
+\begin{itemize}
+\item \href{test-ecc-large-buffer.el}{test-ecc-large-buffer-send-chunked}
+\item \href{test-ecc-large-buffer.el}{test-ecc-large-buffer-process-region}
+\item \href{test-ecc-large-buffer.el}{test-ecc-large-buffer-process-file}
+\item \href{test-ecc-large-buffer.el}{test-ecc-large-buffer-get-optimal-chunk-size}
+\item \href{test-ecc-large-buffer.el}{test-ecc-large-buffer-chunk-string}
+\item \href{test-ecc-large-buffer.el}{test-ecc-large-buffer-loadable}
+\end{itemize}
+\subsection{test-ecc-history.el (6 tests)}
+\label{sec:orgd871efd}
+\begin{itemize}
+\item \href{test-ecc-history.el}{test-ecc-history-reuse-prompt}
+\item \href{test-ecc-history.el}{test-ecc-history-browser-buffer}
+\item \href{test-ecc-history.el}{test-ecc-history-get-entries}
+\item \href{test-ecc-history.el}{test-ecc-history-record-entry}
+\item \href{test-ecc-history.el}{test-ecc-history-variables-defined}
+\item \href{test-ecc-history.el}{test-ecc-history-loadable}
+\end{itemize}
+\subsection{test-ecc-elisp-test.el (6 tests)}
+\label{sec:org6927930}
+\begin{itemize}
+\item \href{test-ecc-elisp-test.el}{test-ecc-elisp-test-generate-shell-script}
+\item \href{test-ecc-elisp-test.el}{test-ecc-elisp-test-generate-report}
+\item \href{test-ecc-elisp-test.el}{test-ecc-elisp-test-run-single-file}
+\item \href{test-ecc-elisp-test.el}{test-ecc-elisp-test-find-test-files}
+\item \href{test-ecc-elisp-test.el}{test-ecc-elisp-test-run-function-exists}
+\item \href{test-ecc-elisp-test.el}{test-ecc-elisp-test-loadable}
+\end{itemize}
+\subsection{test-ecc-detect-prompt.el (10 tests)}
+\label{sec:org326c30b}
+\begin{itemize}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-y/n-prompt-detection}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-returns-nil-when-not-found}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-handles-nil-buffer}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-with-mock-buffer}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-defined}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-y/y/n-defined}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-y/n-defined}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-initial-waiting-defined}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-waiting-defined}
+\item \href{test-ecc-detect-prompt.el}{test-ecc-detect-prompt-loadable}
+\end{itemize}
+\subsection{test-ecc-copy-repository.el (10 tests)}
+\label{sec:orgc09080c}
+\begin{itemize}
+\item \href{test-ecc-copy-repository.el}{test-ecc-repository-copy-contents-creates-output-file}
+\item \href{test-ecc-copy-repository.el}{test-ecc-get-repository-files-with-mock-dir}
+\item \href{test-ecc-copy-repository.el}{test-ecc-repository-get-file-content}
+\item \href{test-ecc-copy-repository.el}{test-ecc-get-file-type-functionality}
+\item \href{test-ecc-copy-repository.el}{test-ecc-repository-blacklisted-p-functionality}
+\item \href{test-ecc-copy-repository.el}{test-ecc-repository-max-file-size-defined}
+\item \href{test-ecc-copy-repository.el}{test-ecc-repository-file-blacklist-defined}
+\item \href{test-ecc-copy-repository.el}{test-ecc-repository-output-file-defined}
+\item \href{test-ecc-copy-repository.el}{test-ecc-repository-dir-defined}
+\item \href{test-ecc-copy-repository.el}{test-ecc-repository-copy-contents-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer.el (9 tests)}
+\label{sec:orgd9d5257}
+\begin{itemize}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-timestamp-required}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-navigation-required}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-stale-required}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-state-required}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-current-required}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-registry-required}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-verification-required}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-variables-required}
+\item \href{test-ecc-buffer.el}{test-ecc-buffer-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer-verification.el (4 tests)}
+\label{sec:orgd2758d4}
+\begin{itemize}
+\item \href{test-ecc-buffer-verification.el}{test-ecc-buffer-verify-buffer-with-buffer-name}
+\item \href{test-ecc-buffer-verification.el}{test-ecc-buffer-verify-buffer-with-various-inputs}
+\item \href{test-ecc-buffer-verification.el}{test-ecc-buffer-verify-buffer-exists}
+\item \href{test-ecc-buffer-verification.el}{test-ecc-buffer-verification-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer-variables.el (9 tests)}
+\label{sec:org5f9f8c5}
+\begin{itemize}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-buffer-property-defaults-structure}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-buffer-current-buffer-initialization}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-state-available-states-values}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-buffer-registered-buffers-alist-initialization}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-buffer-property-defaults-exists}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-buffer-current-buffer-exists}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-state-available-states-exists}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-buffer-registered-buffers-alist-exists}
+\item \href{test-ecc-buffer-variables.el}{test-ecc-buffer-variables-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer-timestamp.el (5 tests)}
+\label{sec:orgb6f60a3}
+\begin{itemize}
+\item \href{test-ecc-buffer-timestamp.el}{test-ecc-buffer-timestamp-for-sorting}
+\item \href{test-ecc-buffer-timestamp.el}{test-ecc-buffer-timestamp-storage-and-retrieval}
+\item \href{test-ecc-buffer-timestamp.el}{test-ecc-buffer-get-timestamp-function-exists}
+\item \href{test-ecc-buffer-timestamp.el}{test-ecc-buffer-record-timestamp-function-exists}
+\item \href{test-ecc-buffer-timestamp.el}{test-ecc-buffer-timestamp-vars-exists}
+\end{itemize}
+\subsection{test-ecc-buffer-state.el (7 tests)}
+\label{sec:org5e32d00}
+\begin{itemize}
+\item \href{test-ecc-buffer-state.el}{test-ecc-state-get-detection}
+\item \href{test-ecc-buffer-state.el}{test-ecc-state-detect-prompt}
+\item \href{test-ecc-buffer-state.el}{test-ecc-state-buffer-exists-p}
+\item \href{test-ecc-buffer-state.el}{test-ecc-state-get-exists}
+\item \href{test-ecc-buffer-state.el}{test-ecc-state-buffer-exists-p-exists}
+\item \href{test-ecc-buffer-state.el}{test-ecc-state-initialize-exists}
+\item \href{test-ecc-buffer-state.el}{test-ecc-buffer-state-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer-stale.el (9 tests)}
+\label{sec:orge256ccb}
+\begin{itemize}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-unregister-stale-buffers}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-unregister-stale-buffer}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-get-and-set-buffer-state}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-cleanup-buffer-registry-exists}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-unregister-stale-buffers-exists}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-unregister-stale-buffer-exists}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-set-buffer-state-exists}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-get-buffer-state-exists}
+\item \href{test-ecc-buffer-stale.el}{test-ecc-buffer-stale-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer-registry.el (6 tests)}
+\label{sec:orge17050b}
+\begin{itemize}
+\item \href{test-ecc-buffer-registry.el}{test-ecc-buffer-list-buffers}
+\item \href{test-ecc-buffer-registry.el}{test-ecc-buffer-register-as-active}
+\item \href{test-ecc-buffer-registry.el}{test-ecc-buffer-unregister-buffer}
+\item \href{test-ecc-buffer-registry.el}{test-ecc-buffer-cleanup-buffer-registry}
+\item \href{test-ecc-buffer-registry.el}{test-ecc-buffer-timestamps-defined}
+\item \href{test-ecc-buffer-registry.el}{test-ecc-buffer-registry-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer-navigation.el (7 tests)}
+\label{sec:org1b0099a}
+\begin{itemize}
+\item \href{test-ecc-buffer-navigation.el}{test-ecc-buffer-navigation-basic}
+\item \href{test-ecc-buffer-navigation.el}{test-ecc-buffer-navigation-with-dead-buffer-as-current}
+\item \href{test-ecc-buffer-navigation.el}{test-ecc-buffer-navigation-handles-stale-buffers}
+\item \href{test-ecc-buffer-navigation.el}{test-ecc-buffer-next-prev-with-empty-buffers}
+\item \href{test-ecc-buffer-navigation.el}{test-ecc-buffer-prev-function-exists}
+\item \href{test-ecc-buffer-navigation.el}{test-ecc-buffer-next-function-exists}
+\item \href{test-ecc-buffer-navigation.el}{test-ecc-buffer-navigation-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer-current.el (8 tests)}
+\label{sec:org8314d5f}
+\begin{itemize}
+\item \href{test-ecc-buffer-current.el}{test-ecc-buffer-current-buffer-state-functions}
+\item \href{test-ecc-buffer-current.el}{test-ecc-buffer-set-and-get-current-buffer}
+\item \href{test-ecc-buffer-current.el}{test-ecc-buffer-set-current-buffer-state-function-exists}
+\item \href{test-ecc-buffer-current.el}{test-ecc-buffer-get-current-buffer-state-function-exists}
+\item \href{test-ecc-buffer-current.el}{test-ecc-buffer-get-current-buffer-function-exists}
+\item \href{test-ecc-buffer-current.el}{test-ecc-buffer-set-current-buffer-function-exists}
+\item \href{test-ecc-buffer-current.el}{test-ecc-buffer-current-buffer-variable-exists}
+\item \href{test-ecc-buffer-current.el}{test-ecc-buffer-current-loadable}
+\end{itemize}
+\subsection{test-ecc-buffer-auto-switch.el (11 tests)}
+\label{sec:org165e295}
+\begin{itemize}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-with-non-existent-buffers}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-previous-buffer}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-next-buffer}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-toggle}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-mode-initialization}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-toggle-function-exists}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-previous-buffer-function-exists}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-next-buffer-function-exists}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-mode-function-exists}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-mode-variable-exists}
+\item \href{test-ecc-buffer-auto-switch.el}{test-ecc-buffer-auto-switch-loadable}
+\end{itemize}
+\subsection{test-ecc-auto.el (6 tests)}
+\label{sec:org74dc7e7}
+\begin{itemize}
+\item \href{test-ecc-auto.el}{test-ecc-auto-send-notification-functions}
+\item \href{test-ecc-auto.el}{test-ecc-auto-check-and-restart-function}
+\item \href{test-ecc-auto.el}{test-ecc-auto-toggle-function}
+\item \href{test-ecc-auto.el}{test-ecc-auto-mode-sends-notifications}
+\item \href{test-ecc-auto.el}{test-ecc-auto-mode-enables-auto-accept}
+\item \href{test-ecc-auto.el}{test-ecc-auto-mode-module-loadable}
+\end{itemize}
+\end{document}

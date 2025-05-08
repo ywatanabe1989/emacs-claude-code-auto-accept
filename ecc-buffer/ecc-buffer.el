@@ -6,17 +6,17 @@
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 
-(require 'ecc-buffer-variables)
-(require 'ecc-buffer-verification)
-(require 'ecc-buffer-registry)
-(require 'ecc-buffer-current)
-(require 'ecc-buffer-state)
-(require 'ecc-buffer-stale)
-(require 'ecc-buffer-navigation)
-(require 'ecc-buffer-timestamp)
+(require 'ecc-buffer/ecc-buffer-variables)
+(require 'ecc-buffer/ecc-buffer-verification)
+(require 'ecc-buffer/ecc-buffer-registry)
+(require 'ecc-buffer/ecc-buffer-current)
+(require 'ecc-buffer/ecc-buffer-state)
+(require 'ecc-buffer/ecc-buffer-stale)
+(require 'ecc-buffer/ecc-buffer-navigation)
+(require 'ecc-buffer/ecc-buffer-timestamp)
 
 
-(provide 'ecc-buffer)
+(provide 'ecc-buffer/ecc-buffer)
 
 (when
     (not load-file-name)

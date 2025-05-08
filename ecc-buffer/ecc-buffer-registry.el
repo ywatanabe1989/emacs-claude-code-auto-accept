@@ -7,7 +7,7 @@
 
 
 (require 'ecc-variables)
-(require 'ecc-buffer-timestamp)
+(require 'ecc-buffer/ecc-buffer-timestamp)
 
 ;; Registry
 ;; ------------------------------
@@ -66,7 +66,7 @@ Return t if buffer was removed, nil otherwise."
         t))))
 
 
-(provide 'ecc-buffer-registry)
+(provide 'ecc-buffer/ecc-buffer-registry)
 
 (when
     (not load-file-name)

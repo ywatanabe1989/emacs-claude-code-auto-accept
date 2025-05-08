@@ -8,12 +8,12 @@
 
 (require 'ert)
 (require 'ecc-variables)
-(require 'ecc-buffer-current)
-(require 'ecc-buffer-state)
+(require 'ecc-buffer/ecc-buffer-current)
+(require 'ecc-buffer/ecc-buffer-state)
 
 (ert-deftest test-ecc-buffer-state-loadable ()
   "Test that ecc-buffer-state loads properly."
-  (should (featurep 'ecc-buffer-state)))
+  (should (featurep 'ecc-buffer/ecc-buffer-state)))
 
 (ert-deftest test-ecc-state-initialize-exists ()
   "Test that ecc-state-initialize function exists."

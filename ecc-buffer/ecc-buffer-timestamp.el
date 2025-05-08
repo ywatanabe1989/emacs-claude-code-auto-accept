@@ -25,7 +25,7 @@ Returns nil if no timestamp is recorded for this buffer."
   (when (buffer-live-p buffer)
     (gethash buffer ecc-buffer-timestamps)))
 
-(provide 'ecc-buffer-timestamp)
+(provide 'ecc-buffer/ecc-buffer-timestamp)
 
 (when (not load-file-name)
   (message "%s loaded."

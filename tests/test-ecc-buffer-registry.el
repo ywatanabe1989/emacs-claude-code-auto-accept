@@ -7,15 +7,15 @@
 
 
 (require 'ert)
-(require 'ecc-buffer-registry)
-(require 'ecc-buffer-variables)
-(require 'ecc-buffer-timestamp)
-(require 'ecc-buffer-stale)
+(require 'ecc-buffer/ecc-buffer-registry)
+(require 'ecc-buffer/ecc-buffer-variables)
+(require 'ecc-buffer/ecc-buffer-timestamp)
+(require 'ecc-buffer/ecc-buffer-stale)
 (require 'ecc-update-mode-line)
 
 (ert-deftest test-ecc-buffer-registry-loadable ()
   "Test that ecc-buffer-registry loads properly."
-  (should (featurep 'ecc-buffer-registry)))
+  (should (featurep 'ecc-buffer/ecc-buffer-registry)))
 
 (ert-deftest test-ecc-buffer-timestamps-defined ()
   "Test that timestamp-related variables are defined."

@@ -28,7 +28,7 @@
   "Default properties for Claude buffers.")
 
 
-(provide 'ecc-buffer-variables)
+(provide 'ecc-buffer/ecc-buffer-variables)
 
 (when
     (not load-file-name)

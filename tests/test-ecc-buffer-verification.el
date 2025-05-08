@@ -8,12 +8,12 @@
 
 (require 'ert)
 (require 'ecc-variables)
-(require 'ecc-buffer-variables)
-(require 'ecc-buffer-verification)
+(require 'ecc-buffer/ecc-buffer-variables)
+(require 'ecc-buffer/ecc-buffer-verification)
 
 (ert-deftest test-ecc-buffer-verification-loadable ()
   "Test that ecc-buffer-verification loads properly."
-  (should (featurep 'ecc-buffer-verification)))
+  (should (featurep 'ecc-buffer/ecc-buffer-verification)))
 
 (ert-deftest test-ecc-buffer-verify-buffer-exists ()
   "Test that ecc-buffer-verify-buffer function exists."

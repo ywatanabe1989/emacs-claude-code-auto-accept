@@ -7,51 +7,51 @@
 
 
 (require 'ert)
-(require 'ecc-buffer)
-(require 'ecc-buffer-variables)
-(require 'ecc-buffer-verification)
-(require 'ecc-buffer-registry)
-(require 'ecc-buffer-current)
-(require 'ecc-buffer-state)
-(require 'ecc-buffer-stale)
-(require 'ecc-buffer-navigation)
-(require 'ecc-buffer-timestamp)
+(require 'ecc-buffer/ecc-buffer)
+(require 'ecc-buffer/ecc-buffer-variables)
+(require 'ecc-buffer/ecc-buffer-verification)
+(require 'ecc-buffer/ecc-buffer-registry)
+(require 'ecc-buffer/ecc-buffer-current)
+(require 'ecc-buffer/ecc-buffer-state)
+(require 'ecc-buffer/ecc-buffer-stale)
+(require 'ecc-buffer/ecc-buffer-navigation)
+(require 'ecc-buffer/ecc-buffer-timestamp)
 
 (ert-deftest test-ecc-buffer-loadable ()
   "Test that ecc-buffer loads properly."
-  (should (featurep 'ecc-buffer)))
+  (should (featurep 'ecc-buffer/ecc-buffer)))
 
 (ert-deftest test-ecc-buffer-variables-required ()
   "Test that ecc-buffer-variables is required."
-  (should (featurep 'ecc-buffer-variables)))
+  (should (featurep 'ecc-buffer/ecc-buffer-variables)))
 
 (ert-deftest test-ecc-buffer-verification-required ()
   "Test that ecc-buffer-verification is required."
-  (should (featurep 'ecc-buffer-verification)))
+  (should (featurep 'ecc-buffer/ecc-buffer-verification)))
 
 (ert-deftest test-ecc-buffer-registry-required ()
   "Test that ecc-buffer-registry is required."
-  (should (featurep 'ecc-buffer-registry)))
+  (should (featurep 'ecc-buffer/ecc-buffer-registry)))
 
 (ert-deftest test-ecc-buffer-current-required ()
   "Test that ecc-buffer-current is required."
-  (should (featurep 'ecc-buffer-current)))
+  (should (featurep 'ecc-buffer/ecc-buffer-current)))
 
 (ert-deftest test-ecc-buffer-state-required ()
   "Test that ecc-buffer-state is required."
-  (should (featurep 'ecc-buffer-state)))
+  (should (featurep 'ecc-buffer/ecc-buffer-state)))
 
 (ert-deftest test-ecc-buffer-stale-required ()
   "Test that ecc-buffer-stale is required."
-  (should (featurep 'ecc-buffer-stale)))
+  (should (featurep 'ecc-buffer/ecc-buffer-stale)))
 
 (ert-deftest test-ecc-buffer-navigation-required ()
   "Test that ecc-buffer-navigation is required."
-  (should (featurep 'ecc-buffer-navigation)))
+  (should (featurep 'ecc-buffer/ecc-buffer-navigation)))
 
 (ert-deftest test-ecc-buffer-timestamp-required ()
   "Test that ecc-buffer-timestamp is required."
-  (should (featurep 'ecc-buffer-timestamp)))
+  (should (featurep 'ecc-buffer/ecc-buffer-timestamp)))
 
 (provide 'test-ecc-buffer)
 
