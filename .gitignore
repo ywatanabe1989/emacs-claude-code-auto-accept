@@ -8,3 +8,30 @@ ELISP-TEST-REPORT-*.pdf
 ELISP-TEST-REPORT-*.tex
 LATEST-TEST-REPORT.*
 *.sh.log
+
+# Environment
+.env/
+.env
+
+# Test artifacts
+custom-report-*.org
+custom-report-*.pdf
+custom-report-*.tex
+buffer-test-report-*.org
+buffer-test-report-*.pdf
+buffer-test-report-*.tex
+
+# User-specific files
+from_user/
+communication/
+
+# Temporary files
+playground.el
+manual-test.el
+simple-test.sh
+screenshot.png
+
+# Editor backup files
+*~
+\#*\#
+.\#*
