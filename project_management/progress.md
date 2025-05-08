@@ -178,8 +178,8 @@
 | 📋 T | [x]  | Optimize buffer handling for large files | 👍 A |
 |      | [x]  | 📌 `/ecc-large-buffer.el`              | 👍 A |
 |------|------|----------------------------------------|------|
-| 📋 T | [ ]  | Improve template caching               | 👀 T |
-|      | [ ]  | 📌 Not yet implemented                 | 👀 T |
+| 📋 T | [x]  | Improve template caching               | 👍 A |
+|      | [x]  | 📌 `/ecc-template-cache.el`           | 👍 A |
 
 ** 🎯 Goal 7: Enhance repository integration
 

@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 12:27:30>
+;;; Timestamp: <2025-05-07 19:58:30>
 ;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-templates.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
@@ -14,8 +14,28 @@
   :type 'directory
   :group 'emacs-claude)
 
-(defvar ecc-template-cache (make-hash-table :test 'equal)
-  "Cache for loaded templates to avoid repeated disk reads.")
+(require 'ecc-template-cache)
+
+(defun ecc-template-cache-purge ()
+  "Purge outdated templates from the cache."
+  (interactive)
+  (let ((purged (ecc-template-cache-purge-outdated)))
+    (message "Purged %d outdated template%s from cache"
+             purged (if (= purged 1) "" "s"))))
+
+(defun ecc-template-cache-stats ()
+  "Display statistics about the template cache."
+  (interactive)
+  (let* ((stats (ecc-template-cache-get-stats))
+         (count (plist-get stats :count))
+         (memory (plist-get stats :memory))
+         (hits (plist-get stats :hits))
+         (misses (plist-get stats :misses))
+         (hit-ratio (if (> (+ hits misses) 0)
+                       (* 100.0 (/ (float hits) (+ hits misses)))
+                     0.0)))
+    (message "Template cache: %d entries, %d bytes, %d hits, %d misses (%.1f%% hit ratio)"
+             count memory hits misses hit-ratio)))
 
 (defun ecc-template-load (template-name)
   "Load template content from TEMPLATE-NAME file in templates directory."
@@ -26,18 +46,29 @@
                                                      template-name)
                                    ".md"))
                          ecc-templates-directory))
-         (cached (gethash template-path ecc-template-cache)))
-    (if cached
-        cached
+         (cached-item (ecc-template-cache-get template-name)))
+    (if (and cached-item
+             (string= (plist-get cached-item :file) template-path)
+             (string= (plist-get cached-item :hash) 
+                    (ecc-template-cache-file-hash template-path)))
+        ;; Cache hit - return the cached content
+        (plist-get cached-item :content)
+      ;; Cache miss or outdated - load from file
       (if (file-exists-p template-path)
           (with-temp-buffer
             (insert-file-contents template-path)
             (let ((content (buffer-substring-no-properties
                             (point-min) (point-max))))
+              ;; Process the content
               (setq content (replace-regexp-in-string
                              "<!--[^>]*-->" "" content))
               (setq content (string-trim content))
-              (puthash template-path content ecc-template-cache)
+              
+              ;; Cache the processed content
+              (let ((file-hash (ecc-template-cache-file-hash template-path)))
+                (ecc-template-cache-put template-name template-path content file-hash))
+              
+              ;; Return the processed content
               content))
         (message "Template file not found: %s" template-path)
         nil))))
@@ -48,25 +79,27 @@
     (mapcar #'file-name-sans-extension
             (directory-files ecc-templates-directory nil "\\.md$"))))
 
-(defun ecc-send-template ()
-  "Interactively select and send a template response for Y/Y/N situations."
+(defun ecc-send-template (&optional template-name)
+  "Interactively select and send a template response for Y/Y/N situations.
+If TEMPLATE-NAME is provided, use that template directly."
   (interactive)
   (let* ((template-list (ecc-template-list))
-         (template-name (completing-read "Select template: "
-                                         (append template-list
-                                                 '("Custom..."))))
+         (selected-template (or template-name
+                                (completing-read "Select template: "
+                                                 (append template-list
+                                                         '("Custom...")))))
          (template-text
-          (if (string= template-name "Custom...")
+          (if (string= selected-template "Custom...")
               (read-string "Enter custom response: ")
-            (ecc-template-load template-name))))
+            (ecc-template-load selected-template))))
     (when template-text
-      (--ecc-auto-send-template template-text))))
+      (--ecc-auto-send-template-on-y/y/n template-text))))
 
-(defun --ecc-auto-send-continue ()
+(defun --ecc-auto-send-continue-on-y/y/n ()
   "Automatically respond with continue to Claude waiting prompts."
   (interactive)
-  (--ecc-auto-send-by-state
-   ecc-prompt-for-waiting
+  (--ecc-send-by-state
+   ecc-prompt-to-send-on-waiting
    (lambda ()
      (or (--ecc-state-waiting-p)
          (--ecc-state-initial-waiting-p)))))
@@ -92,7 +125,8 @@
       (insert "-- --- -->\n")
       (insert content)
       (insert "\n<!-- EOF -->"))
-    (puthash template-path content ecc-template-cache)
+    (let ((file-hash (ecc-template-cache-file-hash template-path)))
+      (ecc-template-cache-put template-name template-path content file-hash))
     (message "Template created: %s" template-path)))
 
 (defun ecc-template-edit (template-name)
@@ -201,6 +235,12 @@
 ;;           (genai--ensure-dependencies)
 ;;           (genai--run-with-template prompt-text template-type)))))))
 
+
+;; Initialize template cache when module is loaded
+(ecc-template-cache-init)
+
+;; Set up a timer to periodically purge the outdated cache entries
+(run-with-idle-timer 300 t #'ecc-template-cache-purge-outdated)
 
 (provide 'ecc-templates)
 

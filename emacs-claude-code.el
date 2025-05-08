@@ -38,6 +38,7 @@
 (require 'ecc-dired)
 (require 'ecc-history)
 (require 'ecc-large-buffer)
+(require 'ecc-template-cache)
 (require 'ecc-bindings)
 (require 'ecc-mode)
 (require 'ecc-template-mode)
