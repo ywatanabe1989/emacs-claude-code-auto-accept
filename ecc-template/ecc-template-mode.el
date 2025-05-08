@@ -1,12 +1,16 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
 ;;; Timestamp: <2025-05-08 13:50:42>
-;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-template-mode.el
+;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-template/ecc-template-mode.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
-(require 'ecc-templates)
-(require 'markdown-mode)
+(require 'ecc-template/ecc-template)
+
+;; Define markdown-mode fallback for testing
+(unless (require 'markdown-mode nil t)
+  (define-derived-mode markdown-mode text-mode "Markdown"
+    "Stub markdown mode for testing."))
 
 ;;;###autoload
 (define-derived-mode ecc-template-mode markdown-mode "Claude Template"
