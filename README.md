@@ -1,5 +1,5 @@
 <!-- ---
-!-- Timestamp: 2025-05-08 02:17:22
+!-- Timestamp: 2025-05-08 22:05:00
 !-- Author: ywatanabe
 !-- File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/README.md
 !-- --- -->
@@ -15,11 +15,12 @@ A streamlined Emacs interface for Claude AI coding assistance.
 
 Emacs Claude Code (ECC) enhances your workflow by seamlessly integrating Claude's AI capabilities directly into Emacs. The package provides:
 
-- Simple buffer management for Claude interactions
+- Comprehensive buffer management for Claude interactions
 - Automatic response handling
 - Template system for common queries
 - Region/buffer processing
 - Repository analysis capabilities
+- Robust test framework
 
 ## Installation
 
@@ -111,6 +112,42 @@ When auto-accept mode is active, you'll see "Auto" in the mode line indicator.
 Configure through the `customize` interface:
 ```elisp
 M-x customize-group RET emacs-claude-code RET
+```
+
+## Testing
+
+The project includes a comprehensive test suite that can be run in multiple ways:
+
+### Standard Tests (Quick)
+
+Run all tests with standard output:
+
+```bash
+./run-tests-elisp.sh
+```
+
+Run a single test file:
+
+```bash
+./run-tests-elisp.sh -s tests/test-ecc-buffer.el
+```
+
+### Detailed Test Reports
+
+Generate detailed test reports with:
+
+```bash
+./run-tests-elisp.sh -r
+```
+
+This creates an org-mode report with detailed test results, and a PDF version if pdflatex is available.
+
+### Advanced Testing Options
+
+For more advanced testing options, use the specialized test script:
+
+```bash
+./elisp-test.sh --help
 ```
 
 ## Contact
