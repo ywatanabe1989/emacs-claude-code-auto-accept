@@ -124,5 +124,5 @@ Returns a plist with keys :count, :memory, :hits, and :misses."
           :hits --ecc-template-cache-hits
           :misses --ecc-template-cache-misses)))
 
-(provide 'ecc-template-cache)
+(provide 'ecc-template/ecc-template-cache)
 ;;; ecc-template-cache.el ends here

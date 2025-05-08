@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 12:27:29>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-state.el
+;;; Timestamp: <2025-05-09 09:25:29>
+;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-state/ecc-state.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
@@ -95,7 +95,7 @@ Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, :running, or nil."
       nil)))
 
 
-(provide 'ecc-state)
+(provide 'ecc-state/ecc-state)
 
 (when
     (not load-file-name)

@@ -23,25 +23,35 @@
 ;; Execute loadpath setup
 (--ecc-add-to-loadpath)
 
-;; Load module umbrella files
+;; Load core modules
 (require 'ecc-variables)
-(require 'ecc-buffer)
-(require 'ecc-state-detect)
-(require 'ecc-state)
-(require 'ecc-send)
-;; (require 'ecc-agent)
 (require 'ecc-update-mode-line)
 (require 'ecc-auto)
 (require 'ecc-run)
+(require 'ecc-send)
+(require 'ecc-large-buffer)
+(require 'ecc-bindings)
+(require 'ecc-mode)
+
+;; Load buffer management modules
+(require 'ecc-buffer)
+
+;; Load state management modules 
+(require 'ecc-state/ecc-state-detect)
+(require 'ecc-state/ecc-state)
+
+;; Load template system modules
+(require 'ecc-template/ecc-template-cache)
+(require 'ecc-template/ecc-template)
+(require 'ecc-template/ecc-template-mode)
+
+;; Load repository integration modules
 (require 'ecc-repository)
 (require 'ecc-repository-view)
 (require 'ecc-dired)
+
+;; Load history and session management
 (require 'ecc-history)
-(require 'ecc-large-buffer)
-(require 'ecc-template-cache)
-(require 'ecc-bindings)
-(require 'ecc-mode)
-(require 'ecc-template-mode)
 
 ;; Enable modes if ecc-auto-enable is set
 (when (and (boundp 'ecc-auto-enable) ecc-auto-enable)

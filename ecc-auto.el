@@ -8,7 +8,9 @@
 (require 'ecc-variables)
 (require 'ecc-send)
 (require 'ecc-update-mode-line)
-(require 'ecc-buffer-registry)
+(require 'ecc-buffer/ecc-buffer-registry)
+(require 'ecc-state/ecc-state)
+(require 'ecc-state/ecc-state-detect)
 
 ;; External function declarations
 (declare-function vterm-send-key "ext:vterm")
@@ -138,7 +140,7 @@ Also verify that the buffer is still valid and in vterm-mode."
           (ecc-send-accept)))
     (error nil)))
 
-(defun --ecc-auto-send-template (template-text)
+(defun --ecc-auto-send-template-on-y/y/n (template-text)
   "Send custom TEMPLATE-TEXT to Claude when in the y/y/n state.
 This allows sending natural language responses instead of just number options."
   (interactive "sEnter your response: ")

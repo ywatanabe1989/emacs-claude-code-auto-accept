@@ -65,7 +65,7 @@ Provides syntax highlighting and special commands for managing Claude templates.
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("/templates/genai/.*\\.md\\'" . ecc-template-mode))
 
-(provide 'ecc-template-mode)
+(provide 'ecc-template/ecc-template-mode)
 
 (when
     (not load-file-name)
