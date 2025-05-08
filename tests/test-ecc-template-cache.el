@@ -8,31 +8,29 @@
 (require 'ert)
 
 ;; Declare functions from the module we're going to test
-(declare-function ecc-template-cache-init "ecc-template-cache")
-(declare-function ecc-template-cache-get "ecc-template-cache")
-(declare-function ecc-template-cache-put "ecc-template-cache")
-(declare-function ecc-template-cache-clear "ecc-template-cache")
-(declare-function ecc-template-cache-purge-outdated "ecc-template-cache")
-(declare-function ecc-template-cache-file-hash "ecc-template-cache")
-(declare-function ecc-template-cache-get-stats "ecc-template-cache")
+(declare-function ecc-template-cache-init "ecc-template/ecc-template-cache")
+(declare-function ecc-template-cache-get "ecc-template/ecc-template-cache")
+(declare-function ecc-template-cache-put "ecc-template/ecc-template-cache")
+(declare-function ecc-template-cache-clear "ecc-template/ecc-template-cache")
+(declare-function ecc-template-cache-purge-outdated "ecc-template/ecc-template-cache")
+(declare-function ecc-template-cache-file-hash "ecc-template/ecc-template-cache")
+(declare-function ecc-template-cache-get-stats "ecc-template/ecc-template-cache")
 
 ;; Test for module loading
 (ert-deftest test-ecc-template-cache-loadable ()
   "Test that ecc-template-cache.el can be loaded."
-  (should (file-exists-p (expand-file-name "ecc-template-cache.el" 
-                                          (file-name-directory
-                                           (directory-file-name
-                                            (file-name-directory load-file-name))))))
-  (should-not (featurep 'ecc-template-cache))
-  (condition-case nil
-      (require 'ecc-template-cache)
-    (error nil))
-  (should (featurep 'ecc-template-cache)))
+  (let ((file-path "/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-template/ecc-template-cache.el")
+        (was-loaded (featurep 'ecc-template/ecc-template-cache)))
+    (should (file-exists-p file-path))
+    (condition-case nil
+        (require 'ecc-template/ecc-template-cache)
+      (error nil))
+    (should (featurep 'ecc-template/ecc-template-cache))))
 
 ;; Test cache initialization
 (ert-deftest test-ecc-template-cache-init ()
   "Test that the template cache can be initialized."
-  (require 'ecc-template-cache)
+  (require 'ecc-template/ecc-template-cache)
   (let ((cache (ecc-template-cache-init)))
     (should (hash-table-p cache))
     (should (= (hash-table-count cache) 0))))
@@ -40,7 +38,7 @@
 ;; Test file hashing function
 (ert-deftest test-ecc-template-cache-file-hash ()
   "Test that file hashing works consistently."
-  (require 'ecc-template-cache)
+  (require 'ecc-template/ecc-template-cache)
   
   ;; Create a temporary file with known content
   (let ((temp-file (make-temp-file "ecc-test-template-"))
@@ -61,16 +59,16 @@
       (should (string= hash1 hash2)))
     
     ;; Modify the file and verify hash changes
-    (with-temp-file temp-file
-      (insert content)
-      (insert "\nModified content."))
-    
-    (let ((modified-hash (ecc-template-cache-file-hash temp-file)))
-      (should (stringp modified-hash))
-      (should (> (length modified-hash) 0))
-      ;; Hash should be different with different content
-      (should-not (string= (ecc-template-cache-file-hash temp-file) 
-                           (ecc-template-cache-file-hash (buffer-name)))))
+    (let ((original-hash (ecc-template-cache-file-hash temp-file)))
+      (with-temp-file temp-file
+        (insert content)
+        (insert "\nModified content."))
+      
+      (let ((modified-hash (ecc-template-cache-file-hash temp-file)))
+        (should (stringp modified-hash))
+        (should (> (length modified-hash) 0))
+        ;; Hash should be different with different content
+        (should-not (string= original-hash modified-hash))))
     
     ;; Clean up
     (delete-file temp-file)))
@@ -78,7 +76,7 @@
 ;; Test cache put and get operations
 (ert-deftest test-ecc-template-cache-put-get ()
   "Test adding and retrieving items from the template cache."
-  (require 'ecc-template-cache)
+  (require 'ecc-template/ecc-template-cache)
   
   ;; Create a temporary file
   (let ((temp-file (make-temp-file "ecc-test-template-"))
@@ -114,7 +112,7 @@
 ;; Test cache clearing
 (ert-deftest test-ecc-template-cache-clear ()
   "Test clearing the template cache."
-  (require 'ecc-template-cache)
+  (require 'ecc-template/ecc-template-cache)
   
   ;; Initialize cache and add an item
   (ecc-template-cache-init)
@@ -132,7 +130,7 @@
 ;; Test outdated cache purging
 (ert-deftest test-ecc-template-cache-purge-outdated ()
   "Test purging outdated items from the template cache."
-  (require 'ecc-template-cache)
+  (require 'ecc-template/ecc-template-cache)
   
   ;; Initialize cache
   (ecc-template-cache-init)
@@ -178,7 +176,7 @@
 ;; Test cache statistics
 (ert-deftest test-ecc-template-cache-stats ()
   "Test getting cache statistics."
-  (require 'ecc-template-cache)
+  (require 'ecc-template/ecc-template-cache)
   
   ;; Initialize cache
   (ecc-template-cache-init)

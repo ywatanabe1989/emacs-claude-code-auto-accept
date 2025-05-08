@@ -1,5 +1,5 @@
 <!-- ---
-!-- Timestamp: 2025-05-08 19:22:14
+!-- Timestamp: 2025-05-08 19:36:28
 !-- Author: ywatanabe
 !-- File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/project_management/progress.md
 !-- --- -->
@@ -7,7 +7,7 @@
 ``` org
 #+TITLE: Emacs Claude Code Project
 #+AUTHOR: ywatanabe
-#+DATE: 2025-05-08 19:22:14
+#+DATE: 2025-05-08 19:36:28
 #+FILE: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/project_management/progress.md
 
 * Title
@@ -58,13 +58,13 @@
 | 🏁 M | [x]  | Claude state detection                      | 👍 A |
 |------|------|---------------------------------------------|------|
 | 📋 T | [x]  | Detect waiting state                        | 👍 A |
-|      | [x]  | 📌 `/ecc-state-detect.el`                   | 👍 A |
+|      | [x]  | 📌 `/ecc-state/ecc-state-detect.el`         | 👍 A |
 |------|------|---------------------------------------------|------|
 | 📋 T | [x]  | Detect Y/N prompt state                     | 👍 A |
-|      | [x]  | 📌 `/ecc-state.el`                          | 👍 A |
+|      | [x]  | 📌 `/ecc-state/ecc-state.el`                | 👍 A |
 |------|------|---------------------------------------------|------|
 | 📋 T | [x]  | Detect Y/Y/N prompt state                   | 👍 A |
-|      | [x]  | 📌 `/ecc-state.el`                          | 👍 A |
+|      | [x]  | 📌 `/ecc-state/ecc-state.el`                | 👍 A |
 |------|------|---------------------------------------------|------|
 | 🏁 M | [x]  | Auto-response system                        | 👍 A |
 |------|------|---------------------------------------------|------|
@@ -83,13 +83,13 @@
 | 🏁 M | [x]  | Template loading and management             | 👍 A |
 |------|------|---------------------------------------------|------|
 | 📋 T | [x]  | Template file loading                       | 👍 A |
-|      | [x]  | 📌 `/ecc-templates.el`                      | 👍 A |
+|      | [x]  | 📌 `/ecc-template/ecc-template.el`          | 👍 A |
 |------|------|---------------------------------------------|------|
 | 📋 T | [x]  | Template caching                            | 👍 A |
-|      | [x]  | 📌 `/ecc-templates.el`                      | 👍 A |
+|      | [x]  | 📌 `/ecc-template/ecc-template-cache.el`    | 👍 A |
 |------|------|---------------------------------------------|------|
 | 📋 T | [x]  | Template directory management               | 👍 A |
-|      | [x]  | 📌 `/ecc-templates.el`                      | 👍 A |
+|      | [x]  | 📌 `/ecc-template/ecc-template.el`          | 👍 A |
 |------|------|---------------------------------------------|------|
 | 🏁 M | [x]  | Default templates                           | 👍 A |
 |------|------|---------------------------------------------|------|
@@ -98,6 +98,7 @@
 |------|------|---------------------------------------------|------|
 | 📋 T | [x]  | Create additional template files            | 👍 A |
 |      | [x]  | 📌 `/templates/claude/*.md`                 | 👍 A |
+|      | [x]  | 📌 `/templates/genai/*.md`                  | 👍 A |
 
 ** 🎯 Goal 4: Implement user interaction features
 
@@ -165,7 +166,7 @@
 |------|------|----------------------------------------|------|
 | 🎯 G | [ ]  | Additional features and refinements    | 👍 A |
 |------|------|----------------------------------------|------|
-| 🏁 M | [ ]  | Repository integration                 | 👍 A |
+| 🏁 M | [x]  | Repository integration                 | 👍 A |
 |------|------|----------------------------------------|------|
 | 📋 T | [x]  | Copy repository contents functionality | 👍 A |
 |      | [x]  | 📌 `/ecc-repository.el`                | 👍 A |
@@ -173,13 +174,21 @@
 | 📋 T | [x]  | Enhanced repository selection          | 👍 A |
 |      | [x]  | 📌 `/ecc-repository-view.el`          | 👍 A |
 |------|------|----------------------------------------|------|
-| 🏁 M | [ ]  | Performance optimizations              | 👍 A |
+| 🏁 M | [x]  | Performance optimizations              | 👍 A |
 |------|------|----------------------------------------|------|
 | 📋 T | [x]  | Optimize buffer handling for large files | 👍 A |
 |      | [x]  | 📌 `/ecc-large-buffer.el`              | 👍 A |
 |------|------|----------------------------------------|------|
 | 📋 T | [x]  | Improve template caching               | 👍 A |
-|      | [x]  | 📌 `/ecc-template-cache.el`           | 👍 A |
+|      | [x]  | 📌 `/ecc-template/ecc-template-cache.el` | 👍 A |
+|------|------|----------------------------------------|------|
+| 🏁 M | [x]  | Documentation improvements             | 👍 A |
+|------|------|----------------------------------------|------|
+| 📋 T | [x]  | Add documentation for Claude settings  | 👍 A |
+|      | [x]  | 📌 `/docs/claude_settings.md`          | 👍 A |
+|------|------|----------------------------------------|------|
+| 📋 T | [x]  | Code organization and cleanup          | 👍 A |
+|      | [x]  | 📌 Refactoring of codebase             | 👍 A |
 
 ** 🎯 Goal 7: Enhance repository integration
 
@@ -254,6 +263,14 @@
 |------|------|----------------------------------------------|------|
 | 📋 T | [ ]  | Create dashboard for interaction statistics  | 👀 T |
 |      | [ ]  | 📌 Planned for implementation                | 👀 T |
+|------|------|----------------------------------------------|------|
+| 🏁 M | [x]  | Mode management                              | 👍 A |
+|------|------|----------------------------------------------|------|
+| 📋 T | [x]  | Create dedicated emacs-claude-code mode      | 👍 A |
+|      | [x]  | 📌 `/ecc-mode.el`                            | 👍 A |
+|------|------|----------------------------------------------|------|
+| 📋 T | [x]  | Add Dired integration                        | 👍 A |
+|      | [x]  | 📌 `/ecc-dired.el`                           | 👍 A |
 
 * Methods
 

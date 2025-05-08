@@ -1,13 +1,15 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 12:27:26>
+;;; Timestamp: <2025-05-07 15:11:52>
 ;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ecc-repository.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
-
 (require 'ecc-variables)
 (declare-function magit-toplevel "ext:magit-git")
+
+;; 1. Configuration variables
+;; ----------------------------------------
 
 (defcustom ecc-repository-dir nil
   "Default directory for repository operations."
@@ -32,17 +34,8 @@
   :type 'integer
   :group 'emacs-claude)
 
-(defun ecc-get-repository-files (dir)
-  "Get list of files in DIR to include in repository copy.
-Filter out blacklisted files and large files."
-  (let ((result nil))
-    (dolist (file (directory-files-recursively dir "\\."))
-      (when (and (file-regular-p file)
-                 (not (ecc-repository-blacklisted-p file))
-                 (<= (file-attribute-size (file-attributes file))
-                     ecc-repository-max-file-size))
-        (push file result)))
-    result))
+;; 2. Main user interface function
+;; ----------------------------------------
 
 (defun ecc-repository-copy-contents (dir)
   "Write repository structure from DIR to output file and clipboard."
@@ -54,7 +47,8 @@ Filter out blacklisted files and large files."
         (output-path
          (expand-file-name ecc-repository-output-file dir)))
     (setq ecc-repository-dir dir)
-    (setq content (concat "# Repository Structure\n\n"))
+    (
+     setq content (concat "# Repository Structure\n\n"))
     (dolist (file file-list)
       (let ((relative-path (file-relative-name file dir)))
         (setq content
@@ -73,6 +67,21 @@ Filter out blacklisted files and large files."
      "Repository written to %s and copied to clipboard: %d files."
      output-path (length file-list))
     output-path))
+
+;; 3. Helper functions
+;; ----------------------------------------
+
+(defun ecc-get-repository-files (dir)
+  "Get list of files in DIR to include in repository copy.
+Filter out blacklisted files and large files."
+  (let ((result nil))
+    (dolist (file (directory-files-recursively dir ".*" t))
+      (when (and (file-regular-p file)
+                 (not (ecc-repository-blacklisted-p file))
+                 (<= (file-attribute-size (file-attributes file))
+                     ecc-repository-max-file-size))
+        (push file result)))
+    result))
 
 (defun ecc-repository-blacklisted-p (file)
   "Return t if FILE matches any pattern in blacklist."

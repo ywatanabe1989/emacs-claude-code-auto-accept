@@ -29,7 +29,7 @@
   (should (fboundp '--ecc-state-detect-prompt)))
 
 (ert-deftest test-ecc-detect-prompt-with-mock-buffer ()
-  (let ((orig-buffer ecc-active-buffer)
+  (let ((orig-buffer ecc-buffer-current-active-buffer)
         (mock-buffer (generate-new-buffer "*MOCK-CLAUDE*"))
         (test-prompt "❯ 1. Yes"))
     (unwind-protect
@@ -37,47 +37,47 @@
           (with-current-buffer mock-buffer
             (insert "Some content before the prompt\n" test-prompt
                     "\nSome content after"))
-          (setq ecc-active-buffer mock-buffer)
+          (setq ecc-buffer-current-active-buffer mock-buffer)
           (should (--ecc-state-detect-prompt test-prompt)))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq ecc-active-buffer orig-buffer))))
+      (setq ecc-buffer-current-active-buffer orig-buffer))))
 
 (ert-deftest test-ecc-detect-prompt-handles-nil-buffer ()
-  (let ((orig-buffer ecc-active-buffer))
+  (let ((orig-buffer ecc-buffer-current-active-buffer))
     (unwind-protect
         (progn
-          (setq ecc-active-buffer nil)
+          (setq ecc-buffer-current-active-buffer nil)
           (should-not (--ecc-state-detect-prompt "any prompt")))
-      (setq ecc-active-buffer orig-buffer))))
+      (setq ecc-buffer-current-active-buffer orig-buffer))))
 
 (ert-deftest
     test-ecc-detect-prompt-returns-nil-when-not-found ()
-  (let ((orig-buffer ecc-active-buffer)
+  (let ((orig-buffer ecc-buffer-current-active-buffer)
         (mock-buffer (generate-new-buffer "*MOCK-CLAUDE*")))
     (unwind-protect
         (progn
           (with-current-buffer mock-buffer
             (insert "Content without the target prompt"))
-          (setq ecc-active-buffer mock-buffer)
+          (setq ecc-buffer-current-active-buffer mock-buffer)
           (should-not
            (--ecc-state-detect-prompt "Target prompt not present")))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq ecc-active-buffer orig-buffer))))
+      (setq ecc-buffer-current-active-buffer orig-buffer))))
 
 (ert-deftest test-ecc-y/n-prompt-detection ()
-  (let ((orig-buffer ecc-active-buffer)
+  (let ((orig-buffer ecc-buffer-current-active-buffer)
         (mock-buffer (generate-new-buffer "*MOCK-CLAUDE*")))
     (unwind-protect
         (progn
           (with-current-buffer mock-buffer
             (insert "Some content\n❯ 1. Yes\nMore content"))
-          (setq ecc-active-buffer mock-buffer)
+          (setq ecc-buffer-current-active-buffer mock-buffer)
           (should (--ecc-state-y/n-p)))
       (when (buffer-live-p mock-buffer)
         (kill-buffer mock-buffer))
-      (setq ecc-active-buffer orig-buffer))))
+      (setq ecc-buffer-current-active-buffer orig-buffer))))
 
 
 (provide 'test-emacs-claude-code-detect-prompt)

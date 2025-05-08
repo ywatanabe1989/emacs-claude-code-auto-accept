@@ -39,7 +39,7 @@
         (progn
           ;; Set up test environment
           (with-current-buffer test-buffer
-            (require 'ecc-buffer-registry)
+            (require 'ecc-buffer/ecc-buffer-registry)
             (ecc-buffer-register-buffer test-buffer))
           
           ;; Call the function
@@ -68,7 +68,7 @@
         (progn
           ;; Set up test environment
           (with-current-buffer test-buffer
-            (require 'ecc-buffer-registry)
+            (require 'ecc-buffer/ecc-buffer-registry)
             (ecc-buffer-register-buffer test-buffer))
           
           ;; Record entries
@@ -100,7 +100,7 @@
         (progn
           ;; Set up test environment
           (with-current-buffer test-buffer
-            (require 'ecc-buffer-registry)
+            (require 'ecc-buffer/ecc-buffer-registry)
             (ecc-buffer-register-buffer test-buffer))
           
           ;; Record entries
@@ -141,7 +141,7 @@
         (progn
           ;; Set up test environment
           (with-current-buffer test-buffer
-            (require 'ecc-buffer-registry)
+            (require 'ecc-buffer/ecc-buffer-registry)
             (ecc-buffer-register-buffer test-buffer))
           
           ;; Record entry

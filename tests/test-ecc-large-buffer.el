@@ -6,7 +6,6 @@
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 (require 'ert)
-(require 'ecc-variables)
 
 ;; Load required modules for testing
 (declare-function ecc-large-buffer-chunk-string "ecc-large-buffer")

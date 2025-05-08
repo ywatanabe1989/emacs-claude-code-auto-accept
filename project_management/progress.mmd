@@ -15,7 +15,10 @@ graph TD
         Root["/.emacs.d/lisp/emacs-claude-code"]:::directory
         Core["emacs-claude-code.el"]:::done
         BufferDir["ecc-buffer/"]:::directory
+        StateDir["ecc-state/"]:::directory
+        TemplateDir["ecc-template/"]:::directory
         TemplatesDir["templates/"]:::directory
+        DocsDir["docs/"]:::directory
         TestsDir["tests/"]:::directory
     end
     
@@ -81,10 +84,11 @@ graph TD
         end
     end
     
-    %% Goal 6 Details (Ongoing)
+    %% Goal 6 Details (Additional Features)
     subgraph Goal6Details[Additional Features]
-        M6_1[Repository Integration]:::inProgress
-        M6_2[Performance Optimizations]:::inProgress
+        M6_1[Repository Integration]:::done
+        M6_2[Performance Optimizations]:::done
+        M6_3[Documentation Improvements]:::done
         
         subgraph M6_1Tasks[Repository Tasks]
             T6_1_1[Copy Repository Contents]:::done
@@ -94,6 +98,28 @@ graph TD
         subgraph M6_2Tasks[Performance Tasks]
             T6_2_1[Buffer Handling for Large Files]:::done
             T6_2_2[Template Caching Improvements]:::done
+        end
+        
+        subgraph M6_3Tasks[Documentation Tasks]
+            T6_3_1[Claude Settings Documentation]:::done
+            T6_3_2[Code Organization and Cleanup]:::done
+        end
+    end
+    
+    %% Goal 9 Details (User Experience - Partial Implementation)
+    subgraph Goal9Details[User Experience]
+        M9_1[Enhanced Visualization]:::todo
+        M9_2[History Management]:::done
+        M9_3[Mode Management]:::done
+        
+        subgraph M9_2Tasks[History Tasks]
+            T9_2_1[History Browser Implementation]:::done
+            T9_2_2[Interaction Statistics Dashboard]:::todo
+        end
+        
+        subgraph M9_3Tasks[Mode Tasks]
+            T9_3_1[Dedicated Mode Implementation]:::done
+            T9_3_2[Dired Integration]:::done
         end
     end
     
@@ -109,16 +135,6 @@ graph TD
             M8_2[Template Enhancements]:::todo
             M8_3[Memory Management]:::todo
         end
-        
-        subgraph Goal9Details[User Experience]
-            M9_1[Enhanced Visualization]:::todo
-            M9_2[History Management]:::done
-            
-            subgraph M9_2Tasks[History Tasks]
-                T9_2_1[History Browser Implementation]:::done
-                T9_2_2[Interaction Statistics Dashboard]:::todo
-            end
-        end
     end
     
     %% Connections
@@ -129,6 +145,7 @@ graph TD
     Goals --> Goal2Details
     Goals --> Goal3Details
     Goals --> Goal6Details
+    Goals --> Goal9Details
     Goals --> FutureGoals
     
     Goal1 --> M1_1
@@ -146,17 +163,24 @@ graph TD
     
     Goal6 --> M6_1
     Goal6 --> M6_2
+    Goal6 --> M6_3
     M6_1 --> M6_1Tasks
     M6_2 --> M6_2Tasks
+    M6_3 --> M6_3Tasks
     
     Goal7 --> Goal7Details
     Goal8 --> Goal8Details
     Goal9 --> Goal9Details
+    
     M9_2 --> M9_2Tasks
+    M9_3 --> M9_3Tasks
     
     Root --> Core
     Root --> BufferDir
+    Root --> StateDir
+    Root --> TemplateDir
     Root --> TemplatesDir
+    Root --> DocsDir
     Root --> TestsDir
     
     %% Styling
@@ -169,5 +193,6 @@ graph TD
     class T1_1_1,T1_1_2,T1_1_3,T1_1_4,T1_1_5,T1_1_6,T1_1_7 done;
     class T2_1_1,T2_1_2,T2_1_3,T2_2_1,T2_2_2 done;
     class T3_1_1,T3_1_2,T3_1_3,T3_2_1,T3_2_2 done;
-    class T6_1_1,T6_1_2,T6_2_1,T6_2_2,T9_2_1 done;
+    class T6_1_1,T6_1_2,T6_2_1,T6_2_2,T6_3_1,T6_3_2 done;
+    class T9_2_1,T9_3_1,T9_3_2 done;
     class T9_2_2 todo;

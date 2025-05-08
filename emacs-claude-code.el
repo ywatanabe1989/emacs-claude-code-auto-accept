@@ -34,7 +34,7 @@
 (require 'ecc-mode)
 
 ;; Load buffer management modules
-(require 'ecc-buffer)
+(require 'ecc-buffer/ecc-buffer)
 
 ;; Load state management modules 
 (require 'ecc-state/ecc-state-detect)

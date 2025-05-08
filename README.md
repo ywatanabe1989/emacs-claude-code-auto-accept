@@ -1,5 +1,5 @@
 <!-- ---
-!-- Timestamp: 2025-05-07 14:02:25
+!-- Timestamp: 2025-05-08 02:17:22
 !-- Author: ywatanabe
 !-- File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/README.md
 !-- --- -->
@@ -74,6 +74,37 @@ All commands are available under the `C-c c` prefix:
 
 ### Repository
 - `C-c c R` - Copy repository contents
+
+## Auto-Accept Mode
+
+ECC provides an Auto-Accept mode that automatically handles Claude's interactive prompts without requiring manual intervention. This is particularly useful for long-running interactions where Claude frequently asks for confirmation or choices.
+
+### How to Use
+
+1. **Toggle Auto-Accept Mode**: Use `C-c c a` to toggle auto-accept mode on/off
+
+2. **Automatic Actions**:
+   - When Claude displays a Y/N prompt, auto-accept automatically selects "Y"
+   - For multi-option prompts (Y/Y/N), it selects the middle option
+   - When Claude waits for confirmation to continue, it automatically sends the continue command
+
+3. **Notifications**:
+   - Desktop notifications are sent when auto-accept is enabled/disabled
+   - Notifications are also sent each time Claude prompts are automatically handled
+
+### Configuration
+
+Auto-accept mode can be configured through these variables:
+
+```elisp
+;; Set auto-accept interval (defaults to 1 second)
+(setq ecc-auto-interval-sec 2)
+
+;; Enable auto-accept when ECC starts
+(setq ecc-auto-enable t)
+```
+
+When auto-accept mode is active, you'll see "Auto" in the mode line indicator.
 
 ## Customization
 

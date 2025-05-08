@@ -29,8 +29,8 @@
                         (list
                          ecc-mode-line-indicator))))
         ;; Highlight buffer name instead of whole mode line
-        (when (buffer-live-p ecc-active-buffer)
-          (with-current-buffer ecc-active-buffer
+        (when (buffer-live-p ecc-buffer-current-active-buffer)
+          (with-current-buffer ecc-buffer-current-active-buffer
             (when ecc-buffer-name-overlay
               (delete-overlay
                ecc-buffer-name-overlay))
@@ -47,8 +47,8 @@
     (setq global-mode-string
           (remove ecc-mode-line-indicator
                   global-mode-string))
-    (when (buffer-live-p ecc-active-buffer)
-      (with-current-buffer ecc-active-buffer
+    (when (buffer-live-p ecc-buffer-current-active-buffer)
+      (with-current-buffer ecc-buffer-current-active-buffer
         (when ecc-buffer-name-overlay
           (delete-overlay ecc-buffer-name-overlay)
           (setq ecc-buffer-name-overlay nil)))))
@@ -56,20 +56,20 @@
 
 (defun ecc-update-state-indicator ()
   "Update mode line indicator based on Claude's current state."
-  (when (buffer-live-p ecc-active-buffer)
-    (with-current-buffer ecc-active-buffer
+  (when (buffer-live-p ecc-buffer-current-active-buffer)
+    (with-current-buffer ecc-buffer-current-active-buffer
       (let* ((state (ecc-state-get))
              (new-indicator
               (cond
-               ((eq state :running) ecc-running-mode-line)
+               ((eq state :running) ecc-viz-mode-line-running)
                ((or (eq state :waiting) (eq state :initial-waiting))
-                ecc-waiting-mode-line)
+                ecc-viz-mode-line-waiting)
                ((or (eq state :y/n) (eq state :y/y/n))
-                ecc-waiting-mode-line)
-               (t ecc-idle-mode-line))))
+                ecc-viz-mode-line-waiting)
+               (t ecc-viz-mode-line-idle))))
 
         ;; Update the running state variable
-        (setq ecc-running (eq state :running))
+        (setq ecc-state-running-p (eq state :running))
 
         ;; Update the indicator if it changed
         (unless (string= ecc-state-indicator new-indicator)
@@ -78,14 +78,14 @@
 
 ;; (defun ecc-update-mode-line-all-buffers ()
 ;;   "Update mode line indicator on all Claude buffers."
-;;   (let ((tail ecc-buffers))
+;;   (let ((tail ecc-buffer-registered-buffers))
 ;;     (while tail
 ;;       (let ((buf (car tail)))
 ;;         (when (buffer-live-p buf)
 ;;           (with-current-buffer buf
-;;             (let* ((is-active (eq buf ecc-active-buffer))
+;;             (let* ((is-active (eq buf ecc-buffer-current-active-buffer))
 ;;                    (state-color (cond
-;;                                  (ecc-running "green")
+;;                                  (ecc-state-running-p "green")
 ;;                                  (is-active "orange")
 ;;                                  (t "gray"))))
 ;;               ;; Safely handle overlay deletion
@@ -107,14 +107,14 @@
 
 (defun ecc-update-mode-line-all-buffers ()
   "Update mode line indicator on all Claude buffers."
-  (let ((tail ecc-buffers))
+  (let ((tail ecc-buffer-registered-buffers))
     (while tail
       (let ((buf (car tail)))
         (when (buffer-live-p buf)
           (with-current-buffer buf
-            (let* ((is-active (eq buf ecc-active-buffer))
+            (let* ((is-active (eq buf ecc-buffer-current-active-buffer))
                    (state-color (cond
-                                 (ecc-running "green")
+                                 (ecc-state-running-p "green")
                                  (is-active "orange")
                                  (t "gray"))))
               ;; Safe overlay handling with condition-case to handle mock objects in tests

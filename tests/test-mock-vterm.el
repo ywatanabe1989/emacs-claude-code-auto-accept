@@ -1,7 +1,7 @@
-;; -*- coding: utf-8; lexical-binding: t -*-
-;; Author: ywatanabe
-;; Timestamp: <2025-05-07 14:45:55>
-;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-mock-vterm.el
+;;; -*- coding: utf-8; lexical-binding: t -*-
+;;; Author: ywatanabe
+;;; Timestamp: <2025-05-07 14:45:55>
+;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-mock-vterm.el
 
 ;; This file provides mock implementations of vterm functions for testing
 
@@ -15,21 +15,24 @@
                                nil))
 
 ;; Define ecc buffer variables for testing
-(defvar ecc-buffer nil
-  "Mock buffer for Claude communication.")
+(defvar ecc-buffers nil
+  "Mock list of Claude buffers.")
 
-(defvar ecc-buffer-registry (make-hash-table :test 'equal)
-  "Mock registry of Claude buffers with timestamps.")
+(defvar ecc-active-buffer nil
+  "Mock currently active Claude buffer.")
 
 (defvar ecc-buffer-current-active-buffer nil
   "Mock currently active Claude buffer.")
+
+(defvar ecc-buffer-timestamps (make-hash-table :test 'equal)
+  "Mock timestamps for Claude buffers.")
 
 ;; Mock buffer function
 (unless (fboundp 'ecc-buffer-get-or-create-active-buffer)
   (defun ecc-buffer-get-or-create-active-buffer ()
     "Mock implementation to get or create a Claude buffer."
-    (or ecc-buffer
-        (setq ecc-buffer (generate-new-buffer "*MOCK-CLAUDE*")))))
+    (or ecc-active-buffer
+        (setq ecc-active-buffer (generate-new-buffer "*MOCK-CLAUDE*")))))
 
 (unless (fboundp 'vterm-mode)
   (defun vterm-mode ()
