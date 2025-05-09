@@ -1,17 +1,22 @@
+# Local config/settings
 **/.claude/settings.local.json
-.old
-tests/.oldtests/.old
+.env/
+.env
 
-# Elisp test reports and logs
+# Archived & Old files
+.old/
+.old
+contrib/
+
+# Test reports and logs
 ELISP-TEST-REPORT-*.org
 ELISP-TEST-REPORT-*.pdf
 ELISP-TEST-REPORT-*.tex
 LATEST-TEST-REPORT.*
 *.sh.log
-
-# Environment
-.env/
-.env
+.*.log
+*.aux
+*.toc
 
 # Test artifacts
 custom-report-*.org
@@ -20,19 +25,38 @@ custom-report-*.tex
 buffer-test-report-*.org
 buffer-test-report-*.pdf
 buffer-test-report-*.tex
+test_logs/
 
-# User-specific files
+# Temporary directories
+tmp/
+temp/
+
+# Communication directories 
 from_user/
+from_claude/
 communication/
 
-# Temporary files
+# Elisp compiled files
+*.elc
+
+# Temporary test/development files
 playground.el
 manual-test.el
 simple-test.sh
+*-manual-test.el
 screenshot.png
 
 # Editor backup files
 *~
 \#*\#
 .\#*
-tmp
+
+# OS specific files
+.DS_Store
+Thumbs.db
+.directory
+
+# Package manager files
+.cask/
+elpa/
+straight/
