@@ -62,6 +62,11 @@
 (require 'ecc-repository-view)
 (require 'ecc-dired)
 
+;; Load terminal integration module
+(condition-case nil
+    (require 'ecc-term/ecc-claude-vterm-mode)
+  (error (message "vterm mode could not be loaded, continuing without it")))
+
 ;; Load history and session management
 (require 'ecc-history)
 
