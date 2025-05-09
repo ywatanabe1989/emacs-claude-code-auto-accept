@@ -13,7 +13,16 @@
       "Bash(./tmp/run-diagnostic.sh:*)",
       "Bash(./tmp/fix-tests.sh:*)",
       "Bash(find:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git mv:*)",
+      "Bash(mv:*)",
+      "Bash(tests/test-ecc-buffer-:*)",
+      "Bash(tests/buffer/)",
+      "Bash(for file in)",
+      "Bash(tests/test-ecc-buffer:*)",
+      "Bash(do mv \"$file\" tests/buffer/)",
+      "Bash(done)",
+      "Bash(tests/*.el)"
     ],
     "deny": []
   }
