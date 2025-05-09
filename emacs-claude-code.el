@@ -74,10 +74,10 @@
 (require 'ecc-bindings)       ;; Key bindings
 (require 'ecc-mode)           ;; Mode definition
 
-;; Buffer management modules
+;; Buffer management modules (legacy)
 (require 'ecc-buffer/ecc-buffer)
 
-;; State management modules 
+;; State management modules (legacy)
 (require 'ecc-state/ecc-state)
 (require 'ecc-state/ecc-state-detect)
 
@@ -98,6 +98,14 @@
 
 ;; History and session management
 (require 'ecc-history)
+
+;; Modern architecture modules
+(require 'ecc-state-engine)    ;; Modern state machine
+(require 'ecc-buffer-manager)  ;; Modern buffer management
+(require 'ecc-command)         ;; Command system
+
+;; Integration layer for backward compatibility
+(require 'ecc-integration)
 
 ;; ---- Initialization ----
 

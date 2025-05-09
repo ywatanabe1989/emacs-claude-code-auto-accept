@@ -22,6 +22,7 @@ Emacs Claude Code (ECC) enhances your workflow by seamlessly integrating Claude'
 - Region/buffer processing
 - Repository analysis capabilities
 - Robust test framework
+- Modern architecture with proper state machine and command system
 
 ## Installation
 
@@ -181,6 +182,17 @@ emacs -batch -l tests/test-vterm-mode.el
 ```
 
 This script is designed to work properly even if the vterm package is not available.
+
+## Architecture
+
+Emacs Claude Code uses a modern, well-structured architecture with proper separation of concerns:
+
+- **State Engine**: Proper state machine implementation for Claude interactions
+- **Buffer Manager**: Robust buffer lifecycle management with metadata
+- **Command System**: Unified command interface with history and extensibility
+- **Integration Layer**: Backward compatibility with legacy systems
+
+For more details, see the [Architecture Documentation](docs/architecture.md).
 
 ## Contact
 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
