@@ -58,6 +58,12 @@ Enabling truncation can improve performance for long lines."
                   :help "Clear the vterm buffer"))
     (define-key menu [ecc-claude-vterm-separator-1]
       '(menu-item "--"))
+    (define-key menu [ecc-claude-vterm-auto-mode-toggle]
+      '(menu-item "Toggle Auto-mode" ecc-claude-vterm-auto-mode-toggle
+                  :help "Toggle automatic response to Claude prompts"
+                  :button (:toggle . ecc-claude-vterm-auto-mode)))
+    (define-key menu [ecc-claude-vterm-separator-2]
+      '(menu-item "--"))
     (define-key menu [ecc-claude-vterm-retry]
       '(menu-item "Retry (r)" ecc-claude-vterm-retry
                   :help "Send 'r' to retry current operation"))
@@ -67,7 +73,7 @@ Enabling truncation can improve performance for long lines."
     (define-key menu [ecc-claude-vterm-yes]
       '(menu-item "Yes (y)" ecc-claude-vterm-yes
                   :help "Send 'y' to respond affirmatively"))
-    (define-key menu [ecc-claude-vterm-separator-2]
+    (define-key menu [ecc-claude-vterm-separator-3]
       '(menu-item "--"))
     (define-key menu [ecc-claude-vterm-interrupt]
       '(menu-item "Interrupt" ecc-claude-vterm-interrupt
@@ -89,12 +95,23 @@ Enabling truncation can improve performance for long lines."
     (define-key map (kbd "C-c C-n") 'ecc-claude-vterm-no)
     (define-key map (kbd "C-c C-r") 'ecc-claude-vterm-retry)
     (define-key map (kbd "C-c C-l") 'ecc-claude-vterm-clear)
+    (define-key map (kbd "C-c C-a") 'ecc-claude-vterm-auto-mode-toggle)
     
     ;; Add menu
     (define-key map [menu-bar claude-vterm] (cons "Claude" ecc-claude-vterm-menu))
     
     map)
   "Keymap for `ecc-claude-vterm-mode'.")
+
+;; Timer for state detection
+(defvar ecc-claude-vterm-state-timer nil
+  "Timer for updating the Claude state in VTERM mode.")
+
+;; Customization for state detection interval
+(defcustom ecc-claude-vterm-state-update-interval 1.0
+  "Interval in seconds for updating Claude state in VTERM mode."
+  :type 'number
+  :group 'ecc-claude-vterm)
 
 ;; Mode definition
 (define-derived-mode ecc-claude-vterm-mode ecc-claude-vterm-parent-mode "Claude-VTerm"
@@ -115,11 +132,40 @@ Key bindings:
               fast-but-imprecise-scrolling t
               truncate-lines ecc-claude-vterm-truncate-lines)
   
+  ;; Update prompt detection patterns
+  (ecc-claude-vterm-update-prompt-patterns)
+  
   ;; Visual indicators for Claude state
   (ecc-claude-vterm-setup-mode-line)
   
   ;; Register in buffer registry
-  (ecc-buffer-register-buffer (current-buffer)))
+  (ecc-buffer-register-buffer (current-buffer))
+  
+  ;; Make this buffer the active Claude buffer
+  (when (boundp 'ecc-active-buffer)
+    (setq ecc-active-buffer (current-buffer)))
+  
+  (when (boundp 'ecc-buffer-current-buffer)
+    (setq ecc-buffer-current-buffer (current-buffer)))
+  
+  ;; Set up state detection timer
+  (when ecc-claude-vterm-state-timer
+    (cancel-timer ecc-claude-vterm-state-timer))
+  
+  (setq ecc-claude-vterm-state-timer
+        (run-with-timer 0 ecc-claude-vterm-state-update-interval
+                        'ecc-claude-vterm-check-state))
+  
+  ;; Set up auto-mode if enabled
+  (when ecc-claude-vterm-auto-mode
+    (add-to-list 'ecc-claude-vterm-update-functions
+                'ecc-claude-vterm-auto-send-accept))
+  
+  ;; Connect to vterm hooks if available
+  (when ecc-claude-vterm--vterm-available
+    (add-hook 'vterm-update-functions
+              (lambda (&rest _)
+                (run-hooks 'ecc-claude-vterm-update-functions)))))
 
 ;; Mode-line indicator for Claude state
 (defun ecc-claude-vterm-setup-mode-line ()
@@ -131,17 +177,42 @@ Key bindings:
   "Return mode line indicator for current Claude state."
   (let ((state (ecc-state-get)))
     (cond
-     ((eq state 'waiting) " [Waiting]")
-     ((eq state 'y/n) " [Y/N]")
-     ((eq state 'y/y/n) " [Y/Y/N]")
+     ((eq state :waiting) " [Waiting]")
+     ((eq state :y/n) " [Y/N]")
+     ((eq state :y/y/n) " [Y/Y/N]")
+     ((eq state :initial-waiting) " [Continue?]")
+     ((eq state :running) " [Running]")
      (t ""))))
+
+;; State detection integration
+(defun ecc-claude-vterm-check-state ()
+  "Check and update the state of the Claude VTERM buffer.
+This function is meant to be run periodically to update the mode line."
+  (interactive)
+  (when (eq major-mode 'ecc-claude-vterm-mode)
+    (let ((state (ecc-state-get)))
+      (force-mode-line-update)
+      state)))
+
+;; Auto-mode configuration
+(defcustom ecc-claude-vterm-auto-mode nil
+  "When non-nil, automatically respond to Claude prompts in VTERM."
+  :type 'boolean
+  :group 'ecc-claude-vterm)
+
+;; Hook variables
+(defvar ecc-claude-vterm-update-functions nil
+  "Functions to run after vterm output is updated.")
 
 ;; Claude interaction functions
 (defun ecc-claude-vterm-interrupt ()
   "Interrupt the current Claude process."
   (interactive)
   (if ecc-claude-vterm--vterm-available
-      (vterm-send-string "\C-c")
+      (progn
+        (vterm-send-string "\C-c")
+        (sit-for 0.3)
+        (vterm-send-string "\C-c"))
     (message "Interrupt not available without vterm")))
 
 (defun ecc-claude-vterm-yes ()
@@ -178,6 +249,58 @@ Key bindings:
       (vterm-clear)
     (erase-buffer)))
 
+;; Auto-response functions
+(defun ecc-claude-vterm-auto-send-accept ()
+  "Automatically respond to Claude prompts in vterm mode."
+  (when ecc-claude-vterm-auto-mode
+    (let ((state (ecc-state-get)))
+      (cond
+       ((eq state :y/y/n)
+        (ecc-claude-vterm-auto-send-y/y/n))
+       ((eq state :y/n)
+        (ecc-claude-vterm-auto-send-y/n))
+       ((eq state :waiting)
+        (ecc-claude-vterm-auto-send-continue))
+       ((eq state :initial-waiting)
+        (ecc-claude-vterm-auto-send-continue))))))
+
+(defun ecc-claude-vterm-auto-send-y/n ()
+  "Automatically respond with 'y' to Y/N prompts."
+  (when ecc-claude-vterm--vterm-available
+    (vterm-send-string "y")
+    (vterm-send-return)
+    (message "Auto-responded: y")))
+
+(defun ecc-claude-vterm-auto-send-y/y/n ()
+  "Automatically respond with 'y' to Y/Y/N prompts."
+  (when ecc-claude-vterm--vterm-available
+    (vterm-send-string "y")
+    (vterm-send-return)
+    (message "Auto-responded: y")))
+
+(defun ecc-claude-vterm-auto-send-continue ()
+  "Automatically respond to continue prompts."
+  (when ecc-claude-vterm--vterm-available
+    (vterm-send-string "continue")
+    (vterm-send-return)
+    (message "Auto-responded: continue")))
+
+;; Toggle auto-mode
+(defun ecc-claude-vterm-auto-mode-toggle ()
+  "Toggle automatic response to Claude prompts."
+  (interactive)
+  (setq ecc-claude-vterm-auto-mode (not ecc-claude-vterm-auto-mode))
+  (message "Claude auto-mode %s"
+           (if ecc-claude-vterm-auto-mode "enabled" "disabled"))
+  
+  ;; Set up hooks for auto-responses
+  (if ecc-claude-vterm-auto-mode
+      (add-to-list 'ecc-claude-vterm-update-functions
+                  'ecc-claude-vterm-auto-send-accept)
+    (setq ecc-claude-vterm-update-functions
+          (remove 'ecc-claude-vterm-auto-send-accept
+                  ecc-claude-vterm-update-functions))))
+
 ;; Function to create new Claude vterm buffer
 (defun ecc-claude-vterm ()
   "Create a new Claude vterm buffer with optimized settings."
@@ -195,6 +318,56 @@ Key bindings:
       (set (make-local-variable 'ecc-original-name) buffer-name))
     (switch-to-buffer new-buffer)
     new-buffer))
+
+;; Custom prompt detection patterns for VTERM
+(defcustom ecc-claude-vterm-prompt-waiting "Continue generati"
+  "Text pattern for detecting waiting prompt in VTERM mode."
+  :type 'string
+  :group 'ecc-claude-vterm)
+
+(defcustom ecc-claude-vterm-prompt-y/n "y/n"
+  "Text pattern for detecting yes/no prompt in VTERM mode."
+  :type 'string
+  :group 'ecc-claude-vterm)
+
+(defcustom ecc-claude-vterm-prompt-y/y/n "Y/y/n"
+  "Text pattern for detecting Y/y/n prompt in VTERM mode."
+  :type 'string
+  :group 'ecc-claude-vterm)
+
+(defcustom ecc-claude-vterm-prompt-initial-waiting "Would you like Claude to continue?"
+  "Text pattern for detecting initial waiting prompt in VTERM mode."
+  :type 'string
+  :group 'ecc-claude-vterm)
+
+;; Function to update prompt patterns with VTERM-specific patterns
+(defun ecc-claude-vterm-update-prompt-patterns ()
+  "Update global prompt patterns with VTERM-specific patterns.
+This function is meant to be called when initializing VTERM mode."
+  (when (boundp 'ecc-prompt-waiting)
+    (setq-default ecc-prompt-waiting ecc-claude-vterm-prompt-waiting))
+  
+  (when (boundp 'ecc-prompt-y/n)
+    (setq-default ecc-prompt-y/n ecc-claude-vterm-prompt-y/n))
+  
+  (when (boundp 'ecc-prompt-y/y/n)
+    (setq-default ecc-prompt-y/y/n ecc-claude-vterm-prompt-y/y/n))
+  
+  (when (boundp 'ecc-prompt-initial-waiting)
+    (setq-default ecc-prompt-initial-waiting ecc-claude-vterm-prompt-initial-waiting))
+  
+  ;; Also update regex patterns
+  (when (boundp 'ecc-prompt-pattern-waiting)
+    (setq-default ecc-prompt-pattern-waiting ecc-claude-vterm-prompt-waiting))
+  
+  (when (boundp 'ecc-prompt-pattern-y/n)
+    (setq-default ecc-prompt-pattern-y/n ecc-claude-vterm-prompt-y/n))
+  
+  (when (boundp 'ecc-prompt-pattern-y/y/n)
+    (setq-default ecc-prompt-pattern-y/y/n ecc-claude-vterm-prompt-y/y/n))
+  
+  (when (boundp 'ecc-prompt-pattern-initial-waiting)
+    (setq-default ecc-prompt-pattern-initial-waiting ecc-claude-vterm-prompt-initial-waiting)))
 
 ;; Provide backward compatibility for existing code that uses vterm
 (unless ecc-claude-vterm--vterm-available

@@ -31,12 +31,16 @@
 
 (ert-deftest test-ecc-claude-vterm-mode-line-indicator-function ()
   "Test the mode line state indicator function."
-  (cl-letf (((symbol-function 'ecc-state-get) (lambda () 'waiting)))
+  (cl-letf (((symbol-function 'ecc-state-get) (lambda () :waiting)))
     (should (equal (ecc-claude-vterm-mode-line-state-indicator) " [Waiting]")))
-  (cl-letf (((symbol-function 'ecc-state-get) (lambda () 'y/n)))
+  (cl-letf (((symbol-function 'ecc-state-get) (lambda () :y/n)))
     (should (equal (ecc-claude-vterm-mode-line-state-indicator) " [Y/N]")))
-  (cl-letf (((symbol-function 'ecc-state-get) (lambda () 'y/y/n)))
-    (should (equal (ecc-claude-vterm-mode-line-state-indicator) " [Y/Y/N]"))))
+  (cl-letf (((symbol-function 'ecc-state-get) (lambda () :y/y/n)))
+    (should (equal (ecc-claude-vterm-mode-line-state-indicator) " [Y/Y/N]")))
+  (cl-letf (((symbol-function 'ecc-state-get) (lambda () :initial-waiting)))
+    (should (equal (ecc-claude-vterm-mode-line-state-indicator) " [Continue?]")))
+  (cl-letf (((symbol-function 'ecc-state-get) (lambda () :running)))
+    (should (equal (ecc-claude-vterm-mode-line-state-indicator) " [Running]"))))
 
 (ert-deftest test-ecc-claude-vterm-mode-keymap-defined ()
   "Test that ecc-claude-vterm-mode-map is defined."
@@ -55,6 +59,33 @@
   (should (fboundp 'ecc-claude-vterm-no))
   (should (fboundp 'ecc-claude-vterm-retry))
   (should (fboundp 'ecc-claude-vterm-clear)))
+
+(ert-deftest test-ecc-claude-vterm-prompt-patterns-defined ()
+  "Test that VTERM-specific prompt patterns are defined."
+  (should (boundp 'ecc-claude-vterm-prompt-waiting))
+  (should (boundp 'ecc-claude-vterm-prompt-y/n))
+  (should (boundp 'ecc-claude-vterm-prompt-y/y/n))
+  (should (boundp 'ecc-claude-vterm-prompt-initial-waiting)))
+
+(ert-deftest test-ecc-claude-vterm-check-state-defined ()
+  "Test that state checking function is defined."
+  (should (fboundp 'ecc-claude-vterm-check-state)))
+
+(ert-deftest test-ecc-claude-vterm-update-prompt-patterns-defined ()
+  "Test that prompt pattern update function is defined."
+  (should (fboundp 'ecc-claude-vterm-update-prompt-patterns)))
+
+(ert-deftest test-ecc-claude-vterm-auto-mode-configuration ()
+  "Test that auto-mode configuration is defined."
+  (should (boundp 'ecc-claude-vterm-auto-mode))
+  (should (fboundp 'ecc-claude-vterm-auto-mode-toggle)))
+
+(ert-deftest test-ecc-claude-vterm-auto-response-functions-defined ()
+  "Test that auto-response functions are defined."
+  (should (fboundp 'ecc-claude-vterm-auto-send-accept))
+  (should (fboundp 'ecc-claude-vterm-auto-send-y/n))
+  (should (fboundp 'ecc-claude-vterm-auto-send-y/y/n))
+  (should (fboundp 'ecc-claude-vterm-auto-send-continue)))
 
 ;; Tests that require vterm - only run if available
 (ert-deftest test-ecc-claude-vterm-mode-derives-from-vterm ()

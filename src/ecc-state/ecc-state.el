@@ -62,11 +62,14 @@ Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, :running, or nil."
    (t nil)))
 
 (defun --ecc-state-detect-prompt (prompt-text &optional n-lines)
-  "Find prompt in active Claude buffer using PROMPT-TEXT within N-LINES lines."
+  "Find prompt in active Claude buffer using PROMPT-TEXT within N-LINES lines.
+Supports both vterm and standard buffers."
   (interactive)
-  (let ((n-lines (or n-lines 50)))
-    (if (and prompt-text (buffer-live-p ecc-active-buffer))
-        (with-current-buffer ecc-active-buffer
+  (let ((n-lines (or n-lines 50))
+        (active-buffer (or (and (boundp 'ecc-active-buffer) ecc-active-buffer)
+                           (and (boundp 'ecc-buffer-current-buffer) ecc-buffer-current-buffer))))
+    (if (and prompt-text (buffer-live-p active-buffer))
+        (with-current-buffer active-buffer
           (save-excursion
             (goto-char (point-max))
             (skip-chars-backward " \t\n\r")
@@ -78,10 +81,17 @@ Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, :running, or nil."
                                  (goto-char (point-min))
                                  (forward-line (1- search-end-line))
                                  (point))))
-              (let
-                  ((found (search-backward prompt-text search-end t)))
+              (let ((found (search-backward prompt-text search-end t)))
                 (when found
-                  (vterm-clear)
+                  ;; Clear screen if in vterm mode and vterm is available
+                  (when (and (boundp 'ecc-claude-vterm--vterm-available) 
+                             ecc-claude-vterm--vterm-available
+                             (eq major-mode 'ecc-claude-vterm-mode))
+                    (condition-case nil
+                        (vterm-clear)
+                      (error nil)))
+                  
+                  ;; Highlight the found prompt
                   (condition-case nil
                       (save-excursion
                         (goto-char found)
