@@ -16,7 +16,8 @@ A streamlined Emacs interface for Claude AI coding assistance.
 Emacs Claude Code (ECC) enhances your workflow by seamlessly integrating Claude's AI capabilities directly into Emacs. The package provides:
 
 - Comprehensive buffer management for Claude interactions
-- Automatic response handling
+- Optimized VTERM mode for high-performance Claude interaction
+- Automatic response handling with state detection
 - Template system for common queries
 - Region/buffer processing
 - Repository analysis capabilities
@@ -48,6 +49,7 @@ All commands are available under the `C-c c` prefix:
 
 ### Buffer Management
 - `C-c c c` - Create new Claude session
+- `C-c c v` - Create new Claude VTERM session
 - `C-c c n` - Navigate to next Claude buffer
 - `C-c c p` - Navigate to previous Claude buffer
 - `C-c c l` - List all Claude buffers
@@ -76,13 +78,42 @@ All commands are available under the `C-c c` prefix:
 ### Repository
 - `C-c c R` - Copy repository contents
 
+## VTERM Mode
+
+ECC provides an optimized VTERM mode for high-performance Claude interaction, with specialized features for handling Claude's interactive capabilities.
+
+### How to Use
+
+1. **Start VTERM Mode**: Use `C-c c v` or `M-x ecc-claude-vterm` to start a new VTERM session
+
+2. **Key Bindings**:
+   - `C-c C-y` - Send 'yes' response
+   - `C-c C-n` - Send 'no' response
+   - `C-c C-r` - Send 'retry' response
+   - `C-c C-c` - Interrupt Claude
+   - `C-c C-a` - Toggle auto-mode
+   - `C-c C-l` - Clear buffer
+   - `C-c C-p/C-c C-b` - Previous buffer
+   - `C-c C-f` - Next buffer
+   - `C-c C-t` - New buffer
+
+3. **Mode Line Indicators**:
+   - `[Waiting]` - Claude is waiting for continuation
+   - `[Y/N]` - Claude is waiting for yes/no
+   - `[Y/Y/N]` - Claude is waiting for complex choice
+   - `[Running]` - Claude is processing
+
+For more details, see the [VTERM Mode documentation](docs/vterm-mode.md).
+
 ## Auto-Accept Mode
 
 ECC provides an Auto-Accept mode that automatically handles Claude's interactive prompts without requiring manual intervention. This is particularly useful for long-running interactions where Claude frequently asks for confirmation or choices.
 
 ### How to Use
 
-1. **Toggle Auto-Accept Mode**: Use `C-c c a` to toggle auto-accept mode on/off
+1. **Toggle Auto-Accept Mode**: 
+   - In standard mode: Use `C-c c a` to toggle auto-accept mode on/off
+   - In VTERM mode: Use `C-c C-a` to toggle auto-mode on/off
 
 2. **Automatic Actions**:
    - When Claude displays a Y/N prompt, auto-accept automatically selects "Y"
@@ -98,11 +129,16 @@ ECC provides an Auto-Accept mode that automatically handles Claude's interactive
 Auto-accept mode can be configured through these variables:
 
 ```elisp
+;; Standard mode configuration
 ;; Set auto-accept interval (defaults to 1 second)
 (setq ecc-auto-interval-sec 2)
 
 ;; Enable auto-accept when ECC starts
 (setq ecc-auto-enable t)
+
+;; VTERM mode configuration
+;; Enable auto-mode in VTERM by default
+(setq ecc-claude-vterm-auto-mode t)
 ```
 
 When auto-accept mode is active, you'll see "Auto" in the mode line indicator.
@@ -123,32 +159,28 @@ The project includes a comprehensive test suite that can be run in multiple ways
 Run all tests with standard output:
 
 ```bash
-./run-tests-elisp.sh
+./run_tests.sh
 ```
 
 Run a single test file:
 
 ```bash
-./run-tests-elisp.sh -s tests/test-ecc-buffer.el
+./run_tests.sh tests/test-ecc-buffer.el
 ```
 
 ### Detailed Test Reports
 
-Generate detailed test reports with:
+The test script automatically generates detailed org-mode and PDF reports with test results.
+
+### Testing VTERM Mode
+
+To specifically test the VTERM mode functionality:
 
 ```bash
-./run-tests-elisp.sh -r
+emacs -batch -l tests/test-vterm-mode.el
 ```
 
-This creates an org-mode report with detailed test results, and a PDF version if pdflatex is available.
-
-### Advanced Testing Options
-
-For more advanced testing options, use the specialized test script:
-
-```bash
-./elisp-test.sh --help
-```
+This script is designed to work properly even if the vterm package is not available.
 
 ## Contact
 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
