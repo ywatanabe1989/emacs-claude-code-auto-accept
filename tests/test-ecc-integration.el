@@ -1,6 +1,7 @@
 ;;; test-ecc-integration.el --- Tests for ecc-integration.el -*- lexical-binding: t -*-
 
 (require 'ert)
+(require 'test-setup)
 (require 'ecc-integration)
 (require 'ecc-state-engine)
 (require 'ecc-buffer-manager)

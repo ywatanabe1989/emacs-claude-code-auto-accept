@@ -1,6 +1,7 @@
 ;;; test-ecc-command.el --- Tests for ecc-command.el -*- lexical-binding: t -*-
 
 (require 'ert)
+(require 'test-setup)
 (require 'ecc-command)
 (require 'ecc-buffer-manager)
 

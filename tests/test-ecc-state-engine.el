@@ -1,6 +1,7 @@
 ;;; test-ecc-state-engine.el --- Tests for ecc-state-engine.el -*- lexical-binding: t -*-
 
 (require 'ert)
+(require 'test-setup)
 (require 'ecc-state-engine)
 
 ;; Test state creation and registration

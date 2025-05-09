@@ -1,6 +1,7 @@
 ;;; test-ecc-buffer-manager.el --- Tests for ecc-buffer-manager.el -*- lexical-binding: t -*-
 
 (require 'ert)
+(require 'test-setup)
 (require 'ecc-buffer-manager)
 
 ;; Test buffer creation and registration
