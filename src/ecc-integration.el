@@ -104,9 +104,9 @@ Returns a state ID symbol compatible with the new state engine."
   (when (buffer-live-p buffer)
     (with-current-buffer buffer
       (let ((legacy-state (cond
-                           ;; Try using the legacy detector
+                           ;; Try using the legacy detector if available
                            ((fboundp 'ecc-state-detect-prompt)
-                            (ecc-state-detect-prompt))
+                            (funcall 'ecc-state-detect-prompt))
                            ;; Fall back to buffer-local state if available
                            ((and (boundp 'ecc-buffer-state)
                                  (local-variable-p 'ecc-buffer-state))
