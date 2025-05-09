@@ -24,7 +24,8 @@
       "Bash(done)",
       "Bash(tests/*.el)",
       "Bash(./tmp/run-diagnostics.sh:*)",
-      "Bash(ln:*)"
+      "Bash(ln:*)",
+      "Bash(ELISP-TEST-REPORT*)"
     ],
     "deny": []
   }
