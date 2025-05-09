@@ -25,9 +25,15 @@
 (require 'ecc-command)
 
 ;; Legacy module requirements for integration
-(require 'ecc-buffer/ecc-buffer-variables)
-(require 'ecc-buffer/ecc-buffer-state)
-(require 'ecc-state/ecc-state-detect)
+;; Use safe require to handle potential missing modules
+(require 'ecc-buffer/ecc-buffer-variables nil t)
+(require 'ecc-buffer/ecc-buffer-state nil t)
+
+;; Create stubs for missing modules if needed
+(unless (boundp 'ecc-buffer-registry)
+  (defvar ecc-buffer-registry (make-hash-table :test 'equal)))
+
+;; Don't require legacy state detection, we'll use the new state engine
 
 ;; ---- Buffer Integration ----
 

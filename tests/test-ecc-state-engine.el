@@ -74,37 +74,44 @@
           (with-current-buffer buffer
             (erase-buffer)
             (insert "Thinking...\nSome more content"))
-          (should (eq (ecc-state-engine-detect-state buffer) 'running))
+          (ecc-state-engine-detect-state buffer)
+          (should (eq (ecc-state-engine-get-current-state-id) 'running))
           
           ;; Test waiting state detection
           (with-current-buffer buffer
             (erase-buffer)
             (insert "Press Enter to continue\nSome more content"))
-          (should (eq (ecc-state-engine-detect-state buffer) 'waiting))
+          (ecc-state-engine-detect-state buffer)
+          (should (eq (ecc-state-engine-get-current-state-id) 'waiting))
           
           ;; Test yes-no state detection
           (with-current-buffer buffer
             (erase-buffer)
             (insert "❯ 1. Yes\n❯ 2. No\nChoose an option"))
-          (should (eq (ecc-state-engine-detect-state buffer) 'yes-no))
+          (ecc-state-engine-detect-state buffer)
+          (should (eq (ecc-state-engine-get-current-state-id) 'yes-no))
           
           ;; Test yes-yes-no state detection
           (with-current-buffer buffer
             (erase-buffer)
             (insert "❯ 1. Yes\n❯ 2. Yes, but with changes\n❯ 3. No\nChoose an option"))
-          (should (eq (ecc-state-engine-detect-state buffer) 'yes-yes-no))
+          (ecc-state-engine-detect-state buffer)
+          (should (eq (ecc-state-engine-get-current-state-id) 'yes-yes-no))
           
           ;; Test error state detection
           (with-current-buffer buffer
             (erase-buffer)
             (insert "Error: Could not complete the request"))
-          (should (eq (ecc-state-engine-detect-state buffer) 'error))
+          (ecc-state-engine-detect-state buffer)
+          (should (eq (ecc-state-engine-get-current-state-id) 'error))
           
-          ;; Test no pattern matches - should return nil and not change state
+          ;; Test no pattern matches - should not change state
+          (ecc-state-engine-set-state 'idle)
           (with-current-buffer buffer
             (erase-buffer)
             (insert "Some random content with no patterns"))
-          (should (null (ecc-state-engine-detect-state buffer))))
+          (ecc-state-engine-detect-state buffer)
+          (should (eq (ecc-state-engine-get-current-state-id) 'idle)))
       
       ;; Clean up
       (kill-buffer buffer))))

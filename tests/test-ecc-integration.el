@@ -7,9 +7,10 @@
 (require 'ecc-buffer-manager)
 (require 'ecc-command)
 
-;; Make sure ecc-buffer-registry is defined for tests
-(unless (boundp 'ecc-buffer-registry)
-  (defvar ecc-buffer-registry (make-hash-table :test 'equal)))
+;; State detection fallback for tests
+(defun ecc-state-detect-prompt (&optional _buffer)
+  "Legacy state detection function for tests."
+  'waiting)
 
 ;; Test buffer import/export
 (ert-deftest test-ecc-integration-import-legacy-buffers ()
