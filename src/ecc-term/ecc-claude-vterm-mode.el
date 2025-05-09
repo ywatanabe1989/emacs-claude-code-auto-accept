@@ -53,6 +53,23 @@ Enabling truncation can improve performance for long lines."
 ;; Mode menu
 (defvar ecc-claude-vterm-menu
   (let ((menu (make-sparse-keymap "Claude-VTerm")))
+    ;; Buffer navigation submenu
+    (let ((submenu (make-sparse-keymap "Buffer Navigation")))
+      (define-key submenu [ecc-claude-vterm]
+        '(menu-item "New Buffer" ecc-claude-vterm
+                    :help "Create a new Claude VTERM buffer"))
+      (define-key submenu [ecc-claude-vterm-next-buffer]
+        '(menu-item "Next Buffer" ecc-claude-vterm-next-buffer
+                    :help "Switch to the next Claude buffer"))
+      (define-key submenu [ecc-claude-vterm-prev-buffer]
+        '(menu-item "Previous Buffer" ecc-claude-vterm-prev-buffer
+                    :help "Switch to the previous Claude buffer"))
+      (define-key menu [ecc-buffer-navigation]
+        (cons "Buffer Navigation" submenu)))
+    
+    (define-key menu [ecc-claude-vterm-separator-0]
+      '(menu-item "--"))
+    
     (define-key menu [ecc-claude-vterm-clear]
       '(menu-item "Clear buffer" ecc-claude-vterm-clear
                   :help "Clear the vterm buffer"))
@@ -96,6 +113,12 @@ Enabling truncation can improve performance for long lines."
     (define-key map (kbd "C-c C-r") 'ecc-claude-vterm-retry)
     (define-key map (kbd "C-c C-l") 'ecc-claude-vterm-clear)
     (define-key map (kbd "C-c C-a") 'ecc-claude-vterm-auto-mode-toggle)
+    
+    ;; Buffer navigation keybindings
+    (define-key map (kbd "C-c C-p") 'ecc-claude-vterm-prev-buffer)
+    (define-key map (kbd "C-c C-f") 'ecc-claude-vterm-next-buffer)
+    (define-key map (kbd "C-c C-b") 'ecc-claude-vterm-prev-buffer)
+    (define-key map (kbd "C-c C-t") 'ecc-claude-vterm)
     
     ;; Add menu
     (define-key map [menu-bar claude-vterm] (cons "Claude" ecc-claude-vterm-menu))
@@ -165,7 +188,10 @@ Key bindings:
   (when ecc-claude-vterm--vterm-available
     (add-hook 'vterm-update-functions
               (lambda (&rest _)
-                (run-hooks 'ecc-claude-vterm-update-functions)))))
+                (run-hooks 'ecc-claude-vterm-update-functions))))
+  
+  ;; Add hook to unregister buffer when killed
+  (add-hook 'kill-buffer-hook 'ecc-claude-vterm-cleanup-buffer nil t))
 
 ;; Mode-line indicator for Claude state
 (defun ecc-claude-vterm-setup-mode-line ()
@@ -301,6 +327,28 @@ This function is meant to be run periodically to update the mode line."
           (remove 'ecc-claude-vterm-auto-send-accept
                   ecc-claude-vterm-update-functions))))
 
+;; Buffer management functions
+(defun ecc-claude-vterm-cleanup-buffer ()
+  "Unregister buffer from Claude buffer registry when killed."
+  (when (eq major-mode 'ecc-claude-vterm-mode)
+    ;; Cancel any timers
+    (when ecc-claude-vterm-state-timer
+      (cancel-timer ecc-claude-vterm-state-timer)
+      (setq ecc-claude-vterm-state-timer nil))
+    
+    ;; Unregister from buffer registry functions
+    (when (fboundp 'ecc-buffer-unregister-buffer)
+      (ecc-buffer-unregister-buffer (current-buffer)))
+    
+    ;; If this was the active buffer, clear it
+    (when (and (boundp 'ecc-active-buffer) 
+               (eq ecc-active-buffer (current-buffer)))
+      (setq ecc-active-buffer nil))
+    
+    (when (and (boundp 'ecc-buffer-current-buffer)
+               (eq ecc-buffer-current-buffer (current-buffer)))
+      (setq ecc-buffer-current-buffer nil))))
+
 ;; Function to create new Claude vterm buffer
 (defun ecc-claude-vterm ()
   "Create a new Claude vterm buffer with optimized settings."
@@ -318,6 +366,23 @@ This function is meant to be run periodically to update the mode line."
       (set (make-local-variable 'ecc-original-name) buffer-name))
     (switch-to-buffer new-buffer)
     new-buffer))
+
+;; Buffer navigation functions
+(defun ecc-claude-vterm-next-buffer ()
+  "Switch to the next Claude VTERM buffer."
+  (interactive)
+  (when (fboundp 'ecc-buffer-next)
+    (let ((next-buffer (ecc-buffer-next)))
+      (when next-buffer
+        (switch-to-buffer next-buffer)))))
+
+(defun ecc-claude-vterm-prev-buffer ()
+  "Switch to the previous Claude VTERM buffer."
+  (interactive)
+  (when (fboundp 'ecc-buffer-prev)
+    (let ((prev-buffer (ecc-buffer-prev)))
+      (when prev-buffer
+        (switch-to-buffer prev-buffer)))))
 
 ;; Custom prompt detection patterns for VTERM
 (defcustom ecc-claude-vterm-prompt-waiting "Continue generati"

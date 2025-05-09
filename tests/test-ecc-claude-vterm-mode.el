@@ -87,6 +87,12 @@
   (should (fboundp 'ecc-claude-vterm-auto-send-y/y/n))
   (should (fboundp 'ecc-claude-vterm-auto-send-continue)))
 
+(ert-deftest test-ecc-claude-vterm-buffer-management-functions-defined ()
+  "Test that buffer management functions are defined."
+  (should (fboundp 'ecc-claude-vterm-cleanup-buffer))
+  (should (fboundp 'ecc-claude-vterm-next-buffer))
+  (should (fboundp 'ecc-claude-vterm-prev-buffer)))
+
 ;; Tests that require vterm - only run if available
 (ert-deftest test-ecc-claude-vterm-mode-derives-from-vterm ()
   "Test that ecc-claude-vterm-mode is derived from vterm-mode if available."
