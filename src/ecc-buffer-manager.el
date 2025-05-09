@@ -21,6 +21,7 @@
 
 (require 'cl-lib)
 (require 'seq)
+(require 'ecc-compat)
 
 ;; Buffer structures and registry
 ;; ------------------------------

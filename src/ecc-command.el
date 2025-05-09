@@ -19,6 +19,7 @@
 
 (require 'cl-lib)
 (require 'seq)
+(require 'ecc-compat)
 (require 'ecc-buffer-manager)
 
 ;; Command structures and registry

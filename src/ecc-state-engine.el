@@ -19,6 +19,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'ecc-compat)
 
 ;; State definitions and constants
 ;; ------------------------------
