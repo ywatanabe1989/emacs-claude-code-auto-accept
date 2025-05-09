@@ -36,6 +36,24 @@ doesn't exist or can't be read."
       (insert-file-contents file-path)
       (secure-hash 'sha256 (buffer-string)))))
 
+(defun ecc-template-cache-get-file-path (template-name)
+  "Get the file path for TEMPLATE-NAME.
+Checks for files in both old and new locations for compatibility."
+  (let* ((root-dir (if load-file-name
+                      (file-name-directory (file-truename load-file-name))
+                    default-directory))
+         (project-root (expand-file-name "../.." root-dir))
+         (paths (list 
+                 ;; Original templates path
+                 (expand-file-name (format "templates/%s.md" template-name) project-root)
+                 ;; Claude subdir path
+                 (expand-file-name (format "templates/claude/%s.md" template-name) project-root)
+                 ;; Genai subdir path
+                 (expand-file-name (format "templates/genai/%s.md" template-name) project-root)
+                 ;; New path in ecc-template
+                 (expand-file-name (format "src/ecc-template/templates/%s.md" template-name) project-root))))
+    (cl-some (lambda (path) (when (file-exists-p path) path)) paths)))
+
 (defun ecc-template-cache-put (template-name file-path content hash)
   "Add a template to the cache.
 TEMPLATE-NAME is the template identifier.
@@ -74,6 +92,32 @@ Returns the cached item as a plist or nil if not found."
         --ecc-template-cache-misses 0)
   nil)
 
+(defun ecc-template-cache-load (template-name)
+  "Load a template from file or from cache.
+If the template is in the cache and still valid, returns it directly.
+Otherwise, reads the template file and updates the cache."
+  (let* ((cache-entry (ecc-template-cache-get template-name))
+         (file-path (or (and cache-entry (plist-get cache-entry :file))
+                        (ecc-template-cache-get-file-path template-name))))
+    
+    (if (and file-path (file-exists-p file-path))
+        (let ((current-hash (ecc-template-cache-file-hash file-path)))
+          (if (and cache-entry 
+                   (string= (plist-get cache-entry :hash) current-hash))
+              ;; Cache hit with valid hash
+              (plist-get cache-entry :content)
+            
+            ;; Cache miss or outdated hash - load from file
+            (with-temp-buffer
+              (insert-file-contents file-path)
+              (let ((content (buffer-string)))
+                (ecc-template-cache-put template-name file-path content current-hash)
+                content))))
+      
+      ;; File not found
+      (message "Template %s not found" template-name)
+      nil)))
+
 (defun ecc-template-cache-purge-outdated ()
   "Purge cache entries whose file contents have changed.
 Returns the number of entries purged."
@@ -87,7 +131,7 @@ Returns the number of entries purged."
     ;; First pass: identify outdated entries
     (maphash
      (lambda (key item)
-       (let* ((file-path (plist-get item :file))  ;; Fixed: Use :file not :hash
+       (let* ((file-path (plist-get item :file))  
               (cached-hash (plist-get item :hash))
               (current-hash (ecc-template-cache-file-hash file-path)))
          ;; If the file no longer exists or its hash has changed, mark for purging
@@ -103,9 +147,9 @@ Returns the number of entries purged."
     
     purge-count))
 
-(defun ecc-template-cache-get-stats ()
+(defun ecc-template-cache-stats ()
   "Get statistics about the template cache.
-Returns a plist with keys :count, :memory, :hits, and :misses."
+Returns a string with a human-readable summary."
   (unless --ecc-template-cache
     (ecc-template-cache-init))
   
@@ -119,10 +163,10 @@ Returns a plist with keys :count, :memory, :hits, and :misses."
                      --ecc-template-cache)
             total)))
     
-    (list :count item-count
-          :memory memory-usage
-          :hits --ecc-template-cache-hits
-          :misses --ecc-template-cache-misses)))
+    (format "Template cache: %d items, ~%d bytes, %d hits, %d misses"
+            item-count memory-usage 
+            --ecc-template-cache-hits --ecc-template-cache-misses)))
 
+(provide 'ecc-template-cache)
 (provide 'ecc-template/ecc-template-cache)
 ;;; ecc-template-cache.el ends here

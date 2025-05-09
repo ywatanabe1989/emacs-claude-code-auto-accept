@@ -22,7 +22,9 @@
       "Bash(tests/test-ecc-buffer:*)",
       "Bash(do mv \"$file\" tests/buffer/)",
       "Bash(done)",
-      "Bash(tests/*.el)"
+      "Bash(tests/*.el)",
+      "Bash(./tmp/run-diagnostics.sh:*)",
+      "Bash(ln:*)"
     ],
     "deny": []
   }

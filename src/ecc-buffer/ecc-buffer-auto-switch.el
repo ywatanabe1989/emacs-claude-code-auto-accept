@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-08 19:25:30>
-;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-buffer/ecc-buffer-auto-switch.el
+;;; Timestamp: <2025-05-10 03:16:30>
+;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/src/ecc-buffer/ecc-buffer-auto-switch.el
 
 ;;; Commentary:
 ;;; This module provides functionality for automatically switching between
@@ -35,18 +35,22 @@ When enabled, provides automatic switching between Claude buffers."
 
 (defun ecc-buffer-auto-switch-next-buffer ()
   "Switch to the next Claude buffer in the list.
-Returns the buffer that was switched to, or nil if no valid buffer exists."
+Returns the buffer that was switched to, or nil if no valid buffer exists.
+Handles killed buffers gracefully by skipping them."
   (interactive)
   (let* ((current (ecc-buffer-get-current-buffer))
-         (buffers (ecc-buffer-get-all-buffers))
-         (valid-buffers (seq-filter #'buffer-live-p buffers))
+         (all-buffers (ecc-buffer-get-all-buffers))
+         (valid-buffers (seq-filter #'buffer-live-p all-buffers))
          next-buffer)
     
     ;; If no valid buffers, return nil
     (if (null valid-buffers)
-        nil
-      ;; If current buffer is not in the list or is nil, use the first one
+        (progn 
+          (message "No valid Claude buffers found")
+          nil)
+      ;; If current buffer is not in the list, is nil, or is not live, use the first one
       (if (or (null current) 
+              (not (buffer-live-p current))
               (not (memq current valid-buffers)))
           (setq next-buffer (car valid-buffers))
         ;; Otherwise, find the next buffer in the list
@@ -56,23 +60,31 @@ Returns the buffer that was switched to, or nil if no valid buffer exists."
                            (1+ pos))))
           (setq next-buffer (nth next-pos valid-buffers))))
       
-      ;; Set the current buffer to the next one
-      (ecc-buffer-set-current-buffer next-buffer))))
+      ;; Only switch to the buffer if it's live
+      (when (and next-buffer (buffer-live-p next-buffer))
+        ;; Switch to the buffer
+        (ecc-buffer-set-current-buffer next-buffer)
+        ;; Return the buffer we switched to
+        next-buffer))))
 
 (defun ecc-buffer-auto-switch-previous-buffer ()
   "Switch to the previous Claude buffer in the list.
-Returns the buffer that was switched to, or nil if no valid buffer exists."
+Returns the buffer that was switched to, or nil if no valid buffer exists.
+Handles killed buffers gracefully by skipping them."
   (interactive)
   (let* ((current (ecc-buffer-get-current-buffer))
-         (buffers (ecc-buffer-get-all-buffers))
-         (valid-buffers (seq-filter #'buffer-live-p buffers))
+         (all-buffers (ecc-buffer-get-all-buffers))
+         (valid-buffers (seq-filter #'buffer-live-p all-buffers))
          prev-buffer)
     
     ;; If no valid buffers, return nil
     (if (null valid-buffers)
-        nil
-      ;; If current buffer is not in the list or is nil, use the last one
+        (progn 
+          (message "No valid Claude buffers found")
+          nil)
+      ;; If current buffer is not in the list, is nil, or is not live, use the last one
       (if (or (null current) 
+              (not (buffer-live-p current))
               (not (memq current valid-buffers)))
           (setq prev-buffer (car (last valid-buffers)))
         ;; Otherwise, find the previous buffer in the list
@@ -82,8 +94,12 @@ Returns the buffer that was switched to, or nil if no valid buffer exists."
                            (1- pos))))
           (setq prev-buffer (nth prev-pos valid-buffers))))
       
-      ;; Set the current buffer to the previous one
-      (ecc-buffer-set-current-buffer prev-buffer))))
+      ;; Only switch to the buffer if it's live
+      (when (and prev-buffer (buffer-live-p prev-buffer))
+        ;; Switch to the buffer
+        (ecc-buffer-set-current-buffer prev-buffer)
+        ;; Return the buffer we switched to
+        prev-buffer))))
 
 ;; Provide the feature
 (provide 'ecc-buffer/ecc-buffer-auto-switch)

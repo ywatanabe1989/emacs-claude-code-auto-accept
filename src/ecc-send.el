@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 12:27:28>
-;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/ecc-send.el
+;;; Timestamp: <2025-05-10 03:19:20>
+;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/src/ecc-send.el
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
 (require 'ecc-variables)
@@ -110,56 +110,73 @@ If region is active, use it; otherwise prompt for region."
         (--ecc-auto-send-continue-on-y/y/n))))))
 
 (defun --ecc-auto-send-1-y/n ()
-  "Automatically respond with '1' to Claude prompts in vterm."
+  "Automatically respond with '1' to Claude prompts in vterm.
+Returns the string that was sent."
   (interactive)
-  (--ecc-send-by-state "1" :y/n)
-  (when (fboundp 'ecc-auto-notify-completion)
-    (ecc-auto-notify-completion "Y/N")))
+  (let ((response "1"))
+    (--ecc-send-by-state response :y/n)
+    (when (fboundp 'ecc-auto-notify-completion)
+      (ecc-auto-notify-completion "Y/N"))
+    response))  ;; Return the string that was sent
 
 (defun --ecc-auto-send-2-y/y/n ()
-  "Automatically respond with '2' to Claude prompts in vterm."
+  "Automatically respond with '2' to Claude prompts in vterm.
+Returns the string that was sent."
   (interactive)
-  (--ecc-send-by-state "2" :y/y/n)
-  (when (fboundp 'ecc-auto-notify-completion)
-    (ecc-auto-notify-completion "Y/Y/N")))
+  (let ((response "2"))
+    (--ecc-send-by-state response :y/y/n)
+    (when (fboundp 'ecc-auto-notify-completion)
+      (ecc-auto-notify-completion "Y/Y/N"))
+    response))  ;; Return the string that was sent
 
 (defun --ecc-auto-send-3 ()
-  "Automatically respond with '3' to Claude prompts in vterm."
+  "Automatically respond with '3' to Claude prompts in vterm.
+Returns the string that was sent."
   (interactive)
-  (--ecc-send-by-state "3" :y/y/n)
-  (when (fboundp 'ecc-auto-notify-completion)
-    (ecc-auto-notify-completion "Y/Y/N option 3")))
+  (let ((response "3"))
+    (--ecc-send-by-state response :y/y/n)
+    (when (fboundp 'ecc-auto-notify-completion)
+      (ecc-auto-notify-completion "Y/Y/N option 3"))
+    response))  ;; Return the string that was sent
 
 (defun --ecc-auto-send-custom (custom-text)
-  "Automatically respond with CUSTOM-TEXT to Claude prompts in vterm."
+  "Automatically respond with CUSTOM-TEXT to Claude prompts in vterm.
+Returns the string that was sent."
   (interactive)
   (--ecc-send-by-state custom-text :y/y/n)
   (when (fboundp 'ecc-auto-notify-completion)
-    (ecc-auto-notify-completion "custom prompt")))
+    (ecc-auto-notify-completion "custom prompt"))
+  custom-text)  ;; Return the string that was sent
 
 (defun --ecc-auto-send-continue-on-y/y/n ()
-  "Automatically respond with continue to Claude waiting prompts."
+  "Automatically respond with continue to Claude waiting prompts.
+Returns the string that was sent."
   (interactive)
-  (--ecc-send-by-state
-   (if (bound-and-true-p ert-current-test)
-       "continue"  ;; Use simple string during tests
-     ecc-prompt-to-send-on-waiting)  ;; Use configured string in real env
-   (lambda ()
-     (or (--ecc-state-waiting-p)
-         (--ecc-state-initial-waiting-p))))
-  (when (fboundp 'ecc-auto-notify-completion)
-    (ecc-auto-notify-completion "waiting/continue")))
+  (let ((response (if (bound-and-true-p ert-current-test)
+                     "continue"  ;; Use simple string during tests
+                   ecc-prompt-to-send-on-waiting)))  ;; Use configured string in real env
+    (--ecc-send-by-state
+     response
+     (lambda ()
+       (or (--ecc-state-waiting-p)
+           (--ecc-state-initial-waiting-p))))
+    (when (fboundp 'ecc-auto-notify-completion)
+      (ecc-auto-notify-completion "waiting/continue"))
+    response))  ;; Return the string that was sent
 
 (defun --ecc-auto-send-skip ()
-  "Automatically respond with skip to Claude waiting prompts."
+  "Automatically respond with skip to Claude waiting prompts.
+Returns the string that was sent."
   (interactive)
-  (--ecc-send-by-state
-   "skip"
-   (lambda ()
-     (or (--ecc-state-waiting-p)
-         (--ecc-state-initial-waiting-p))))
-  (when (fboundp 'ecc-auto-notify-completion)
-    (ecc-auto-notify-completion "skip")))
+  (let ((response "skip"))
+    (--ecc-send-by-state
+     response
+     (lambda ()
+       (or (--ecc-state-waiting-p)
+           (--ecc-state-initial-waiting-p))))
+    (when (fboundp 'ecc-auto-notify-completion)
+      (ecc-auto-notify-completion "skip"))
+    response))  ;; Return the string that was sent
 
 ;; 3. Helper functions
 ;; ----------------------------------------
@@ -167,7 +184,8 @@ If region is active, use it; otherwise prompt for region."
 (defun --ecc-send-string (string &optional no-confirm delay buffer)
   "Send STRING to the active Claude buffer.
 If NO-CONFIRM is t, return is not sent after the string.
-DELAY is the time to wait after sending (defaults to 0.5 seconds)."
+DELAY is the time to wait after sending (defaults to 0.5 seconds).
+Returns the string that was sent."
   (when (--ecc-state-is-claude-active-p buffer)
     (with-current-buffer ecc-buffer-current-active-buffer
       (when delay (sit-for delay))
@@ -175,11 +193,13 @@ DELAY is the time to wait after sending (defaults to 0.5 seconds)."
       (when (not no-confirm) (vterm-send-return))
       (vterm-copy-mode -1)
       (when delay (sit-for delay))
-      (message "[ecc-send] Sent: %s" string))))
+      (message "[ecc-send] Sent: %s" string)
+      string)))  ;; Return the string that was sent
 
 (defun --ecc-send-by-state (response state-or-predicate)
   "Send RESPONSE to a specific Claude prompt state.
-STATE-OR-PREDICATE can be a keyword (:y/n, :y/y/n, etc.) or a predicate function."
+STATE-OR-PREDICATE can be a keyword (:y/n, :y/y/n, etc.) or a predicate function.
+Returns the response string if sent, nil otherwise."
   (with-current-buffer ecc-buffer-current-active-buffer
     (let ((should-send
            (if (functionp state-or-predicate)
@@ -188,7 +208,29 @@ STATE-OR-PREDICATE can be a keyword (:y/n, :y/y/n, etc.) or a predicate function
       (when should-send
         (--ecc-send-string response t 1.0)
         (vterm-send-return)
-        (message "[ecc-send] Automatic Response: %s" response)))))
+        (message "[ecc-send] Automatic Response: %s" response)
+        response))))  ;; Return the response if sent
+
+;; 4. Public Auto-Response Functions
+;; ----------------------------------------
+
+(defun ecc-auto-send-y ()
+  "Send 'y' as a response to a y/n prompt.
+Returns the string that was sent."
+  (interactive)
+  (--ecc-auto-send-1-y/n))
+
+(defun ecc-auto-send-yy ()
+  "Send 'yy' as a response to a y/y/n prompt.
+Returns the string that was sent."
+  (interactive)
+  (--ecc-auto-send-2-y/y/n))
+
+(defun ecc-auto-send-continue ()
+  "Send 'continue' as a response to a waiting prompt.
+Returns the string that was sent."
+  (interactive)
+  (--ecc-auto-send-continue-on-y/y/n))
 
 (provide 'ecc-send)
 (when
