@@ -100,6 +100,8 @@ run_tests_elisp() {
     local emacs_cmd="emacs -Q --batch"
     
     # Add load paths
+    emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)/tests/modules\\\")\" "
+    emacs_cmd+=" --load \"tests/test-loader.el\" "
     emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)\\\")\" "
     emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$THIS_DIR\\\")\" "
     emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$TESTS_DIR\\\")\" "

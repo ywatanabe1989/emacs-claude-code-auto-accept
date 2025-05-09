@@ -1,5 +1,5 @@
 <!-- ---
-!-- Timestamp: 2025-05-10 01:05:00
+!-- Timestamp: 2025-05-10 01:46:00
 !-- Author: ywatanabe
 !-- File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/project_management/ORIGINAL_PLAN_v02.md
 !-- --- -->
@@ -13,21 +13,17 @@
   provide at-a-glance status information.
 
 ## CLAUDE-CODE-VTERM-MODE
-  This is a very astute observation! The current buffer management system is indeed
-  complex, and a dedicated vterm-based approach could simplify things significantly. Optimizing for high-speed
+  A dedicated vterm-based approach could simplify things significantly. Optimizing for high-speed
   streaming without line numbers would improve performance.
     - No Line Numbers
     - Optimized settings for high speed streaming
     - Visualization
 
 ## States Tracking
-  Adding host machine, project details, and test metrics to the state tracking is very smart.
-  This contextual information would help users keep track of which Claude sessions are working on what projects
-  with what success metrics.
-  - host machine
-  - project
-  - test metrics (success rate [%], # of total tests)
-  - claude states
+  - Host Machine
+  - Project Title
+  - Test Metrics (success rate [%], test count)
+  - Claude States
     - running, waiting, Y/N, Y/Y/N
 
 ## Automated Guidance Injection
