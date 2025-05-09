@@ -9,16 +9,28 @@
 ;; emacs-claude-code.el - Main module file
 
 (defun --ecc-add-to-loadpath ()
-  "Add all visible (non-hidden) subdirectories to `load-path`."
-  (let ((parent (file-name-directory
-                 (or load-file-name buffer-file-name))))
+  "Add all necessary directories to `load-path`."
+  (let* ((parent (file-name-directory
+                  (or load-file-name buffer-file-name)))
+         (src-dir (expand-file-name "src" parent)))
+    
     ;; Add parent directory to load-path
     (add-to-list 'load-path parent)
-    ;; Add immediate subdirectories to load-path
-    (let ((candidates (directory-files parent t "\\`[^.]")))
-      (dolist (dir candidates)
+    
+    ;; Add src directory to load-path
+    (when (file-directory-p src-dir)
+      (add-to-list 'load-path src-dir)
+      
+      ;; Add all subdirectories of src to load-path
+      (dolist (dir (directory-files src-dir t "\\`[^.]"))
         (when (file-directory-p dir)
-          (add-to-list 'load-path dir))))))
+          (add-to-list 'load-path dir))))
+    
+    ;; Add other immediate subdirectories to load-path
+    (dolist (dir (directory-files parent t "\\`[^.]"))
+      (when (and (file-directory-p dir)
+                 (not (string= dir src-dir)))
+        (add-to-list 'load-path dir)))))
 
 ;; Execute loadpath setup
 (--ecc-add-to-loadpath)
@@ -37,8 +49,8 @@
 (require 'ecc-buffer/ecc-buffer)
 
 ;; Load state management modules 
-(require 'ecc-state-detect)
-(require 'ecc-state)
+(require 'ecc-state/ecc-state-detect)
+(require 'ecc-state/ecc-state)
 
 ;; Load template system modules
 (require 'ecc-template/ecc-template-cache)
