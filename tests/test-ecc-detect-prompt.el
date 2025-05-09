@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 12:27:10>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-detect-prompt.el
+;;; Timestamp: <2025-05-08 21:20:10>
+;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-detect-prompt.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
@@ -80,10 +80,9 @@
       (setq ecc-buffer-current-active-buffer orig-buffer))))
 
 
-(provide 'test-emacs-claude-code-detect-prompt)
+(provide 'test-ecc-detect-prompt)
 
-(when
-    (not load-file-name)
-  (message "test-emacs-claude-code-detect-prompt.el loaded."
+(when (not load-file-name)
+  (message "test-ecc-detect-prompt.el loaded: %s"
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

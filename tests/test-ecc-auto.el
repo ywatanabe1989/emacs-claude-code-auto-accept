@@ -196,8 +196,7 @@
 
 (provide 'test-ecc-auto)
 
-(when
-    (not load-file-name)
-  (message "test-ecc-auto.el loaded."
+(when (not load-file-name)
+  (message "test-ecc-auto.el loaded: %s"
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

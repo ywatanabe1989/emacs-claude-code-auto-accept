@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 12:27:10>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-start-stop.el
+;;; Timestamp: <2025-05-08 21:15:10>
+;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-start-stop.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
@@ -273,10 +273,9 @@
             ecc-buffer-registered-buffers orig-buffers))))
 
 
-(provide 'test-emacs-claude-code-start-stop)
+(provide 'test-ecc-start-stop)
 
-(when
-    (not load-file-name)
-  (message "test-emacs-claude-code-start-stop.el loaded."
+(when (not load-file-name)
+  (message "test-ecc-start-stop.el loaded: %s"
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

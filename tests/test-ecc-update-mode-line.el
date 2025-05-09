@@ -1,7 +1,7 @@
 ;;; -*- coding: utf-8; lexical-binding: t -*-
 ;;; Author: ywatanabe
-;;; Timestamp: <2025-05-07 12:27:11>
-;;; File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/tests/test-emacs-claude-code-update-mode-line.el
+;;; Timestamp: <2025-05-08 21:20:11>
+;;; File: /home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/tests/test-ecc-update-mode-line.el
 
 ;;; Copyright (C) 2025 Yusuke Watanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 
@@ -104,10 +104,9 @@
       (setq ecc-buffer-current-active-buffer orig-active-buffer))))
 
 
-(provide 'test-emacs-claude-code-update-mode-line)
+(provide 'test-ecc-update-mode-line)
 
-(when
-    (not load-file-name)
-  (message "test-emacs-claude-code-update-mode-line.el loaded."
+(when (not load-file-name)
+  (message "test-ecc-update-mode-line.el loaded: %s"
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

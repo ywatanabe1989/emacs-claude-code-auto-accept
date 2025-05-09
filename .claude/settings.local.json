@@ -1,27 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tests/test-ecc-*state*.el)",
-      "Bash(chmod:*)",
-      "Bash(./simple-test.sh:*)",
-      "Bash(cat:*)",
       "Bash(ls:*)",
-      "Bash(grep:*)",
       "Bash(git checkout:*)",
-      "Bash(./run-tests.sh:*)",
-      "Bash(find:*)",
-      "Bash(./generate_mermaid_images.sh:*)",
-      "Bash(mkdir:*)",
-      "Bash(/home/ywatanabe/.dotfiles/.emacs.d/lisp/emacs-claude-code/*.org)",
-      "Bash(./elisp-test.sh:*)",
-      "Bash(/home/ywatanabe/.emacs.d/lisp/emacs-claude-code/ELISP-TEST-REPORT*.org)",
-      "Bash(ELISP-TEST-REPORT-*)",
-      "Bash(tests/test-ecc-buffer-:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git merge:*)",
-      "Bash(git rm:*)",
-      "Bash(git stash:*)"
+      "Bash(tests/test-*.el)",
+      "Bash(emacs-claude-code.el:*)"
     ],
     "deny": []
   }

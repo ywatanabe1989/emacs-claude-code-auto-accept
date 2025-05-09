@@ -7,6 +7,8 @@
 
 ;; This is a compatibility module for ecc-state.el
 
+;; Provide both features to maintain backward compatibility
+(provide 'ecc-state-detect)
 (provide 'ecc-state/ecc-state-detect)
 
 (when (not load-file-name)

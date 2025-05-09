@@ -1,13 +1,19 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
-# Timestamp: "2025-05-08 17:29:10 (ywatanabe)"
-# File: ./project_management/generate_mermaid_images.sh
+# Timestamp: "2025-05-10 01:01:32 (ywatanabe)"
+# File: ./project_management/render_mermaid.sh
 
 THIS_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
 LOG_PATH="$THIS_DIR/.$(basename $0).log"
-touch "$LOG_PATH" >/dev/null 2>&1
+echo > "$LOG_PATH"
 
-# generate_mermaid_images.sh
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+# ---------------------------------------
+
+# render_mermaid.sh
 # Author: ywatanabe (ywatanabe@alumni.u-tokyo.ac.jp)
 # Date: 2025-05-08
 

@@ -207,8 +207,7 @@
 
 (provide 'test-ecc-buffer-auto-switch)
 
-(when
-    (not load-file-name)
-  (message "test-ecc-buffer-auto-switch.el loaded."
+(when (not load-file-name)
+  (message "test-ecc-buffer-auto-switch.el loaded: %s"
            (file-name-nondirectory
             (or load-file-name buffer-file-name))))

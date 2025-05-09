@@ -95,6 +95,8 @@ Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, :running, or nil."
       nil)))
 
 
+;; Provide both features to maintain backward compatibility
+(provide 'ecc-state)
 (provide 'ecc-state/ecc-state)
 
 (when

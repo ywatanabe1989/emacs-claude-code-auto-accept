@@ -1,10 +1,11 @@
 <!-- ---
-!-- Timestamp: 2025-05-08 14:19:04
+!-- Timestamp: 2025-05-10 00:07:43
 !-- Author: ywatanabe
-!-- File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/docs/claude_settings.md
+!-- File: /home/ywatanabe/.emacs.d/lisp/emacs-claude-code/docs/claude-code-best-practices.md
 !-- --- -->
 
 # Claude Code: Configuration and Best Practices
+https://www.anthropic.com/engineering/claude-code-best-practices
 
 A quick reference guide for maximizing Claude Code's capabilities.
 

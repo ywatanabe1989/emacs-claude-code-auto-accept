@@ -37,8 +37,8 @@
 (require 'ecc-buffer/ecc-buffer)
 
 ;; Load state management modules 
-(require 'ecc-state/ecc-state-detect)
-(require 'ecc-state/ecc-state)
+(require 'ecc-state-detect)
+(require 'ecc-state)
 
 ;; Load template system modules
 (require 'ecc-template/ecc-template-cache)
