@@ -24,8 +24,27 @@
 (require 'ecc-send)
 (require 'ecc-update-mode-line)
 
-;; Buffer registry functions
+;; Variable mapping - define legacy variables and map them to new ones
+(defvar ecc-auto-timer nil)
+(defvar ecc-active-buffer nil)
 (defvar ecc-buffers nil)
+
+;; Fix naming inconsistencies
+(defvar ecc-timer nil)
+
+;; Map variable names for backward compatibility
+(with-no-warnings
+  ;; Map ecc-auto-timer to ecc-timer
+  (defvaralias 'ecc-auto-timer 'ecc-timer)
+  
+  ;; Map active buffer names
+  (defvaralias 'ecc-active-buffer 'ecc-buffer-current-buffer)
+  (defvaralias 'ecc-buffer-current-active-buffer 'ecc-buffer-current-buffer)
+  
+  ;; Map buffer registry names
+  (defvaralias 'ecc-buffers 'ecc-buffer-registered-buffers-alist))
+
+;; Buffer registry functions
 (defun ecc-buffer-registry-cleanup-buffers ()
   "Compatibility function for ecc-buffer-cleanup-buffer-registry."
   (when (fboundp 'ecc-buffer-cleanup-buffer-registry)
@@ -59,13 +78,39 @@
   (when (fboundp 'ecc-buffer-register-buffer)
     (ecc-buffer-register-buffer buffer)))
 
+(defun ecc-buffer-register-as-active (buffer)
+  "Compatibility function for buffer registration as active."
+  (setq ecc-buffer-current-buffer buffer)
+  (setq ecc-active-buffer buffer)
+  (setq ecc-buffer-current-active-buffer buffer))
+
 ;; Activate these variables that aren't declared in the current code
 (defvar ecc-buffer-registered-buffers (make-hash-table))
-(defvar ecc-buffer-current-active-buffer nil)
 (defvar --ecc-send-string-calls nil)
 
 ;; Make ecc-buffer-registered-buffers point to ecc-buffer-registered-buffers-alist
 (setq ecc-buffer-registered-buffers ecc-buffer-registered-buffers-alist)
-(setq ecc-buffer-current-active-buffer ecc-buffer-current-buffer)
+
+;; Create stub functions for vterm
+(unless (fboundp 'vterm-send-key)
+  (defun vterm-send-key (key &optional times)
+    "Stub function for vterm-send-key when vterm is not available.
+Simulates sending KEY TIMES times to a vterm buffer."
+    (ignore key times)))
+
+(unless (fboundp 'vterm-send-return)
+  (defun vterm-send-return ()
+    "Stub function for vterm-send-return when vterm is not available."
+    nil))
+
+(unless (fboundp 'vterm-send-string)
+  (defun vterm-send-string (string &optional paste-p)
+    "Stub function for vterm-send-string when vterm is not available."
+    (ignore string paste-p)))
+
+(unless (fboundp 'vterm-copy-mode)
+  (defun vterm-copy-mode (arg)
+    "Stub function for vterm-copy-mode when vterm is not available."
+    (ignore arg)))
 
 (provide 'fix-names)
