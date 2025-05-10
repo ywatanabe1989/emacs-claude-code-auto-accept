@@ -9,13 +9,15 @@
        (buffer-subdir (expand-file-name "ecc-buffer" src-dir))
        (state-subdir (expand-file-name "ecc-state" src-dir))
        (template-subdir (expand-file-name "ecc-template" src-dir))
-       (term-subdir (expand-file-name "ecc-term" src-dir)))
+       (term-subdir (expand-file-name "ecc-term" src-dir))
+       (term-tests-dir (expand-file-name "term" tests-dir)))
   
   ;; Add all necessary directories to load-path
   (add-to-list 'load-path root-dir)
   (add-to-list 'load-path src-dir)
   (add-to-list 'load-path tests-dir)
   (add-to-list 'load-path modules-dir)
+  (add-to-list 'load-path term-tests-dir)
   
   ;; Add known subdirectories to load-path
   (add-to-list 'load-path buffer-subdir)
@@ -32,8 +34,11 @@
   (message "Added package root to load-path: %s" root-dir)
   (message "Added subdir to load-path: %s" modules-dir))
 
-;; Load variable fix first
-(load "tests/modules/variable-fix.el")
+;; Load our mock vterm implementation FIRST
+(load "tests/term/vterm-mock.el")
+
+;; Load variable fix (for pre-initializing essential variables)
+(load "tests/modules/fix-variables.el")
 
 ;; Load compatibility layers
 (require 'test-compat)
