@@ -163,7 +163,16 @@ run_tests_elisp() {
     fi
 
     # Run tests
-    emacs_cmd+=" --eval \"(elisp-test-run \\\"$target\\\" $TEST_TIMEOUT t)\" "
+    # Check if this is the ecc-send specific test
+    if [[ "$target" == *"test-ecc-send.el" ]]; then
+        emacs_cmd+=" --eval \"(progn
+          (load \\\"$THIS_DIR/tests/modules/fix-variables.el\\\")
+          (load \\\"$THIS_DIR/tests/term/vterm-mock.el\\\")
+          (load \\\"$THIS_DIR/tests/test-ecc-send.el\\\")
+          (ert-run-tests-batch-and-exit))\" "
+    else
+        emacs_cmd+=" --eval \"(elisp-test-run \\\"$target\\\" $TEST_TIMEOUT t)\" "
+    fi
 
     # Execute the command
     if $DEBUG_MODE; then

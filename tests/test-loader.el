@@ -34,11 +34,14 @@
   (message "Added package root to load-path: %s" root-dir)
   (message "Added subdir to load-path: %s" modules-dir))
 
-;; Load our mock vterm implementation FIRST
+;; Load essential variables FIRST to break circular dependencies
+(load "tests/modules/fix-variables.el")
+
+;; Load our mock vterm implementation SECOND
 (load "tests/term/vterm-mock.el")
 
-;; Load variable fix (for pre-initializing essential variables)
-(load "tests/modules/fix-variables.el")
+;; Load test helper functions THIRD
+(load "tests/standalone-test-ecc-send.el")
 
 ;; Load compatibility layers
 (require 'test-compat)

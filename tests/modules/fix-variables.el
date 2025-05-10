@@ -32,6 +32,14 @@
 (defvar ecc-buffer-registered-buffers-alist nil
   "Registry of all buffers for compatibility.")
 
+;; State detection flags and variables
+(defvar ecc-state-running-p nil
+  "Flag indicating if Claude is actively running/generating.")
+
+;; Test helper variables
+(defvar ecc-claude-vterm--vterm-available t
+  "Flag indicating if vterm is available (always true for tests).")
+
 ;; Timer variables
 (defvar ecc-timer nil
   "Timer for auto-detection of Claude state.")

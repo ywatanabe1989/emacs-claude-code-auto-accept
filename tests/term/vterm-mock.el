@@ -59,5 +59,18 @@ Optional PASTE-P parameter is ignored in the mock."
   (message "Mock vterm-send-key called with key: %s, times: %s" 
            key (or times 1)))
 
+;; Define test buffer setup function
+(defun vterm-mock-setup-test-buffer ()
+  "Create a test buffer for vterm operations."
+  (let ((test-buffer (generate-new-buffer "*TEST-VTERM*")))
+    (with-current-buffer test-buffer
+      (setq-local major-mode 'ecc-claude-vterm-mode))
+    ;; Set all the necessary buffer variables
+    (setq ecc-buffer test-buffer
+          ecc-buffer-current-buffer test-buffer
+          ecc-buffer-current-active-buffer test-buffer
+          ecc-active-buffer test-buffer)
+    test-buffer))
+
 (provide 'vterm-mock)
 ;;; vterm-mock.el ends here
