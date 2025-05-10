@@ -9,10 +9,10 @@
 
 ;;; Code:
 
-(require 'ecc-buffer/ecc-buffer-variables)
-(require 'ecc-buffer/ecc-buffer-registry)
-(require 'ecc-buffer/ecc-buffer-current)
-(require 'ecc-buffer/ecc-buffer-state)
+(require 'ecc-buffer-variables)
+(require 'ecc-buffer-registry)
+(require 'ecc-buffer-current)
+(require 'ecc-buffer-state)
 
 (defvar ecc-buffer-auto-switch-mode nil
   "When non-nil, enable automatic switching between Claude buffers.")
@@ -102,7 +102,11 @@ Handles killed buffers gracefully by skipping them."
         prev-buffer))))
 
 ;; Provide the feature
-(provide 'ecc-buffer/ecc-buffer-auto-switch)
+;; Register this feature with standard naming
 (provide 'ecc-buffer-auto-switch)
+
+;; Also provide with prefix to match test expectations
+(provide 'ecc-buffer/ecc-buffer-auto-switch)
+
 
 ;;; ecc-buffer-auto-switch.el ends here
