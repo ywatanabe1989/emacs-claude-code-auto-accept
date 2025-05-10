@@ -36,6 +36,10 @@
 (require 'test-compat)
 (require 'fix-names)
 
+;; Load our improved path and feature compatibility helpers
+(require 'test-load-helpers)
+(ecc-test-setup-feature-compatibility)
+
 ;; Set up compatibility for direct loading of root modules
 (dolist (name '("ecc-auto" "ecc-bindings" "ecc-dired" "ecc-elisp-test"
                 "ecc-history" "ecc-large-buffer" "ecc-mode"
