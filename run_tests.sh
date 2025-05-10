@@ -1,6 +1,6 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
-# Timestamp: "2025-05-09 19:32:15 (ywatanabe)"
+# Timestamp: "2025-05-10 17:38:15 (ywatanabe)"
 # File: ./run_tests.sh
 
 THIS_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
@@ -19,6 +19,7 @@ ELISP_TEST_PATH="$HOME/.emacs.d/lisp/elisp-test"
 TESTS_DIR="${2:-$THIS_DIR/tests}"
 DEBUG_MODE=false
 SINGLE_TEST_FILE=""
+LATESET_FNAME="LATEST-ELISP-TEST.org"
 
 usage() {
     echo "Usage: $0 [OPTIONS]"
@@ -74,11 +75,51 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+# Project Tree
+tree --gitignore >> "$LOG_PATH"
+
+# Loadable teet
+is_this_package_loadable() {
+    local this_package=$(basename "$THIS_DIR")
+
+    # echo "Checking if package '$this_package' is loadable..." | tee -a "$LOG_PATH"
+
+    local emacs_cmd="emacs -Q --batch"
+
+    # Set debug level if needed
+    if $DEBUG_MODE; then
+        emacs_cmd+=" --eval \"(require 'help-mode)\" "
+        emacs_cmd+=" --eval \"(setq debug-on-error t)\" "
+        emacs_cmd+=" --eval \"(setq debug-on-signal t)\" "
+    fi
+
+    emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)\\\")\" "
+    emacs_cmd+=" --eval \"(require '$this_package)\" "
+
+    eval $emacs_cmd
+
+    local exit_status=$?
+    if [ $exit_status -eq 0 ]; then
+        echo -e "${GREEN}SUCCESS: '$this_package' loadable${NC}" | tee -a "$LOG_PATH"
+    else
+        echo -e "${RED}ERROR: '$this_package' not loadable${NC}" | tee -a "$LOG_PATH"
+        exit 1
+    fi
+
+    return $exit_status
+}
+
+# Call the function and exit if it fails
+if ! is_this_package_loadable; then
+    echo "Package check failed, exiting script" | tee -a "$LOG_PATH"
+    exit 1
+fi
+
 # Function to run tests
 run_tests_elisp() {
     local target="$1"
     local is_single_file=false
-    
+
     if [ -z "$target" ]; then
         echo -e "${RED}Error: Test target not specified${NC}" | tee -a "$LOG_PATH"
         usage
@@ -98,28 +139,32 @@ run_tests_elisp() {
 
     # Prepare command
     local emacs_cmd="emacs -Q --batch"
-    
+
     # Add load paths
-    emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)/tests/modules\\\")\" "
-    emacs_cmd+=" --load \"tests/test-loader.el\" "
     emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)\\\")\" "
     emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$THIS_DIR\\\")\" "
     emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$TESTS_DIR\\\")\" "
     emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$target\\\")\" "
     emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$ELISP_TEST_PATH\\\")\" "
-    
+
+    # Add modules directory to load path
+    emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)/tests/modules\\\")\" "
+
+    # Load test-loader.el which sets up feature path compatibility
+    emacs_cmd+=" --load \"$THIS_DIR/tests/test-loader.el\" "
+
     # Load elisp-test
     emacs_cmd+=" --eval \"(require 'elisp-test)\" "
-    
+
     # Set debug level if needed
     if $DEBUG_MODE; then
         emacs_cmd+=" --eval \"(setq debug-on-error t)\" "
         emacs_cmd+=" --eval \"(setq debug-on-signal t)\" "
     fi
-    
+
     # Run tests
     emacs_cmd+=" --eval \"(elisp-test-run \\\"$target\\\" $TEST_TIMEOUT t)\" "
-    
+
     # Execute the command
     if $DEBUG_MODE; then
         # Show command if in debug mode
@@ -130,7 +175,7 @@ run_tests_elisp() {
         # Execute quietly in normal mode
         eval $emacs_cmd >> "$LOG_PATH" 2>&1
     fi
-    
+
     local exit_status=$?
 
     if [ $exit_status -eq 124 ] || [ $exit_status -eq 137 ]; then
@@ -142,18 +187,23 @@ run_tests_elisp() {
     local report_file=$(find "$THIS_DIR" -maxdepth 1 -mmin -0.1 -name "*ELISP-TEST-REPORT*" | head -n 1)
 
     if [ -f "$report_file" ]; then
-        echo -e "${GREEN}Report created: $report_file${NC}" | tee -a "$LOG_PATH"
-        
+        echo -e "${GREEN}SUCCESS: Report created: $report_file${NC}" | tee -a "$LOG_PATH"
+
+        # Remove any extension and add .org
+        target_org="${report_file%.*}.org"
+        ln -sfr "$target_org" "$(dirname "$(realpath "$report_file")")/$LATESET_FNAME"
+        echo -e "${GREEN}SUCCESS: Symlinked to: $LATESET_FNAME${NC}" | tee -a "$LOG_PATH"
+
         # Only display report content in debug mode
         if $DEBUG_MODE; then
             cat "$report_file" | tee -a "$LOG_PATH"
         else
             cat "$report_file" >> "$LOG_PATH"
         fi
-        
+
         return 0
     else
-        echo -e "${RED}No test report was generated. Check for errors.${NC}" | tee -a "$LOG_PATH"
+        echo -e "${RED}ERROR: No test report generated. Check $LOG_PATH${NC}" | tee -a "$LOG_PATH"
         return 1
     fi
 }

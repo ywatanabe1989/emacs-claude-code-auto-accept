@@ -32,6 +32,9 @@
   (message "Added package root to load-path: %s" root-dir)
   (message "Added subdir to load-path: %s" modules-dir))
 
+;; Load variable fix first
+(load "tests/modules/variable-fix.el")
+
 ;; Load compatibility layers
 (require 'test-compat)
 (require 'fix-names)
