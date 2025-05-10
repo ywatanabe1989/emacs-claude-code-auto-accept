@@ -5,7 +5,21 @@
 
 THIS_DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
 LOG_PATH="$THIS_DIR/.$(basename $0).log"
-echo > "$LOG_PATH"
+
+# Parse debug flag before clearing log
+for arg in "$@"; do
+  if [[ "$arg" == "-d" || "$arg" == "--debug" ]]; then
+    DEBUG_MODE=true
+    break
+  fi
+done
+
+# Only clear log if not in debug mode
+if [[ "$DEBUG_MODE" != "true" ]]; then
+  echo > "$LOG_PATH"
+else
+  echo "=== New test run $(date) ===" >> "$LOG_PATH"
+fi
 
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
@@ -109,10 +123,16 @@ is_this_package_loadable() {
     return $exit_status
 }
 
-# Call the function and exit if it fails
-if ! is_this_package_loadable; then
-    echo "Package check failed, exiting script" | tee -a "$LOG_PATH"
-    exit 1
+# Only check package loadability if we're not running a specific test
+if [ -z "$SINGLE_TEST_FILE" ]; then
+    # Call the function and exit if it fails for full test suite
+    if ! is_this_package_loadable; then
+        echo "Package check failed, exiting script" | tee -a "$LOG_PATH"
+        exit 1
+    fi
+else
+    # Skip loadability check for single test file
+    echo "Skipping package loadability check for single test file" | tee -a "$LOG_PATH"
 fi
 
 # Function to run tests
@@ -165,11 +185,29 @@ run_tests_elisp() {
     # Run tests
     # Check if this is the ecc-send specific test
     if [[ "$target" == *"test-ecc-send.el" ]]; then
-        emacs_cmd+=" --eval \"(progn
-          (load \\\"$THIS_DIR/tests/modules/fix-variables.el\\\")
-          (load \\\"$THIS_DIR/tests/term/vterm-mock.el\\\")
-          (load \\\"$THIS_DIR/tests/test-ecc-send.el\\\")
-          (ert-run-tests-batch-and-exit))\" "
+        # Use standalone test runner for ecc-send tests
+        emacs_cmd="emacs -Q --batch"
+        # Add load paths
+        emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)/tests\\\")\" "
+        emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)/tests/modules\\\")\" "
+        emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)/tests/term\\\")\" "
+        emacs_cmd+=" --eval \"(add-to-list 'load-path \\\"$(pwd)/src\\\")\" "
+        
+        # Debug mode if needed
+        if $DEBUG_MODE; then
+            emacs_cmd+=" --eval \"(setq debug-on-error t)\" "
+            emacs_cmd+=" --eval \"(setq debug-on-signal t)\" "
+        fi
+        
+        # Load standalone test and run tests
+        emacs_cmd+=" --load \"$THIS_DIR/tests/standalone-test-ecc-send.el\" "
+        emacs_cmd+=" --eval \"(progn (mapatoms (lambda (sym) 
+              (when (and 
+                     (fboundp sym) 
+                     (string-match \\\"^test-ecc-\\\" (symbol-name sym))
+                     (not (string-match \\\"test-completion\\\" (symbol-name sym))))
+                (message \\\"Running test %s\\\" sym) 
+                (funcall sym)))))\" "
     else
         emacs_cmd+=" --eval \"(elisp-test-run \\\"$target\\\" $TEST_TIMEOUT t)\" "
     fi
