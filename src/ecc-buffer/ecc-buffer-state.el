@@ -8,7 +8,7 @@
 
 (require 'pulse)
 (require 'ecc-variables)
-(require 'ecc-buffer/ecc-buffer-current)
+(require 'ecc-buffer-current)
 
 ;; State initialization
 ;; ------------------------------
@@ -131,7 +131,12 @@ Returns one of: :y/y/n, :y/n, :waiting, :initial-waiting, :running, or nil."
               found)))))))
 
 
+;; Register this feature with standard naming
+(provide 'ecc-buffer-state)
+
+;; Also provide with prefix to match test expectations
 (provide 'ecc-buffer/ecc-buffer-state)
+
 
 (when
     (not load-file-name)
